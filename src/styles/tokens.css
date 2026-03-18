@@ -48,9 +48,9 @@
    * ────────────────────────────────────────── */
 
   /* Familias */
-  --font-headline:  'Syne', sans-serif;          /* H1, H2 — impacto */
-  --font-subhead:   'Space Grotesk', sans-serif; /* H3, labels, CTAs */
-  --font-body:      'Inter', sans-serif;         /* Cuerpo, FAQs */
+  --font-headline:  'Lato', sans-serif;  /* H1, H2 — impacto */
+  --font-subhead:   'Lato', sans-serif;  /* H3, labels, CTAs */
+  --font-body:      'Lato', sans-serif;  /* Cuerpo, FAQs */
 
   /* Escala tipográfica (fluid) */
   --text-xs:   0.75rem;    /* 12px */
