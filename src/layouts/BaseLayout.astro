@@ -11,6 +11,7 @@ import { SITE } from '../content/site';
 import { FAQ_ITEMS } from '../content/faq';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import Analytics from '@vercel/analytics/astro';
 import '../styles/global.css';
 import '../styles/animations.css';
 
@@ -153,6 +154,9 @@ const schemaBreadcrumb = {
       gtag('js', new Date());
       gtag('config', 'G-7LH63DBJDK');
     </script>
+
+    <!-- Vercel Web Analytics -->
+    <Analytics />
   </head>
 
   <body>
