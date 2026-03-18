@@ -1,0 +1,51 @@
+---
+/**
+ * SectionLabel.astro
+ * Propósito: Etiqueta de sección pequeña con acento dorado.
+ * Aparece sobre el H2 de cada sección para contextualizarla.
+ * Ejemplo: "[ RESULTADOS REALES ]" → "CASO DE ESTUDIO"
+ */
+
+export interface SectionLabelProps {
+  text: string;
+  align?: 'left' | 'center';
+  /** Agrega clase de animación GSAP */
+  animate?: boolean;
+}
+
+const {
+  text,
+  align = 'left',
+  animate = true,
+} = Astro.props as SectionLabelProps;
+---
+
+<span
+  class:list={['section-label', `section-label--${align}`, animate && 'gs-fade-in']}
+  aria-hidden="true"
+>
+  <span class="section-label__bracket">[ </span>
+  {text}
+  <span class="section-label__bracket"> ]</span>
+</span>
+
+<style>
+  .section-label {
+    display: block;
+    font-family: var(--font-subhead);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-4);
+  }
+
+  .section-label--center {
+    text-align: center;
+  }
+
+  .section-label__bracket {
+    opacity: 0.5;
+  }
+</style>

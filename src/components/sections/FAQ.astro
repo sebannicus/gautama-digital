@@ -1,0 +1,155 @@
+---
+/**
+ * FAQ.astro
+ * Propósito: Preguntas frecuentes con acordeón accesible.
+ * SEO: el schema FAQPage se genera en BaseLayout desde FAQ_ITEMS.
+ * A11y: usa <details>/<summary> nativo — accesible sin JS.
+ * Relación: consume FAQ_ITEMS.
+ */
+
+import SectionLabel from '../ui/SectionLabel.astro';
+import { FAQ_ITEMS } from '../../content/faq';
+---
+
+<section class="faq section" id="faq" aria-labelledby="faq-heading">
+  <div class="container faq__inner">
+    <div class="faq__header gs-fade-up">
+      <SectionLabel text="PREGUNTAS FRECUENTES" />
+      <h2 class="faq__title" id="faq-heading">
+        Todo lo que necesitas<br />
+        <span class="text-gradient-gold">saber antes de decidir.</span>
+      </h2>
+      <p class="faq__sub">
+        Respuestas honestas a las dudas más comunes de negocios locales en La Serena y Coquimbo.
+      </p>
+    </div>
+
+    <div class="faq__list" role="list">
+      {FAQ_ITEMS.map((item, i) => (
+        <details
+          class="faq__item gs-fade-up"
+          role="listitem"
+          name="faq-group"
+        >
+          <summary class="faq__question">
+            <span>{item.question}</span>
+            <svg class="faq__icon" aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <div class="faq__answer">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+
+  /* Header */
+  .faq__title {
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    margin-bottom: var(--space-4);
+  }
+
+  .faq__sub {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 420px;
+  }
+
+  /* Lista */
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Item */
+  .faq__item {
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--transition-base);
+  }
+
+  .faq__item[open] {
+    border-color: var(--color-border-hover);
+  }
+
+  /* Pregunta */
+  .faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-6);
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-subhead);
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    line-height: var(--leading-snug);
+    transition: color var(--transition-fast);
+    user-select: none;
+  }
+
+  /* Quita el marcador nativo */
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__question:hover {
+    color: var(--color-gold);
+  }
+
+  .faq__item[open] .faq__question {
+    color: var(--color-gold);
+  }
+
+  /* Ícono rotatorio */
+  .faq__icon {
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+    transition: transform var(--transition-base), color var(--transition-base);
+  }
+
+  .faq__item[open] .faq__icon {
+    transform: rotate(180deg);
+    color: var(--color-gold);
+  }
+
+  /* Respuesta */
+  .faq__answer {
+    padding: 0 var(--space-6) var(--space-5);
+  }
+
+  .faq__answer p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Responsive */
+  @media (min-width: 900px) {
+    .faq__inner {
+      grid-template-columns: 1fr 1.8fr;
+      align-items: start;
+    }
+
+    .faq__header {
+      position: sticky;
+      top: 100px;
+    }
+  }
+</style>

@@ -1,0 +1,163 @@
+---
+/**
+ * BaseLayout.astro
+ * Propósito: Layout base con SEO completo, schema JSON-LD y OG tags.
+ * Principio Information Expert: recibe title/description opcionales —
+ * los defaults vienen de SITE (fuente única de verdad).
+ * Relación: envuelve todas las páginas. Consume FAQ_ITEMS para FAQPage schema.
+ */
+
+import { SITE } from '../content/site';
+import { FAQ_ITEMS } from '../content/faq';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import '../styles/global.css';
+import '../styles/animations.css';
+
+export interface BaseLayoutProps {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalUrl?: string;
+  noIndex?: boolean;
+}
+
+const {
+  title = `${SITE.name} — ${SITE.tagline}`,
+  description = SITE.description,
+  image = `${SITE.url}/images/og-image.jpg`,
+  canonicalUrl = SITE.url,
+  noIndex = false,
+} = Astro.props as BaseLayoutProps;
+
+// ── Schema JSON-LD ─────────────────────────────────────────────────────────
+
+const schemaProfessionalService = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${SITE.url}/#business`,
+  name: SITE.name,
+  description: SITE.description,
+  url: SITE.url,
+  telephone: SITE.phone,
+  email: SITE.email,
+  founder: {
+    '@type': 'Person',
+    '@id': `${SITE.url}/#founder`,
+    name: SITE.founder.name,
+    jobTitle: SITE.founder.role,
+    url: SITE.url,
+    sameAs: [SITE.social.instagram].filter(Boolean),
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: SITE.location.city,
+    addressRegion: SITE.location.region,
+    addressCountry: SITE.location.country,
+  },
+  areaServed: [
+    { '@type': 'City', name: 'La Serena' },
+    { '@type': 'City', name: 'Coquimbo' },
+  ],
+  serviceType: ['Diseño Web', 'SEO Local', 'Google My Business'],
+  priceRange: '$$$',
+  inLanguage: 'es-CL',
+};
+
+const schemaFAQPage = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+
+const schemaBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Inicio',
+      item: SITE.url,
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="es-CL">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO primario -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:alt" content={`${SITE.name} — ${SITE.tagline}`} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="es_CL" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Local SEO -->
+    <meta name="geo.region" content="CL-CO" />
+    <meta name="geo.placename" content={`${SITE.location.city}, Chile`} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+
+    <!-- Preconnect Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Google Fonts: Syne + Space Grotesk + Inter -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Schema JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaProfessionalService)} />
+    <script type="application/ld+json" set:html={JSON.stringify(schemaFAQPage)} />
+    <script type="application/ld+json" set:html={JSON.stringify(schemaBreadcrumb)} />
+
+    <!-- Theme color mobile -->
+    <meta name="theme-color" content="#06060F" />
+  </head>
+
+  <body>
+    <Header />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- Scroll reveal global — se activa una vez que el DOM está listo -->
+    <script>
+      import { initScrollReveal } from '../utils/animations';
+      // Pequeño delay para no competir con la animación del hero
+      setTimeout(() => initScrollReveal(), 300);
+    </script>
+  </body>
+</html>

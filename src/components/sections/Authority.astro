@@ -1,0 +1,162 @@
+---
+/**
+ * Authority.astro
+ * Propósito: Sección de autoridad — métricas reales que establecen credibilidad.
+ * Estrategia: diferenciación competitiva — ninguna agencia local muestra números reales.
+ * Relación: consume CASE_STUDIES[0].metrics para las métricas de CheckVital.
+ */
+
+import SectionLabel from '../ui/SectionLabel.astro';
+import MetricCard from '../ui/MetricCard.astro';
+import { CASE_STUDIES } from '../../content/caseStudies';
+
+const checkVital = CASE_STUDIES[0];
+---
+
+<section class="authority section" id="resultados" aria-labelledby="authority-heading">
+  <div class="container">
+    <div class="authority__header gs-fade-up">
+      <SectionLabel text="RESULTADOS REALES" align="center" />
+      <h2 class="authority__title" id="authority-heading">
+        Números que puedes<br />
+        <span class="text-gradient-gold">verificar tú mismo</span>
+      </h2>
+      <p class="authority__sub">
+        Caso real: {checkVital.clientName} — {checkVital.industry} en {checkVital.location}.
+        Sin publicidad. Sin trucos. Solo SEO bien hecho.
+      </p>
+    </div>
+
+    <!-- Métricas -->
+    <div class="authority__metrics">
+      {checkVital.metrics.map((metric) => (
+        <MetricCard
+          value={metric.value}
+          label={metric.label}
+          source={metric.source}
+        />
+      ))}
+    </div>
+
+    <!-- Quote de prueba -->
+    <blockquote class="authority__quote gs-fade-up">
+      <p class="authority__quote-text">"{checkVital.copyQuote}"</p>
+      <footer class="authority__quote-footer">
+        <span class="authority__quote-client">{checkVital.clientName}</span>
+        <span class="authority__quote-detail"> · {checkVital.industry}, {checkVital.location}</span>
+      </footer>
+    </blockquote>
+
+    <!-- Keywords verificadas -->
+    <div class="authority__keywords gs-fade-in">
+      <span class="authority__keywords-label">Posicionado en Google Maps para:</span>
+      <div class="authority__keywords-list">
+        {checkVital.mapKeywords.map((kw) => (
+          <span class="authority__keyword">"{kw}"</span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .authority {
+    background-color: var(--color-bg-surface);
+  }
+
+  /* Header */
+  .authority__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+
+  .authority__title {
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    margin-bottom: var(--space-4);
+  }
+
+  .authority__sub {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    max-width: 560px;
+    margin-inline: auto;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Métricas */
+  .authority__metrics {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    margin-bottom: var(--space-10);
+  }
+
+  /* Quote */
+  .authority__quote {
+    background-color: var(--color-bg-overlay);
+    border-left: 3px solid var(--color-gold);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: var(--space-6) var(--space-8);
+    margin-bottom: var(--space-8);
+  }
+
+  .authority__quote-text {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    font-style: italic;
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-3);
+  }
+
+  .authority__quote-footer {
+    font-size: var(--text-sm);
+  }
+
+  .authority__quote-client {
+    font-weight: var(--weight-semibold);
+    color: var(--color-gold);
+  }
+
+  .authority__quote-detail {
+    color: var(--color-text-muted);
+  }
+
+  /* Keywords */
+  .authority__keywords {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    justify-content: center;
+  }
+
+  .authority__keywords-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .authority__keywords-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+  }
+
+  .authority__keyword {
+    font-family: var(--font-subhead);
+    font-size: var(--text-xs);
+    color: var(--color-gold);
+    background: rgba(201, 168, 76, 0.08);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: var(--space-1) var(--space-3);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  /* Responsive */
+  @media (min-width: 640px) {
+    .authority__metrics {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

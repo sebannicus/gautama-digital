@@ -1,0 +1,201 @@
+---
+/**
+ * CtaFinal.astro
+ * Propósito: CTA final — último intento de conversión antes del footer.
+ * Tono: urgencia suave + personalidad de Seba.
+ */
+
+import Button from '../ui/Button.astro';
+import { SITE } from '../../content/site';
+
+const whatsappMsg = encodeURIComponent('Hola Seba, quiero empezar con mi sitio web. ¿Cuándo podemos hablar?');
+const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
+---
+
+<section class="cta-final section" id="contacto" aria-label="Contacto final">
+  <!-- Fondo elegante -->
+  <div class="cta-final__bg" aria-hidden="true">
+    <div class="bg-glow bg-glow--gold cta-final__glow--1"></div>
+    <div class="bg-glow bg-glow--violet cta-final__glow--2"></div>
+  </div>
+
+  <div class="container cta-final__inner gs-fade-up">
+    <!-- Eyebrow -->
+    <div class="cta-final__eyebrow">
+      <span class="gold-line gold-line--center gold-line--lg" aria-hidden="true"></span>
+    </div>
+
+    <h2 class="cta-final__title">
+      Tu negocio en Google.<br />
+      <span class="text-gradient-gold">Esta semana, no el año que viene.</span>
+    </h2>
+
+    <p class="cta-final__sub">
+      Una llamada de 30 minutos con Seba. Sin costo. Sin compromiso.
+      Solo hablas de tu negocio y salís con un plan claro.
+    </p>
+
+    <!-- Botones -->
+    <div class="cta-final__actions">
+      <Button href={whatsappUrl} variant="whatsapp" size="lg" external={true} pulse={true}>
+        Escribirle a Seba por WhatsApp
+      </Button>
+      <Button href={`mailto:${SITE.email}`} variant="ghost" size="lg">
+        Enviar un correo
+      </Button>
+    </div>
+
+    <!-- Datos de contacto directo -->
+    <div class="cta-final__contact">
+      <a href={`mailto:${SITE.email}`} class="cta-final__contact-item">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        {SITE.email}
+      </a>
+
+      {SITE.social.instagram && (
+        <a
+          href={SITE.social.instagram}
+          class="cta-final__contact-item"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+          @gautamadigital
+        </a>
+      )}
+    </div>
+
+    <!-- Garantía de no compromiso -->
+    <p class="cta-final__guarantee">
+      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Sin contrato de permanencia · Sin mensualidades obligatorias · El sitio es tuyo
+    </p>
+  </div>
+</section>
+
+<style>
+  .cta-final {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-final__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .cta-final__glow--1 {
+    width: 700px;
+    height: 700px;
+    top: -200px;
+    right: -200px;
+    opacity: 0.06;
+  }
+
+  .cta-final__glow--2 {
+    width: 500px;
+    height: 500px;
+    bottom: -100px;
+    left: -100px;
+    opacity: 0.05;
+  }
+
+  /* Contenido */
+  .cta-final__inner {
+    position: relative;
+    z-index: var(--z-above);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .cta-final__eyebrow {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-2);
+  }
+
+  .cta-final__title {
+    font-size: clamp(var(--text-3xl), 5vw, var(--text-6xl));
+    max-width: 760px;
+  }
+
+  .cta-final__sub {
+    font-size: clamp(var(--text-base), 2vw, var(--text-lg));
+    color: var(--color-text-secondary);
+    max-width: 520px;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Botones */
+  .cta-final__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+  }
+
+  /* Contacto directo */
+  .cta-final__contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-6);
+    margin-top: var(--space-2);
+  }
+
+  .cta-final__contact-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .cta-final__contact-item:hover {
+    color: var(--color-gold);
+  }
+
+  /* Garantía */
+  .cta-final__guarantee {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cta-final__guarantee svg {
+    flex-shrink: 0;
+    color: var(--color-gold);
+  }
+
+  @media (max-width: 640px) {
+    .cta-final__actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .cta-final__actions :global(.btn) {
+      width: 100%;
+    }
+  }
+</style>

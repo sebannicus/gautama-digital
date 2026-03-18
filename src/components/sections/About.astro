@@ -1,0 +1,222 @@
+---
+/**
+ * About.astro
+ * Propósito: Sección "Seba" — personal branding y diferenciación.
+ * Copy: comerciante toda la vida + programación + impulsar negocios locales.
+ * Foto: seba2.jpeg (camisa blanca, lentes de sol, luz dorada) — máximo impacto.
+ * SEO: refuerza "Sebastián Morales" + "Coquimbo" para búsquedas de persona.
+ */
+
+import SectionLabel from '../ui/SectionLabel.astro';
+import Button from '../ui/Button.astro';
+import { SITE } from '../../content/site';
+
+const whatsappMsg = encodeURIComponent('Hola Seba, vi tu sitio y quiero hablar contigo.');
+const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
+---
+
+<section class="about section" id="sobre-seba" aria-labelledby="about-heading">
+  <div class="container about__inner">
+    <!-- Foto -->
+    <div class="about__photo-wrap gs-slide-left">
+      <div class="about__photo-border" aria-hidden="true"></div>
+      <img
+        src="/images/seba.jpeg"
+        alt="Sebastián Morales — Seba, consultor digital en Coquimbo, La Serena"
+        class="about__photo"
+        width="480"
+        height="560"
+        loading="lazy"
+        decoding="async"
+      />
+      <!-- Floating badge -->
+      <div class="about__badge" aria-hidden="true">
+        <span class="about__badge-value">25M+</span>
+        <span class="about__badge-label">CLP en ventas<br/>directas</span>
+      </div>
+    </div>
+
+    <!-- Copy -->
+    <div class="about__copy">
+      <SectionLabel text="QUIÉN TE VA A AYUDAR" />
+
+      <h2 class="about__title" id="about-heading">
+        No una agencia anónima.<br />
+        <span class="text-gradient-gold">Seba, en persona.</span>
+      </h2>
+
+      <div class="about__body">
+        <p>
+          Soy Seba. Llevo toda la vida en el comercio — vendí más de
+          <strong>25 millones de pesos en una sola temporada de verano</strong>,
+          puerta a puerta, cara a cara. Sé lo que significa convencer a alguien,
+          cerrar una venta y entregar valor de verdad.
+        </p>
+
+        <p>
+          La vida me llevó al camino de la programación y ahí encontré algo que no esperaba:
+          <strong>podía usar todo lo que sabía del comercio para hacer crecer negocios digitalmente</strong>.
+          No soy un técnico encerrado en una oficina. Soy alguien que entiende tu negocio,
+          tu cliente y cómo conectar los dos en Google.
+        </p>
+
+        <p>
+          Trabajo con negocios locales en <strong>La Serena y Coquimbo</strong>.
+          Sin contratos interminables, sin mensualidades obligatorias y sin promesas vacías.
+          Solo presencia digital real, con métricas que puedes verificar.
+        </p>
+      </div>
+
+      <!-- Puntos clave -->
+      <ul class="about__points">
+        <li class="about__point">
+          <span class="about__point-icon" aria-hidden="true">→</span>
+          <span>Trato directo — hablas con quien hace el trabajo</span>
+        </li>
+        <li class="about__point">
+          <span class="about__point-icon" aria-hidden="true">→</span>
+          <span>Background comercial real — no solo técnico</span>
+        </li>
+        <li class="about__point">
+          <span class="about__point-icon" aria-hidden="true">→</span>
+          <span>Especializado en negocios locales de La Serena/Coquimbo</span>
+        </li>
+      </ul>
+
+      <div class="about__cta">
+        <Button href={whatsappUrl} variant="primary" size="md" external={true}>
+          Habla con Seba
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    overflow: hidden;
+  }
+
+  .about__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  /* Foto */
+  .about__photo-wrap {
+    position: relative;
+    max-width: 420px;
+    margin-inline: auto;
+  }
+
+  .about__photo-border {
+    position: absolute;
+    inset: -8px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-2xl);
+    z-index: 0;
+  }
+
+  .about__photo {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 6/7;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: var(--radius-2xl);
+    filter: grayscale(15%);
+    transition: filter var(--transition-slow);
+  }
+
+  .about__photo-wrap:hover .about__photo {
+    filter: grayscale(0%);
+  }
+
+  /* Badge flotante */
+  .about__badge {
+    position: absolute;
+    bottom: var(--space-6);
+    right: calc(-1 * var(--space-6));
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border-hover);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-4);
+    text-align: center;
+    z-index: 2;
+    box-shadow: var(--shadow-gold);
+  }
+
+  .about__badge-value {
+    display: block;
+    font-family: var(--font-headline);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-extrabold);
+    color: var(--color-gold);
+    line-height: 1;
+    margin-bottom: var(--space-1);
+  }
+
+  .about__badge-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-snug);
+  }
+
+  /* Copy */
+  .about__title {
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    margin-bottom: var(--space-6);
+  }
+
+  .about__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .about__body p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Puntos */
+  .about__points {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+  }
+
+  .about__point {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .about__point-icon {
+    color: var(--color-gold);
+    font-weight: var(--weight-bold);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Responsive */
+  @media (min-width: 900px) {
+    .about__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+    }
+
+    .about__photo-wrap {
+      margin-inline: 0;
+      max-width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,204 @@
+---
+/**
+ * ServiceCard.astro
+ * Propósito: Tarjeta de servicio/paquete. Muestra precio, features y CTA.
+ * Principio ISP: recibe un Service tipado — no props sueltas.
+ * Relación: Consumido por Services.astro.
+ */
+
+import type { Service } from '../../types/service.types';
+import Button from './Button.astro';
+import { SITE } from '../../content/site';
+
+export interface ServiceCardProps {
+  service: Service;
+  animate?: boolean;
+}
+
+const { service, animate = true } = Astro.props as ServiceCardProps;
+
+const whatsappMsg = encodeURIComponent(
+  `Hola Seba, me interesa el ${service.name}. ¿Podemos hablar?`
+);
+const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
+---
+
+<article
+  class:list={[
+    'service-card',
+    service.highlighted && 'service-card--highlighted',
+    animate && 'gs-fade-up',
+  ]}
+  aria-label={`${service.name} — ${service.price}`}
+>
+  {service.badge && (
+    <div class="service-card__badge">{service.badge}</div>
+  )}
+
+  <div class="service-card__header">
+    <h3 class="service-card__name">{service.name}</h3>
+    <p class="service-card__tagline">{service.tagline}</p>
+  </div>
+
+  <div class="service-card__price">
+    <span class="service-card__price-value">{service.price}</span>
+    {service.priceNote && (
+      <span class="service-card__price-note">{service.priceNote}</span>
+    )}
+  </div>
+
+  <p class="service-card__description">{service.description}</p>
+
+  <ul class="service-card__features" aria-label="Incluye">
+    {service.features.map((feature) => (
+      <li class="service-card__feature">
+        <svg class="service-card__check" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8L6.5 11.5L13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>{feature.text}</span>
+      </li>
+    ))}
+  </ul>
+
+  <div class="service-card__cta">
+    <Button
+      href={whatsappUrl}
+      variant={service.highlighted ? 'primary' : 'ghost'}
+      size="md"
+      external={true}
+      pulse={service.highlighted}
+    >
+      {service.cta}
+    </Button>
+  </div>
+</article>
+
+<style>
+  .service-card {
+    position: relative;
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-slow);
+  }
+
+  .service-card:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-4px);
+  }
+
+  /* Destacado */
+  .service-card--highlighted {
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-gold);
+  }
+
+  .service-card--highlighted:hover {
+    box-shadow: var(--shadow-gold-hover);
+  }
+
+  /* Badge */
+  .service-card__badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-gold);
+    color: var(--color-text-inverse);
+    font-family: var(--font-subhead);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    padding: var(--space-1) var(--space-4);
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+  }
+
+  /* Header */
+  .service-card__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .service-card__name {
+    font-family: var(--font-headline);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-text-primary);
+  }
+
+  .service-card__tagline {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-snug);
+  }
+
+  /* Precio */
+  .service-card__price {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding-block: var(--space-4);
+    border-block: 1px solid var(--color-border);
+  }
+
+  .service-card__price-value {
+    font-family: var(--font-headline);
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-extrabold);
+    color: var(--color-gold);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1;
+  }
+
+  .service-card__price-note {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  /* Descripción */
+  .service-card__description {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Features */
+  .service-card__features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    flex: 1;
+  }
+
+  .service-card__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-snug);
+  }
+
+  .service-card__check {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--color-gold);
+  }
+
+  /* CTA */
+  .service-card__cta {
+    margin-top: auto;
+  }
+
+  .service-card__cta :global(.btn) {
+    width: 100%;
+  }
+</style>

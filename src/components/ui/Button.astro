@@ -1,0 +1,159 @@
+---
+/**
+ * Button.astro
+ * Propósito: Botón CTA reutilizable con variantes.
+ * Principio OCP: nuevas variantes se agregan sin modificar el core.
+ * Principio ISP: Props tipadas — solo lo que el componente necesita.
+ *
+ * Variantes:
+ *   - primary  → fondo dorado, texto oscuro (CTA principal)
+ *   - ghost    → borde dorado, texto dorado (CTA secundario)
+ *   - whatsapp → fondo verde WhatsApp con icono
+ */
+
+export interface ButtonProps {
+  variant?: 'primary' | 'ghost' | 'whatsapp';
+  href?: string;
+  size?: 'sm' | 'md' | 'lg';
+  /** Abre en nueva pestaña. Solo aplica cuando href está definido. */
+  external?: boolean;
+  /** Agrega clase de animación pulse-gold */
+  pulse?: boolean;
+  /** Clase extra opcional */
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  href,
+  size = 'md',
+  external = false,
+  pulse = false,
+  class: className = '',
+} = Astro.props as ButtonProps;
+
+const tag = href ? 'a' : 'button';
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+const classNames = [
+  'btn',
+  `btn--${variant}`,
+  `btn--${size}`,
+  pulse ? 'pulse-gold' : '',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+{tag === 'a' ? (
+  <a href={href} class={classNames} {...externalAttrs}>
+    {variant === 'whatsapp' && (
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    )}
+    <slot />
+  </a>
+) : (
+  <button class={classNames} type="button">
+    {variant === 'whatsapp' && (
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    )}
+    <slot />
+  </button>
+)}
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-family: var(--font-subhead);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    border-radius: var(--radius-md);
+    transition:
+      background-color var(--transition-base),
+      color var(--transition-base),
+      border-color var(--transition-base),
+      transform var(--transition-spring),
+      box-shadow var(--transition-base);
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  /* Tamaños */
+  .btn--sm {
+    font-size: var(--text-xs);
+    padding: var(--space-2) var(--space-4);
+    height: 36px;
+  }
+
+  .btn--md {
+    font-size: var(--text-sm);
+    padding: var(--space-3) var(--space-6);
+    height: 48px;
+  }
+
+  .btn--lg {
+    font-size: var(--text-base);
+    padding: var(--space-4) var(--space-8);
+    height: 56px;
+  }
+
+  /* Variante primary — dorado */
+  .btn--primary {
+    background-color: var(--color-gold);
+    color: var(--color-text-inverse);
+    border: 2px solid var(--color-gold);
+  }
+
+  .btn--primary:hover {
+    background-color: var(--color-gold-light);
+    border-color: var(--color-gold-light);
+    box-shadow: var(--shadow-gold-hover);
+    transform: translateY(-2px);
+  }
+
+  /* Variante ghost — borde dorado */
+  .btn--ghost {
+    background-color: transparent;
+    color: var(--color-gold);
+    border: 2px solid var(--color-gold);
+  }
+
+  .btn--ghost:hover {
+    background-color: rgba(201, 168, 76, 0.08);
+    border-color: var(--color-gold-light);
+    color: var(--color-gold-light);
+    transform: translateY(-2px);
+  }
+
+  /* Variante whatsapp */
+  .btn--whatsapp {
+    background-color: #25D366;
+    color: #ffffff;
+    border: 2px solid #25D366;
+  }
+
+  .btn--whatsapp:hover {
+    background-color: #20BD5C;
+    border-color: #20BD5C;
+    box-shadow: 0 0 30px rgba(37, 211, 102, 0.25);
+    transform: translateY(-2px);
+  }
+
+  /* SVG dentro del botón */
+  .btn svg {
+    flex-shrink: 0;
+  }
+</style>

@@ -1,0 +1,88 @@
+---
+/**
+ * Services.astro
+ * Propósito: Sección de paquetes de servicios con pricing transparente.
+ * Estrategia SEO: mostrar precios reales — diferenciador vs competencia local.
+ * Relación: consume SERVICES, renderiza ServiceCard por cada paquete.
+ */
+
+import SectionLabel from '../ui/SectionLabel.astro';
+import ServiceCard from '../ui/ServiceCard.astro';
+import { SERVICES } from '../../content/services';
+---
+
+<section class="services section section--surface" id="servicios" aria-labelledby="services-heading">
+  <div class="container">
+    <div class="services__header gs-fade-up">
+      <SectionLabel text="PAQUETES" align="center" />
+      <h2 class="services__title" id="services-heading">
+        Precios claros.<br />
+        <span class="text-gradient-gold">Sin letras chicas.</span>
+      </h2>
+      <p class="services__sub">
+        Inviertes una vez. El sitio es tuyo. Sin mensualidades obligatorias ni contratos trampa.
+      </p>
+    </div>
+
+    <div class="services__grid">
+      {SERVICES.map((service) => (
+        <ServiceCard service={service} />
+      ))}
+    </div>
+
+    <p class="services__note gs-fade-in">
+      ¿Tienes dudas sobre qué paquete te conviene?
+      <a href="#contacto" class="link-gold">Escríbele a Seba</a> — sin compromiso.
+    </p>
+  </div>
+</section>
+
+<style>
+  /* Header */
+  .services__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+
+  .services__title {
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    margin-bottom: var(--space-4);
+  }
+
+  .services__sub {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    max-width: 520px;
+    margin-inline: auto;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Grid */
+  .services__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-bottom: var(--space-10);
+  }
+
+  /* Nota inferior */
+  .services__note {
+    text-align: center;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  /* Responsive */
+  @media (min-width: 768px) {
+    .services__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .services__grid {
+      grid-template-columns: repeat(3, 1fr);
+      align-items: start;
+    }
+  }
+</style>
