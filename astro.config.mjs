@@ -5,10 +5,14 @@
 
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel/static';
 
 export default defineConfig({
   site: 'https://www.gautamadigital.cl',
   output: 'static',
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+  }),
   compressHTML: true,
   integrations: [sitemap()],
   build: {
