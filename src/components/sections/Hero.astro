@@ -18,9 +18,10 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
   <!-- Glows decorativos de fondo -->
   <div class="bg-glow bg-glow--gold hero__glow hero__glow--1" aria-hidden="true"></div>
   <div class="bg-glow bg-glow--violet hero__glow hero__glow--2" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow--violet hero__glow hero__glow--3" aria-hidden="true"></div>
 
   <div class="container hero__inner">
-    <div class="hero__content">
+    <div class="hero__content" id="hero-parallax">
       <!-- Label superior -->
       <span class="hero__label" data-hero-label>
         <span class="hero__label-dot" aria-hidden="true"></span>
@@ -70,6 +71,45 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
     </div>
   </div>
 
+  <!-- Marquee ticker — da vida y refuerza keywords SEO -->
+  <div class="hero__marquee marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span class="hero__marquee-item">Diseño Web Profesional</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">SEO Local</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">Google Maps</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">La Serena</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">Coquimbo</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">Posicionamiento Google</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">Sin Mensualidades</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">Resultados Reales</span>
+      <span class="hero__marquee-sep">·</span>
+      <!-- Duplicado para loop continuo -->
+      <span class="hero__marquee-item">Diseño Web Profesional</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">SEO Local</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">Google Maps</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">La Serena</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">Coquimbo</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">Posicionamiento Google</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">Sin Mensualidades</span>
+      <span class="hero__marquee-sep">·</span>
+      <span class="hero__marquee-item">Resultados Reales</span>
+      <span class="hero__marquee-sep">·</span>
+    </div>
+  </div>
+
   <!-- Scroll hint -->
   <div class="hero__scroll" data-hero-scroll aria-hidden="true">
     <div class="hero__scroll-line"></div>
@@ -80,6 +120,18 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
 <script>
   import { initHeroAnimation } from '../../utils/animations';
   initHeroAnimation();
+
+  // Efecto scroll-scale: el contenido se reduce suavemente al bajar
+  const heroParallax = document.getElementById('hero-parallax');
+  if (heroParallax && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const scale = Math.max(1 - scrollY / 1400, 0.88);
+      const opacity = Math.max(1 - scrollY / 500, 0);
+      heroParallax.style.transform = `scale(${scale})`;
+      heroParallax.style.opacity = String(opacity);
+    }, { passive: true });
+  }
 </script>
 
 <style>
@@ -99,18 +151,27 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
   }
 
   .hero__glow--1 {
-    width: 600px;
-    height: 600px;
-    top: -100px;
-    right: -200px;
+    width: 700px;
+    height: 700px;
+    top: -150px;
+    right: -250px;
   }
 
   .hero__glow--2 {
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     bottom: 0;
-    left: -150px;
+    left: -200px;
     animation-delay: -6s;
+  }
+
+  .hero__glow--3 {
+    width: 400px;
+    height: 400px;
+    top: 40%;
+    right: 15%;
+    animation-delay: -10s;
+    opacity: 0.12;
   }
 
   /* Layout */
@@ -188,6 +249,33 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
     opacity: 0; /* GSAP */
   }
 
+  /* Marquee */
+  .hero__marquee {
+    position: absolute;
+    bottom: var(--space-20);
+    left: 0;
+    right: 0;
+    padding-block: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero__marquee-item {
+    font-family: var(--font-subhead);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+  }
+
+  .hero__marquee-sep {
+    color: var(--color-violet-dim);
+    font-size: var(--text-base);
+    flex-shrink: 0;
+  }
+
   .hero__proof-item {
     display: flex;
     flex-direction: column;
@@ -200,6 +288,10 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
     font-weight: var(--weight-bold);
     color: var(--color-gold);
     line-height: 1;
+    background: linear-gradient(135deg, var(--color-gold), var(--color-gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .hero__proof-label {
@@ -215,7 +307,7 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
   /* Scroll hint */
   .hero__scroll {
     position: absolute;
-    bottom: var(--space-8);
+    bottom: var(--space-4);
     left: 50%;
     transform: translateX(-50%);
     display: flex;

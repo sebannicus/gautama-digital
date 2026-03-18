@@ -5,8 +5,8 @@
  * Relación: Importado por global.css. Consumido por todos los componentes
  * a través de variables CSS nativas.
  *
- * Sistema de color: oscuro/elegante con acento dorado y violeta eléctrico.
- * Referente visual: SmartSites — impacto cinético, texto mínimo, mucho contraste.
+ * Sistema de color: lavanda claro con púrpura profundo como acción principal
+ * y periwinkle como acento. Paleta vibrante, moderna, con carácter propio.
  */
 
 :root {
@@ -15,28 +15,28 @@
    * ────────────────────────────────────────── */
 
   /* Fondos */
-  --color-bg:          #06060F;  /* Negro casi puro — base oscura */
-  --color-bg-surface:  #0D0D1A;  /* Superficie elevada (cards, secciones alt) */
-  --color-bg-overlay:  #12121F;  /* Overlay intermedio */
+  --color-bg:          #F0F0F2;  /* Lavanda casi blanco — base clara */
+  --color-bg-surface:  #DDDCF2;  /* Superficie elevada (cards, secciones alt) */
+  --color-bg-overlay:  #EEEDF8;  /* Overlay intermedio */
 
-  /* Primario — Dorado */
-  --color-gold:        #C9A84C;  /* Dorado principal */
-  --color-gold-light:  #E2C47A;  /* Hover / énfasis */
-  --color-gold-dim:    #8A6E2F;  /* Estado secundario / disabled */
+  /* Primario — Púrpura profundo */
+  --color-gold:        #352F59;  /* Púrpura profundo — acción principal */
+  --color-gold-light:  #4A4280;  /* Hover / énfasis */
+  --color-gold-dim:    #9E99BF;  /* Estado secundario */
 
-  /* Acento — Violeta eléctrico */
-  --color-violet:      #7B6FFF;  /* Acento secundario */
-  --color-violet-dim:  #4A41CC;  /* Hover violeta */
+  /* Acento — Periwinkle */
+  --color-violet:      #BFBDF2;  /* Periwinkle — acento suave */
+  --color-violet-dim:  #9E99BF;  /* Hover periwinkle */
 
   /* Texto */
-  --color-text-primary:   #F0EBE0;  /* Crema — cuerpo de texto */
-  --color-text-secondary: #A09A8E;  /* Gris cálido — subtexto */
-  --color-text-muted:     #5C5750;  /* Muy silenciado */
-  --color-text-inverse:   #06060F;  /* Texto sobre fondos claros */
+  --color-text-primary:   #352F59;  /* Púrpura profundo — cuerpo de texto */
+  --color-text-secondary: #6B6596;  /* Púrpura medio — subtexto */
+  --color-text-muted:     #9E99BF;  /* Muy silenciado */
+  --color-text-inverse:   #F0F0F2;  /* Texto sobre fondos oscuros */
 
   /* Bordes */
-  --color-border:       rgba(201, 168, 76, 0.15);  /* Borde dorado sutil */
-  --color-border-hover: rgba(201, 168, 76, 0.40);  /* Hover */
+  --color-border:       rgba(53, 47, 89, 0.12);  /* Borde púrpura sutil */
+  --color-border-hover: rgba(53, 47, 89, 0.30);  /* Hover */
 
   /* Estados */
   --color-success:  #2ECC71;
@@ -130,11 +130,11 @@
    * SHADOWS & GLOWS
    * ────────────────────────────────────────── */
 
-  --shadow-card:   0 4px 24px rgba(0, 0, 0, 0.4);
-  --shadow-gold:   0 0 40px rgba(201, 168, 76, 0.15);
-  --shadow-gold-hover: 0 0 60px rgba(201, 168, 76, 0.25);
-  --glow-gold:     0 0 80px rgba(201, 168, 76, 0.08);
-  --glow-violet:   0 0 80px rgba(123, 111, 255, 0.08);
+  --shadow-card:   0 4px 24px rgba(53, 47, 89, 0.08);
+  --shadow-gold:   0 0 40px rgba(53, 47, 89, 0.12);
+  --shadow-gold-hover: 0 0 60px rgba(53, 47, 89, 0.22);
+  --glow-gold:     0 0 80px rgba(191, 189, 242, 0.35);
+  --glow-violet:   0 0 80px rgba(53, 47, 89, 0.10);
 
 
   /* ──────────────────────────────────────────
