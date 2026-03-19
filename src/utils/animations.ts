@@ -52,7 +52,47 @@ export async function initScrollReveal(): Promise<void> {
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // Fade up — el más común
+  // ── Stagger children — efecto copywriters.cl ──────────────────────────────
+  // Contenedores con [data-scroll-children]: cada hijo aparece en secuencia.
+  // Crea el efecto de título/subtítulo/párrafo que va apareciendo en cascada.
+  gsap.utils.toArray<HTMLElement>('[data-scroll-children]').forEach((container) => {
+    const children = Array.from(container.children) as HTMLElement[];
+    if (!children.length) return;
+
+    gsap.fromTo(
+      children,
+      { opacity: 0, y: 55, filter: 'blur(4px)' },
+      {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: 0.85,
+        stagger: 0.18,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: container,
+          start: 'top 88%',
+          once: true,
+        },
+      }
+    );
+  });
+
+  // ── Clip-up reveal — título que emerge desde abajo como una cortina ───────
+  gsap.utils.toArray<HTMLElement>('.gs-clip-up').forEach((el) => {
+    gsap.to(el, {
+      clipPath: 'inset(0 0 0% 0)',
+      duration: 0.9,
+      ease: 'power4.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 90%',
+        once: true,
+      },
+    });
+  });
+
+  // ── Fade up — el más común ────────────────────────────────────────────────
   gsap.utils.toArray<HTMLElement>('.gs-fade-up').forEach((el) => {
     gsap.to(el, {
       opacity: 1,

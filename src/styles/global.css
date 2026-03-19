@@ -220,7 +220,7 @@ strong {
  * ────────────────────────────────────────── */
 
 ::selection {
-  background-color: rgba(191, 189, 242, 0.5);
+  background-color: rgba(4, 196, 217, 0.35);
   color: var(--color-text-primary);
 }
 
