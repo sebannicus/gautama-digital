@@ -10,7 +10,7 @@
 import Button from '../ui/Button.astro';
 import { SITE } from '../../content/site';
 
-const whatsappMsg = encodeURIComponent('Hola Seba, quiero cotizar mi sitio web. ¿Tienes disponibilidad?');
+const whatsappMsg = encodeURIComponent('Hola Seba, quiero solicitar una cotización para mi negocio. ¿Tienes disponibilidad?');
 const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
 ---
 
@@ -25,26 +25,31 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
       <!-- Label superior -->
       <span class="hero__label" data-hero-label>
         <span class="hero__label-dot" aria-hidden="true"></span>
-        Diseño Web & SEO Local — {SITE.location.city}
+        Para dueños de negocio en La Serena y Coquimbo
       </span>
 
       <!-- H1 — keyword principal incluida -->
       <h1 class="hero__title" data-hero-title>
-        Tu negocio en La Serena,<br />
-        <span class="text-gradient-gold">visible en Google</span><br />
-        desde el día uno.
+        Aparece en Google<br />
+        <span class="text-gradient-gold">cuando tus clientes</span><br />
+        te están buscando.
       </h1>
 
       <!-- Subtítulo -->
       <p class="hero__sub" data-hero-sub>
-        Diseño web profesional y SEO real para negocios locales en La Serena y Coquimbo.
-        Sin agencias impersonales. Sin mensualidades obligatorias. Solo resultados.
+        Construimos tu sitio web profesional + SEO local + Google My Business optimizado
+        para que nuevos clientes lleguen solos — sin pagar publicidad cada mes,
+        sin contratos de permanencia y sin mensualidades obligatorias.
+        El sitio es tuyo desde el día uno.
       </p>
 
       <!-- CTAs -->
       <div class="hero__cta" data-hero-cta>
         <Button href={whatsappUrl} variant="primary" size="lg" external={true} pulse={true}>
-          Habla con Seba →
+          Solicitar cotización gratuita
+        </Button>
+        <Button href="#servicios" variant="ghost" size="lg">
+          Ver planes y precios →
         </Button>
       </div>
 

@@ -8,7 +8,7 @@
 import Button from '../ui/Button.astro';
 import { SITE } from '../../content/site';
 
-const whatsappMsg = encodeURIComponent('Hola Seba, quiero empezar con mi sitio web. ¿Cuándo podemos hablar?');
+const whatsappMsg = encodeURIComponent('Hola Seba, quiero solicitar el diagnóstico gratuito para mi negocio. ¿Tienes disponibilidad?');
 const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
 ---
 
@@ -26,22 +26,23 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
     </div>
 
     <h2 class="cta-final__title">
-      Tu negocio en Google.<br />
-      <span class="text-gradient-gold">Esta semana, no el año que viene.</span>
+      ¿Tu negocio debería aparecer<br />
+      <span class="text-gradient-gold">donde tus clientes te buscan?</span>
     </h2>
 
     <p class="cta-final__sub">
-      Una llamada de 30 minutos con Seba. Sin costo. Sin compromiso.
-      Solo hablas de tu negocio y salís con un plan claro.
+      Agenda el diagnóstico gratuito. En 30 minutos revisamos tu situación actual,
+      te explico qué se puede mejorar y te entrego un plan concreto.
+      Sin costo. Sin compromiso de contratar.
     </p>
 
     <!-- Botones -->
     <div class="cta-final__actions">
       <Button href={whatsappUrl} variant="whatsapp" size="lg" external={true} pulse={true}>
-        Escribirle a Seba por WhatsApp
+        Solicitar diagnóstico gratuito
       </Button>
       <Button href={`mailto:${SITE.email}`} variant="ghost" size="lg">
-        Enviar un correo
+        Enviar cotización por correo
       </Button>
     </div>
 

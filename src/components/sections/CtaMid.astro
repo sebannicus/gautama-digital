@@ -8,7 +8,7 @@
 import Button from '../ui/Button.astro';
 import { SITE } from '../../content/site';
 
-const whatsappMsg = encodeURIComponent('Hola Seba, quiero cotizar mi sitio web. ¿Cuándo podemos hablar?');
+const whatsappMsg = encodeURIComponent('Hola Seba, quiero agendar un diagnóstico gratuito para mi negocio. ¿Tienes disponibilidad?');
 const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
 ---
 
@@ -22,22 +22,22 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
     <div class="cta-mid__content">
       <p class="cta-mid__tag">
         <span class="cta-mid__tag-dot" aria-hidden="true"></span>
-        Diagnóstico gratuito · Sin compromiso
+        Diagnóstico gratuito · Sin compromiso · 30 minutos
       </p>
 
       <h2 class="cta-mid__title">
-        Cuéntale a Seba lo que necesitas.<br />
-        <span class="text-gradient-gold">En 30 minutos tienes un plan.</span>
+        El primer paso es gratis:<br />
+        <span class="text-gradient-gold">analizamos tu negocio juntos.</span>
       </h2>
 
       <p class="cta-mid__sub">
-        Una llamada. Sin costo. Sin presión. Solo una conversación honesta sobre
-        cómo tu negocio puede aparecer en Google.
+        Antes de cotizar cualquier cosa, conversamos. Revisamos cómo está tu presencia digital hoy,
+        qué está haciendo tu competencia y qué necesitas exactamente. Sin presión, sin venta agresiva.
       </p>
 
       <div class="cta-mid__actions">
         <Button href={whatsappUrl} variant="primary" size="lg" external={true} pulse={true}>
-          Cotizar por WhatsApp
+          Agendar diagnóstico gratuito
         </Button>
         <a href={`mailto:${SITE.email}`} class="cta-mid__email-link">
           o escribe a {SITE.email}
