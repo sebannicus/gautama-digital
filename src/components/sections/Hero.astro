@@ -137,6 +137,27 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
   import { initHeroAnimation } from '../../utils/animations';
   initHeroAnimation();
 
+  // Fade suave en el corte del loop del video
+  const heroVideo = document.querySelector<HTMLVideoElement>('.hero__video');
+  if (heroVideo) {
+    const FADE = 1.5;     // segundos de transición
+    const MAX_OP = 0.75;  // opacidad máxima definida en CSS
+
+    heroVideo.addEventListener('timeupdate', () => {
+      const { currentTime, duration } = heroVideo;
+      if (!duration) return;
+      const remaining = duration - currentTime;
+
+      if (remaining < FADE) {
+        heroVideo.style.opacity = String((remaining / FADE) * MAX_OP);
+      } else if (currentTime < FADE) {
+        heroVideo.style.opacity = String((currentTime / FADE) * MAX_OP);
+      } else {
+        heroVideo.style.opacity = String(MAX_OP);
+      }
+    });
+  }
+
   // Efecto scroll-scale: el contenido se reduce suavemente al bajar
   const heroParallax = document.getElementById('hero-parallax');
   if (heroParallax && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
@@ -377,7 +398,8 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
       height: 100%;
       object-fit: cover;
       object-position: center;
-      opacity: 0.75;
+      opacity: 0; /* JS lo sube gradualmente desde el inicio */
+      transition: opacity 0.05s linear;
     }
 
     .hero__video-fade {
