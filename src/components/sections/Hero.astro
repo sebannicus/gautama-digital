@@ -140,7 +140,7 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
   // Fade suave en el corte del loop del video
   const heroVideo = document.querySelector<HTMLVideoElement>('.hero__video');
   if (heroVideo) {
-    const FADE = 1.5;     // segundos de transición
+    const FADE = 0.6;     // segundos de transición
     const MAX_OP = 0.75;  // opacidad máxima definida en CSS
 
     heroVideo.addEventListener('timeupdate', () => {
@@ -222,6 +222,7 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
+    padding-bottom: 140px; /* espacio para el marquee absoluto */
   }
 
   /* Label */
