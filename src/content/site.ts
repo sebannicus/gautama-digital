@@ -34,7 +34,7 @@ export const SITE = {
   },
 
   social: {
-    instagram: 'https://instagram.com/gautamadigital',
+    instagram: 'https://instagram.com/gautama_digital',
     linkedin: '',
   },
 
