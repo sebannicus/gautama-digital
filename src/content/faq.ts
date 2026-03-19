@@ -22,7 +22,7 @@ export const FAQ_ITEMS: readonly FAQItem[] = [
   {
     question: '¿Qué pasa si no aparezco en Google después del lanzamiento?',
     answer:
-      'El SEO es un proceso, no un botón. Lo que garantizo es que el sitio queda construido correctamente — con la estructura técnica, los textos y las keywords que Google necesita para posicionarte. Los resultados dependen del rubro, la competencia local y el tiempo. Lo que nunca hago es prometerte posición #1 sin saber nada de tu negocio.',
+      'El SEO es un proceso, no un botón. Lo que garantizo es que el sitio queda construido correctamente — con la estructura técnica, los textos y las keywords que Google necesita para posicionarte. CheckVital pasó de cero a Top Google Maps en 30 días sin invertir un peso en publicidad. Eso es exactamente lo que pasa cuando se construye bien desde el inicio.',
   },
   {
     question: '¿Necesito firmar un contrato de permanencia?',

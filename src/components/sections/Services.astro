@@ -24,6 +24,12 @@ import { SERVICES } from '../../content/services';
       </p>
     </div>
 
+    <div class="services__cupo gs-fade-in" aria-live="polite">
+      <span class="services__cupo-dot" aria-hidden="true"></span>
+      Trabajo con máximo <strong>4 clientes al mes</strong>. Actualmente tengo
+      <strong>1 cupo disponible</strong>.
+    </div>
+
     <div class="services__grid">
       {SERVICES.map((service) => (
         <ServiceCard service={service} />
@@ -55,6 +61,35 @@ import { SERVICES } from '../../content/services';
     max-width: 520px;
     margin-inline: auto;
     line-height: var(--leading-relaxed);
+  }
+
+  /* Cupo disponible */
+  .services__cupo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--color-border-hover);
+    border-radius: var(--radius-full);
+    width: fit-content;
+    margin-inline: auto;
+  }
+
+  .services__cupo-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse-gold 2s ease-in-out infinite;
+  }
+
+  .services__cupo strong {
+    color: var(--color-text-primary);
   }
 
   /* Grid */

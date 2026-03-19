@@ -13,7 +13,7 @@ export const SERVICES: readonly Service[] = [
     name: 'Paquete Starter',
     tagline: 'Tu primera presencia digital profesional',
     description:
-      'Todo lo que un negocio local necesita para aparecer en Google desde el día uno. Landing page, SEO y Google My Business optimizado.',
+      'Todo lo que tus clientes necesitan para encontrarte en Google desde el día uno. Landing page, SEO y Google My Business optimizado.',
     features: [
       { text: 'Landing page profesional (Astro, diseño único)' },
       { text: 'SEO on-page completo con keywords locales' },
@@ -24,7 +24,7 @@ export const SERVICES: readonly Service[] = [
       { text: '1 mes de soporte post-lanzamiento' },
     ],
     price: 'desde $350.000',
-    priceNote: 'Pago único. Sin mensualidades obligatorias.',
+    priceNote: 'Dos pagos, al revisar inicialmente el trabajo en conjunto al cliente y otro pago al momento del despliegue final. Sin mensualidades obligatorias.',
     highlighted: false,
     cta: 'Quiero el Starter',
   },
@@ -43,7 +43,7 @@ export const SERVICES: readonly Service[] = [
       { text: 'Velocidad optimizada para Core Web Vitals' },
       { text: '3 meses de seguimiento y ajustes SEO' },
     ],
-    price: 'desde $700.000',
+    price: 'desde $500.000',
     priceNote: 'Pago único. Seguimiento incluido por 3 meses.',
     highlighted: true,
     badge: 'Más elegido',
