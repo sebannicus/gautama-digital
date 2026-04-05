@@ -23,6 +23,10 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
         <span class="footer__logo-dot" aria-hidden="true">.</span>
       </a>
       <p class="footer__tagline">{SITE.tagline}</p>
+      <p class="footer__desc">
+        Diseño web, páginas web profesionales y SEO local para negocios en La Serena y Coquimbo.
+        Aparecer en Google sin pagar publicidad es posible — te mostramos cómo.
+      </p>
       <p class="footer__location">
         <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
@@ -36,9 +40,12 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
     <div class="footer__col">
       <h3 class="footer__col-title">Servicios</h3>
       <ul class="footer__col-list">
-        <li><a href="#servicios" class="footer__link">Paquete Starter</a></li>
-        <li><a href="#servicios" class="footer__link">Paquete Pro</a></li>
-        <li><a href="#servicios" class="footer__link">Seguimiento Mensual</a></li>
+        <li><a href="#servicios" class="footer__link">Diseño web La Serena</a></li>
+        <li><a href="#servicios" class="footer__link">Páginas web profesionales</a></li>
+        <li><a href="#servicios" class="footer__link">SEO local La Serena</a></li>
+        <li><a href="#servicios" class="footer__link">Google My Business</a></li>
+        <li><a href="#servicios" class="footer__link">Marketing digital</a></li>
+        <li><a href="#servicios" class="footer__link">Seguimiento mensual</a></li>
       </ul>
     </div>
 
@@ -120,8 +127,16 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
     line-height: var(--leading-relaxed);
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-2);
     max-width: 280px;
+  }
+
+  .footer__desc {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-3);
+    max-width: 300px;
   }
 
   .footer__location {

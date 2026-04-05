@@ -25,7 +25,7 @@ export interface BaseLayoutProps {
 }
 
 const {
-  title = `${SITE.name} — ${SITE.tagline}`,
+  title = `${SITE.tagline} | ${SITE.name}`,
   description = SITE.description,
   image = `${SITE.url}/images/og-image.jpg`,
   canonicalUrl = SITE.url,
@@ -61,7 +61,17 @@ const schemaProfessionalService = {
     { '@type': 'City', name: 'La Serena' },
     { '@type': 'City', name: 'Coquimbo' },
   ],
-  serviceType: ['Diseño Web', 'SEO Local', 'Google My Business'],
+  serviceType: [
+    'Diseño Web',
+    'Páginas Web Profesionales',
+    'Desarrollo Web',
+    'SEO Local',
+    'Posicionamiento en Google',
+    'Google My Business',
+    'Marketing Digital',
+    'Marketing Online',
+    'Optimización Web',
+  ],
   priceRange: '$$$',
   inLanguage: 'es-CL',
 };
