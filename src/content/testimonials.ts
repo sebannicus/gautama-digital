@@ -24,28 +24,28 @@ export interface Testimonial {
 
 export const TESTIMONIALS: Testimonial[] = [
   {
-    name: 'Carlos Muñoz',
-    initial: 'C',
-    business: 'Ferretería El Maestro, La Serena',
+    name: 'Evelyn M.',
+    initial: 'E',
+    business: 'CheckVital, Coquimbo',
     rating: 5,
-    text: 'Antes no aparecíamos en Google para nada. Sebastián nos hizo el sitio y optimizó el Google Maps, y al mes ya teníamos gente llamando que nos encontró por ahí. Muy buen trabajo, se nota que entiende el negocio, no solo la parte técnica.',
-    date: '2026-01-28',
+    text: 'Quería impulsar mi negocio y gracias a la asesoría de Seba entendí lo que necesitaba. Lo aplicamos y hoy recibo constantemente pacientes nuevos sin haber pagado por publicidad, solo posicionamiento de mi web y mi GMB.',
+    date: '2026-02-15',
   },
   {
-    name: 'Patricia Soto',
-    initial: 'P',
-    business: 'Centro Dental Soto, Coquimbo',
+    name: 'Antocarz',
+    initial: 'A',
+    business: 'Car Audio & Accesorios, Coquimbo',
     rating: 5,
-    text: 'Lo contraté para renovar la página web de mi clínica y el resultado fue mucho mejor de lo que esperaba. El sitio quedó profesional, carga rápido y ahora aparecemos primeros cuando buscan dentista en Coquimbo. Muy recomendable.',
-    date: '2026-02-11',
+    text: 'Queríamos hacer una renovación de nuestra imagen y conocer el comportamiento de nuestros clientes. Seba dio en el clavo con una web informando nuestros principales servicios y pudiendo medir su impacto con analíticas.',
+    date: '2026-03-10',
   },
   {
-    name: 'Rodrigo Espinoza',
-    initial: 'R',
-    business: 'Hostal Brisas del Norte, La Serena',
+    name: 'SIMA Ingeniería',
+    initial: 'S',
+    business: 'Ingeniería, Coquimbo',
     rating: 5,
-    text: 'Excelente servicio. Seba es muy directo, explica todo sin tecnicismos y cumple los tiempos. El hostal ahora recibe reservas a través del sitio web y aparecemos en Google Maps con toda la información correcta. Valió cada peso.',
-    date: '2026-03-04',
+    text: 'Necesitábamos traspasar toda nuestra experiencia a una web que pudiera informar claramente a nuestros clientes. Seba lo logró al adoptar una imagen corporativa pero novedosa y además de estar presentes en los buscadores ahora podemos medir todo nuestro tráfico.',
+    date: '2026-03-20',
   },
 ];
 
