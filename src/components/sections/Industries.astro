@@ -1,0 +1,185 @@
+---
+/**
+ * Industries.astro
+ * Propósito: Captura búsquedas long-tail por rubro — "diseño web para clínicas La Serena", etc.
+ * SEO: cada card es un cluster de keywords específicas por industria.
+ */
+
+const industries = [
+  {
+    icon: '🏥',
+    title: 'Salud y clínicas',
+    desc: 'Páginas web para médicos, dentistas, clínicas y centros de estética en La Serena y Coquimbo. Reserva de horas, ficha de servicios y posicionamiento en Google Maps.',
+    keywords: ['clínica', 'dentista', 'médico', 'estética'],
+  },
+  {
+    icon: '🚗',
+    title: 'Comercios y automotriz',
+    desc: 'Sitios web para tiendas, talleres y negocios de productos en La Serena. Catálogo de servicios, galería de trabajos y analíticas para medir tu tráfico.',
+    keywords: ['tienda', 'taller', 'comercio'],
+  },
+  {
+    icon: '⚙️',
+    title: 'Ingeniería y servicios',
+    desc: 'Diseño web corporativo para empresas de ingeniería, construcción y servicios industriales. Imagen profesional + presencia en Google para captar clientes B2B.',
+    keywords: ['ingeniería', 'construcción', 'industrial'],
+  },
+  {
+    icon: '🍽️',
+    title: 'Gastronomía y turismo',
+    desc: 'Páginas web para restaurantes, cafeterías, hoteles y hostales en La Serena y Coquimbo. Menú online, fotos del local y botón de reserva directo.',
+    keywords: ['restaurante', 'hotel', 'turismo'],
+  },
+  {
+    icon: '⚖️',
+    title: 'Servicios profesionales',
+    desc: 'Sitio web para abogados, contadores, psicólogos y consultores. Transmite confianza y credibilidad desde el primer clic — con SEO para que te encuentren primero.',
+    keywords: ['abogado', 'contador', 'consultor'],
+  },
+  {
+    icon: '🏘️',
+    title: 'Inmobiliaria y propiedades',
+    desc: 'Páginas web para corredores de propiedades e inmobiliarias en La Serena. Ficha de propiedades, formulario de contacto y posicionamiento local en Google.',
+    keywords: ['inmobiliaria', 'propiedades', 'corredor'],
+  },
+];
+---
+
+<section class="industries section" id="industrias" aria-labelledby="industries-heading">
+  <div class="container">
+
+    <div class="industries__header" data-scroll-children>
+      <p class="industries__label">DISEÑO WEB POR RUBRO</p>
+      <h2 class="industries__title" id="industries-heading">
+        Páginas web profesionales<br />
+        <span class="text-gradient-gold">para todo tipo de negocio.</span>
+      </h2>
+      <p class="industries__sub">
+        Diseñamos sitios web a medida en La Serena y Coquimbo para negocios de cualquier rubro.
+        Cada página es única — no usamos plantillas genéricas.
+      </p>
+    </div>
+
+    <div class="industries__grid">
+      {industries.map((ind, i) => (
+        <div
+          class="industries__card gs-fade-up"
+          style={`animation-delay: ${i * 60}ms`}
+        >
+          <div class="industries__card-icon" aria-hidden="true">{ind.icon}</div>
+          <h3 class="industries__card-title">{ind.title}</h3>
+          <p class="industries__card-desc">{ind.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <p class="industries__note gs-fade-up">
+      ¿Tu rubro no está en la lista?
+      <a href="#contacto" class="link-gold">Escríbeme igual</a> — si tienes clientes que te buscan en Google, puedo ayudarte.
+    </p>
+
+  </div>
+</section>
+
+<script>
+  import { initScrollReveal } from '../../utils/animations';
+  initScrollReveal();
+</script>
+
+<style>
+  .industries {
+    background-color: var(--color-bg-surface);
+  }
+
+  .industries__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .industries__label {
+    font-family: var(--font-subhead);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .industries__title {
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-weight: var(--weight-extrabold);
+    line-height: var(--leading-tight);
+  }
+
+  .industries__sub {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    max-width: 520px;
+    line-height: var(--leading-relaxed);
+  }
+
+  .industries__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    margin-bottom: var(--space-10);
+  }
+
+  @media (min-width: 640px) {
+    .industries__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .industries__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .industries__card {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-slow);
+  }
+
+  .industries__card:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-3px);
+  }
+
+  .industries__card-icon {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .industries__card-title {
+    font-family: var(--font-headline);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    color: var(--color-text-primary);
+  }
+
+  .industries__card-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    flex: 1;
+  }
+
+  .industries__note {
+    text-align: center;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+</style>
