@@ -1,0 +1,51 @@
+name: Gautama Social Publisher
+
+on:
+  schedule:
+    # 23:00 UTC = 20:00 Chile CLT (UTC-3)
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+    # Permite correrlo manualmente desde GitHub si es necesario
+    inputs:
+      date:
+        description: 'Fecha a publicar (YYYY-MM-DD, dejar vacío = hoy)'
+        required: false
+        default: ''
+      dry_run:
+        description: 'Dry run (true/false)'
+        required: false
+        default: 'false'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      CI: true
+      LONG_LIVED_TOKEN:       ${{ secrets.LONG_LIVED_TOKEN }}
+      IG_BUSINESS_ACCOUNT_ID: ${{ secrets.IG_BUSINESS_ACCOUNT_ID }}
+      FB_PAGE_ID:             ${{ secrets.FB_PAGE_ID }}
+      FB_PAGE_ACCESS_TOKEN:   ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+      IMGBB_API_KEY:          ${{ secrets.IMGBB_API_KEY }}
+
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: |
+          pip install requests playwright
+          python -m playwright install chromium --with-deps
+
+      - name: Publicar carrusel del dia
+        run: |
+          cd scripts/social
+          python publish_ci.py \
+            --date "${{ github.event.inputs.date }}" \
+            --dry-run "${{ github.event.inputs.dry_run || 'false' }}"

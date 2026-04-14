@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gautama Digital — Tu web es una inversión</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
+    :root {
+      --bg-light:   #F0F8FC;
+      --bg-surface: #E2F0F8;
+      --blue:       #0477BF;
+      --cyan:       #04C4D9;
+      --cyan-mid:   #04B2D9;
+      --text-dark:  #59343E;
+      --text-sub:   #0378A6;
+      --white:      #FFFFFF;
+      --wine:       #59343E;
+      --slide-w: 1080px;
+      --slide-h: 1350px;
+      --scale: 0.5;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d0d0d;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px;
+      gap: 16px;
+      font-family: 'Lato', sans-serif;
+    }
+
+    h1.page-title {
+      color: #555;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      width: calc(var(--slide-w) * var(--scale));
+      height: calc(var(--slide-h) * var(--scale));
+    }
+
+    .carousel {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 6px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+
+    .slides-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .slide {
+      width: calc(var(--slide-w) * var(--scale));
+      height: calc(var(--slide-h) * var(--scale));
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-inner {
+      width: var(--slide-w);
+      height: var(--slide-h);
+      transform: scale(var(--scale));
+      transform-origin: top left;
+      position: absolute;
+      top: 0; left: 0;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.55);
+      border: none; color: white;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      cursor: pointer; font-size: 18px; z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(4,119,191,0.9); }
+    .nav-prev { left: -22px; }
+    .nav-next { right: -22px; }
+
+    .counter { color: #555; font-size: 12px; letter-spacing: 2px; }
+
+    /* =============================
+       SLIDE 1 — PORTADA GRADIENTE AUTORIDAD
+    ============================= */
+    .s1 .slide-inner {
+      background: linear-gradient(145deg, var(--wine) 0%, var(--blue) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px 120px 88px;
+    }
+
+    .s1 .eyebrow {
+      font-size: 28px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+
+    .s1 .divider-line {
+      width: 80px; height: 4px;
+      background: var(--cyan);
+      border-radius: 2px;
+      margin-bottom: 48px;
+    }
+
+    .s1 .title {
+      font-size: 94px;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.02;
+      margin-bottom: 48px;
+    }
+
+    .s1 .title span {
+      color: var(--cyan);
+    }
+
+    .s1 .subtitle {
+      font-size: 36px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.55;
+      max-width: 840px;
+    }
+
+    .s1 .dots {
+      position: absolute;
+      bottom: 80px; left: 88px;
+      display: flex; gap: 10px; align-items: center;
+    }
+    .dot { width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+    .dot.active { width: 40px; border-radius: 8px; background: var(--cyan); }
+
+    .s1 .handle {
+      position: absolute;
+      bottom: 80px; right: 80px;
+      font-size: 26px; font-weight: 700;
+      color: rgba(255,255,255,0.65);
+    }
+
+    /* ===== LOGO EN TODOS LOS SLIDES ===== */
+    .slide-inner::after {
+      content: '';
+      position: absolute;
+      bottom: 48px;
+      right: 56px;
+      width: 148px;
+      height: 148px;
+      background-image: url('../../../imagenes%20para%20historias/gautama_reel.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.92;
+    }
+
+    .sc .logo-tag { display: none; }
+    .s-cta .handle-cta { display: none; }
+    .s1 .handle { display: none; }
+    .s-frase .handle-f { display: none; }
+
+    /* =============================
+       SLIDES 2-5 — RAZONES (fondo claro alternado)
+    ============================= */
+    .sc .slide-inner {
+      background: var(--bg-light);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px 120px 88px;
+      border-left: 10px solid var(--cyan);
+    }
+
+    .sc .number {
+      font-size: 130px;
+      font-weight: 900;
+      color: var(--cyan);
+      line-height: 1;
+      margin-bottom: 16px;
+      letter-spacing: -4px;
+    }
+
+    .sc .heading {
+      font-size: 62px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.15;
+      margin-bottom: 36px;
+    }
+
+    .sc .body {
+      font-size: 36px;
+      font-weight: 400;
+      color: var(--text-sub);
+      line-height: 1.6;
+      margin-bottom: 56px;
+      max-width: 900px;
+    }
+
+    .sc .insight {
+      background: var(--white);
+      border-left: 6px solid var(--blue);
+      padding: 28px 36px;
+      border-radius: 0 12px 12px 0;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--blue);
+      line-height: 1.4;
+    }
+
+    .sc .divider {
+      width: 100%; height: 1px;
+      background: rgba(4,196,217,0.3);
+      margin-bottom: 32px;
+    }
+
+    .sc .logo-tag {
+      position: absolute;
+      bottom: 60px; right: 80px;
+      font-size: 22px; font-weight: 700;
+      color: var(--text-sub);
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+
+    .sc .slide-counter {
+      position: absolute;
+      bottom: 64px; left: 88px;
+      font-size: 22px; font-weight: 400; color: #aac;
+    }
+
+    /* =============================
+       SLIDE 6 — FRASE DE AUTORIDAD
+    ============================= */
+    .s-frase .slide-inner {
+      background: linear-gradient(145deg, var(--wine) 0%, var(--blue) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 88px 120px 88px;
+    }
+
+    .s-frase .comillas {
+      font-size: 200px;
+      font-weight: 900;
+      color: var(--cyan);
+      line-height: 0.7;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+
+    .s-frase .frase {
+      font-size: 60px;
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.25;
+      margin-bottom: 48px;
+      max-width: 880px;
+    }
+
+    .s-frase .frase strong {
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    .s-frase .attr-line {
+      width: 80px; height: 2px;
+      background: var(--cyan); margin-bottom: 24px;
+    }
+
+    .s-frase .attr {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .s-frase .handle-f {
+      position: absolute;
+      bottom: 80px; right: 80px;
+      font-size: 26px; font-weight: 700;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* =============================
+       SLIDE 7 — CTA PRECIO
+    ============================= */
+    .s-cta .slide-inner {
+      background: var(--blue);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 80px 120px 88px;
+    }
+
+    .s-cta .pre-title {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 32px;
+    }
+
+    .s-cta .question {
+      font-size: 80px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 24px;
+      max-width: 880px;
+    }
+
+    .s-cta .price-tag {
+      font-size: 40px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 56px;
+    }
+
+    .s-cta .price-tag span {
+      color: var(--cyan);
+    }
+
+    .s-cta .btn {
+      display: inline-block;
+      background: var(--cyan);
+      color: var(--white);
+      font-size: 40px;
+      font-weight: 700;
+      font-family: 'Lato', sans-serif;
+      padding: 30px 60px;
+      border-radius: 60px;
+      margin-bottom: 40px;
+      width: fit-content;
+    }
+
+    .s-cta .url {
+      font-size: 28px; font-weight: 400;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .s-cta .handle-cta {
+      position: absolute;
+      bottom: 80px; right: 80px;
+      font-size: 26px; font-weight: 700;
+      color: rgba(255,255,255,0.7);
+    }
+  </style>
+</head>
+<body>
+  <h1 class="page-title">Gautama Digital — Carrusel Día 3 · Viernes 17 Abril</h1>
+
+  <div class="carousel-wrapper">
+    <div class="carousel">
+      <div class="slides-track" id="track">
+
+        <!-- S1: PORTADA GRADIENTE -->
+        <div class="slide s1">
+          <div class="slide-inner">
+            <p class="eyebrow">Inversión digital</p>
+            <div class="divider-line"></div>
+            <h1 class="title">Tener web no es un gasto.<br><span>Es una inversión.</span></h1>
+            <p class="subtitle">Y te mostramos exactamente por qué los números lo respaldan.</p>
+            <div class="dots">
+              <div class="dot active"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+            <span class="handle">@gautama_digital</span>
+          </div>
+        </div>
+
+        <!-- S2 -->
+        <div class="slide sc">
+          <div class="slide-inner">
+            <span class="number">01</span>
+            <h2 class="heading">Trabaja 24/7 sin que estés presente</h2>
+            <p class="body">Tu WhatsApp no recibe mensajes a las 2am. Tu web sí. Mientras duermes, un cliente nuevo puede encontrarte, ver tu trabajo y decidir contactarte mañana.</p>
+            <div class="divider"></div>
+            <span class="logo-tag">Gautama Digital</span>
+            <span class="slide-counter">2 / 7</span>
+          </div>
+        </div>
+
+        <!-- S3 -->
+        <div class="slide sc">
+          <div class="slide-inner">
+            <span class="number">02</span>
+            <h2 class="heading">Es el único activo digital que te pertenece</h2>
+            <p class="body">Instagram puede cerrarte la cuenta. Facebook puede hundirte el alcance. Un sitio web no tiene dueño que no seas tú. Es tuyo para siempre.</p>
+            <div class="insight">
+              Tu web = tu activo. Las redes = activos prestados.
+            </div>
+            <span class="logo-tag">Gautama Digital</span>
+            <span class="slide-counter">3 / 7</span>
+          </div>
+        </div>
+
+        <!-- S4 -->
+        <div class="slide sc">
+          <div class="slide-inner">
+            <span class="number">03</span>
+            <h2 class="heading">Multiplica el alcance local sin pagar pauta</h2>
+            <p class="body">Un negocio bien posicionado en Google recibe visitas constantes y gratuitas. No dependes de pagar publicidad para que te encuentren — Google hace ese trabajo.</p>
+            <div class="divider"></div>
+            <span class="logo-tag">Gautama Digital</span>
+            <span class="slide-counter">4 / 7</span>
+          </div>
+        </div>
+
+        <!-- S5 -->
+        <div class="slide sc">
+          <div class="slide-inner">
+            <span class="number">04</span>
+            <h2 class="heading">Convierte visitas en clientes sin intermediarios</h2>
+            <p class="body">Tu web muestra tu trabajo, tu precio, tu contacto. El cliente decide solo. Sin que tengas que explicar lo mismo 10 veces por DM ni gestionar consultas en comentarios.</p>
+            <div class="divider"></div>
+            <span class="logo-tag">Gautama Digital</span>
+            <span class="slide-counter">5 / 7</span>
+          </div>
+        </div>
+
+        <!-- S6: FRASE AUTORIDAD -->
+        <div class="slide s-frase">
+          <div class="slide-inner">
+            <div class="comillas">"</div>
+            <p class="frase">Cada mes sin web es un mes de <strong>clientes que eligieron a otro</strong> que sí aparecía cuando buscaron.</p>
+            <div class="attr-line"></div>
+            <span class="attr">Gautama Digital</span>
+            <span class="handle-f">@gautama_digital</span>
+          </div>
+        </div>
+
+        <!-- S7: CTA -->
+        <div class="slide s-cta">
+          <div class="slide-inner">
+            <p class="pre-title">Plan Starter</p>
+            <p class="question">Tu web profesional lista en días, no meses.</p>
+            <p class="price-tag">Desde <span>$280.000 CLP</span></p>
+            <span class="btn">Diagnóstico gratuito →</span>
+            <p class="url">gautamadigital.cl  ·  Link en bio 📲</p>
+            <span class="handle-cta">@gautama_digital</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <button class="nav-btn nav-prev" id="prev" onclick="prevSlide()">&#8592;</button>
+    <button class="nav-btn nav-next" id="next" onclick="nextSlide()">&#8594;</button>
+  </div>
+  <div class="counter" id="counter">1 / 7</div>
+
+  <script>
+    let current = 0;
+    const total = 7;
+    const track = document.getElementById('track');
+    const counter = document.getElementById('counter');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    const sw = 1080 * 0.5;
+
+    function update() {
+      track.style.transform = `translateX(-${current * sw}px)`;
+      counter.textContent = `${current + 1} / ${total}`;
+      prev.style.display = current === 0 ? 'none' : 'flex';
+      next.style.display = current === total - 1 ? 'none' : 'flex';
+    }
+    function nextSlide() { if (current < total - 1) { current++; update(); } }
+    function prevSlide() { if (current > 0) { current--; update(); } }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+    update();
+  </script>
+
+  <style>
+    .caption-box {
+      max-width: 540px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 24px 28px;
+      color: #bbb;
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      margin-top: 8px;
+    }
+    .caption-box strong {
+      color: #04C4D9;
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+  </style>
+  <div class="caption-box">
+    <strong>Caption sugerido</strong>"Igual sin web me va bien."
+
+Puede ser. Pero lo que no ves es cuántos clientes pasaron, te buscaron en Google y eligieron a otro que sí tenía web.
+
+Una página web no es un gasto. Es la herramienta que trabaja por ti cuando tú no estás. 💻
+
+Plan Starter desde $280.000 → Link en bio 📲
+
+#GautamaDigital #SitioWeb #MarketingDigital #InversiónDigital #CuartaRegion #Coquimbo #LaSerena #NegociosLocales</div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gautama Digital — 5 errores Google</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Outfit:wght@300;400;500;600&display=swap');
+    :root {
+      --accent:#04C4D9; --accent2:#0477BF; --dark:#06060F; --text:#FFFFFF;
+      --font-h:'Playfair Display',serif; --font-b:'Outfit',sans-serif;
+      --W:1080px; --H:1350px; --S:0.5;
+      --bg:url('file:///C:/Users/crman/Downloads/fondos/WhatsApp%20Image%202026-04-14%20at%2012.41.24%20PM%20(2).jpeg');
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:#0d0d0d;display:flex;flex-direction:column;align-items:center;padding:40px 20px;gap:12px;}
+    .carousel{position:relative;width:calc(var(--W)*var(--S));height:calc(var(--H)*var(--S));overflow:hidden;border-radius:10px;box-shadow:0 0 50px rgba(4,196,217,0.12);}
+    .slides-wrapper{display:flex;height:100%;transition:transform 0.38s cubic-bezier(.4,0,.2,1);}
+    .slide{position:relative;flex-shrink:0;width:calc(var(--W)*var(--S));height:calc(var(--H)*var(--S));overflow:hidden;}
+    .bg{position:absolute;inset:0;background-image:var(--bg);background-size:cover;background-position:center top;opacity:0.28;}
+    .ov{position:absolute;inset:0;background:linear-gradient(168deg,rgba(6,6,15,0.82) 0%,rgba(4,119,191,0.08) 50%,rgba(6,6,15,0.90) 100%);}
+    .bottom-fade{position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(to bottom,transparent 0%,rgba(6,6,15,0.88) 50%,rgba(6,6,15,1) 100%);z-index:2;}
+    .char-halo{position:absolute;bottom:calc(20px*var(--S));left:50%;transform:translateX(-50%);width:calc(380px*var(--S));height:calc(380px*var(--S));background:radial-gradient(circle,rgba(4,196,217,0.13) 0%,transparent 65%);z-index:3;}
+    .char{position:absolute;bottom:0;left:50%;transform:translateX(-50%);z-index:4;height:calc(300px*var(--S));object-fit:contain;mix-blend-mode:screen;filter:drop-shadow(0 0 16px rgba(4,196,217,0.5));}
+    .cnt{position:relative;z-index:5;height:100%;display:flex;flex-direction:column;justify-content:center;padding:calc(52px*var(--S));padding-bottom:calc(290px*var(--S));}
+    .handle{position:absolute;top:calc(30px*var(--S));left:calc(52px*var(--S));z-index:6;font-family:var(--font-b);font-size:calc(20px*var(--S));font-weight:500;color:var(--accent);letter-spacing:.07em;}
+    .slide-num{font-family:var(--font-b);font-size:calc(14px*var(--S));color:rgba(255,255,255,.35);letter-spacing:.12em;margin-bottom:calc(16px*var(--S));}
+    .eyebrow{font-family:var(--font-b);font-size:calc(15px*var(--S));font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.20em;margin-bottom:calc(12px*var(--S));}
+    .bar{width:calc(56px*var(--S));height:calc(4px*var(--S));background:var(--accent);border-radius:2px;margin-bottom:calc(26px*var(--S));}
+    h1{font-family:var(--font-h);font-size:calc(76px*var(--S));font-weight:900;color:var(--text);line-height:1.06;margin-bottom:calc(26px*var(--S));}
+    p.body{font-family:var(--font-b);font-size:calc(34px*var(--S));color:rgba(255,255,255,.82);line-height:1.55;margin-bottom:calc(14px*var(--S));}
+    p.body strong{color:var(--text);font-weight:600;}
+    p.body.accent{color:var(--accent);font-weight:600;}
+    .err-card{background:rgba(255,255,255,.05);border-left:calc(4px*var(--S)) solid var(--accent);border-radius:calc(8px*var(--S));padding:calc(22px*var(--S)) calc(28px*var(--S));margin-bottom:calc(18px*var(--S));}
+    .err-label{font-family:var(--font-b);font-size:calc(14px*var(--S));font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.14em;margin-bottom:calc(8px*var(--S));}
+    .err-card h3{font-family:var(--font-h);font-size:calc(46px*var(--S));font-weight:700;color:var(--text);line-height:1.1;margin-bottom:calc(8px*var(--S));}
+    .err-card p{font-family:var(--font-b);font-size:calc(28px*var(--S));color:rgba(255,255,255,.72);line-height:1.45;}
+    .cta-box{border:1px solid rgba(4,196,217,.35);border-radius:calc(12px*var(--S));padding:calc(28px*var(--S));background:rgba(4,119,191,.14);margin-top:calc(20px*var(--S));}
+    .cta-box p{font-family:var(--font-b);font-size:calc(28px*var(--S));color:rgba(255,255,255,.85);margin-bottom:calc(10px*var(--S));line-height:1.45;}
+    .cta-link{font-family:var(--font-h);font-size:calc(32px*var(--S));font-weight:700;color:var(--accent);}
+    .nav-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.15);color:#fff;width:calc(44px*var(--S));height:calc(44px*var(--S));border-radius:50%;cursor:pointer;font-size:calc(18px*var(--S));display:flex;align-items:center;justify-content:center;}
+    .nav-prev{left:10px;} .nav-next{right:10px;}
+    .counter{font-family:'Outfit',sans-serif;font-size:12px;color:#555;}
+  </style>
+</head>
+<body>
+<div class="carousel">
+  <div class="slides-wrapper" id="slider">
+    <div class="slide">
+      <div class="bg"></div><div class="ov"></div><div class="bottom-fade"></div><div class="char-halo"></div>
+      <div class="handle">@gautama_digital</div>
+      <div class="cnt">
+        <div class="eyebrow">Serie — Google + IA</div><div class="bar"></div>
+        <h1>5 errores que te hacen invisible en Google</h1>
+        <p class="body">Si tu negocio no aparece cuando lo buscan, tus clientes le están comprando a otro.</p>
+        <p class="body accent">Desliza para descubrirlos →</p>
+      </div>
+      <img src="file:///C:/Users/crman/Downloads/16-bit/gautama%201.png" class="char" alt="">
+    </div>
+    <div class="slide">
+      <div class="bg"></div><div class="ov"></div><div class="bottom-fade"></div><div class="char-halo"></div>
+      <div class="handle">@gautama_digital</div>
+      <div class="cnt">
+        <div class="slide-num">01 / 05</div><div class="eyebrow">❌ Error 1</div><div class="bar"></div>
+        <div class="err-card">
+          <h3>No tienes sitio web propio</h3>
+          <p>Las redes sociales no te pertenecen. Instagram puede suspender tu cuenta mañana.</p>
+        </div>
+        <p class="body">Tu sitio web es tuyo desde el primer día — y <strong>lo encuentra Google.</strong></p>
+      </div>
+      <img src="file:///C:/Users/crman/Downloads/16-bit/gautama%203.png" class="char" alt="">
+    </div>
+    <div class="slide">
+      <div class="bg"></div><div class="ov"></div><div class="bottom-fade"></div><div class="char-halo"></div>
+      <div class="handle">@gautama_digital</div>
+      <div class="cnt">
+        <div class="slide-num">02 / 05</div><div class="eyebrow">❌ Error 2</div><div class="bar"></div>
+        <div class="err-card">
+          <h3>Tu web no carga en celular</h3>
+          <p>El <strong>80% de tus clientes</strong> te busca desde el teléfono. Si tarda más de 3 segundos, se van.</p>
+        </div>
+        <p class="body">Google penaliza los sitios lentos bajándolos en el ranking.</p>
+      </div>
+      <img src="file:///C:/Users/crman/Downloads/16-bit/gautama%20seo.png" class="char" alt="">
+    </div>
+    <div class="slide">
+      <div class="bg"></div><div class="ov"></div><div class="bottom-fade"></div><div class="char-halo"></div>
+      <div class="handle">@gautama_digital</div>
+      <div class="cnt">
+        <div class="slide-num">03 / 05</div><div class="eyebrow">❌ Errores 3 y 4</div><div class="bar"></div>
+        <div class="err-card">
+          <div class="err-label">📍 Sin Google Maps</div>
+          <h3>No existes en búsquedas locales</h3>
+          <p>Si no apareces en Maps, para quien busca cerca eres invisible.</p>
+        </div>
+        <div class="err-card">
+          <div class="err-label">⭐ Sin reseñas</div>
+          <h3>Google baja, la IA ignora</h3>
+          <p>Sin reseñas reales el algoritmo te desconfía.</p>
+        </div>
+      </div>
+      <img src="file:///C:/Users/crman/Downloads/16-bit/gautama%204.png" class="char" alt="">
+    </div>
+    <div class="slide">
+      <div class="bg"></div>
+      <div class="ov" style="background:linear-gradient(168deg,rgba(4,119,191,0.20) 0%,rgba(6,6,15,0.95) 100%);"></div>
+      <div class="bottom-fade"></div><div class="char-halo"></div>
+      <div class="handle">@gautama_digital</div>
+      <div class="cnt">
+        <div class="eyebrow">Diagnóstico gratuito</div><div class="bar"></div>
+        <h1>¿Cuántos de estos errores tiene tu negocio?</h1>
+        <div class="cta-box">
+          <p>Te decimos exactamente qué está fallando y qué hacer primero.</p>
+          <p>Sin compromiso. Sin venta disfrazada.</p>
+          <div class="cta-link">→ Link en bio · gautamadigital.cl</div>
+        </div>
+      </div>
+      <img src="file:///C:/Users/crman/Downloads/16-bit/gautama%206.png" class="char" alt="">
+    </div>
+  </div>
+  <button class="nav-btn nav-prev" onclick="prev()">&#8592;</button>
+  <button class="nav-btn nav-next" onclick="next()">&#8594;</button>
+</div>
+<div class="counter" id="counter">1 / 5</div>
+<script>
+  let cur=0; const total=5; const slideW=1080*0.5;
+  const slider=document.getElementById('slider');
+  const counter=document.getElementById('counter');
+  const btnP=document.querySelector('.nav-prev');
+  const btnN=document.querySelector('.nav-next');
+  function render(){slider.style.transform=`translateX(-${cur*slideW}px)`;counter.textContent=`${cur+1} / ${total}`;btnP.style.display=cur===0?'none':'flex';btnN.style.display=cur===total-1?'none':'flex';}
+  function next(){if(cur<total-1){cur++;render();}} function prev(){if(cur>0){cur--;render();}} render();
+</script>
+</body>
+</html>

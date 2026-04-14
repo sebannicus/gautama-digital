@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gautama Digital — ¿Apareció tu negocio en Google?</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
+    :root {
+      --bg-light:   #F0F8FC;
+      --bg-surface: #E2F0F8;
+      --blue:       #0477BF;
+      --cyan:       #04C4D9;
+      --text-dark:  #59343E;
+      --text-sub:   #0378A6;
+      --white:      #FFFFFF;
+      --slide-w: 1080px;
+      --slide-h: 1350px;
+      --scale: 0.5;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d0d0d;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px;
+      gap: 16px;
+      font-family: 'Lato', sans-serif;
+    }
+
+    h1.page-title {
+      color: #555;
+      font-family: 'Lato', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      width: calc(var(--slide-w) * var(--scale));
+      height: calc(var(--slide-h) * var(--scale));
+    }
+
+    .carousel {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 6px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+
+    .slides-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .slide {
+      width: calc(var(--slide-w) * var(--scale));
+      height: calc(var(--slide-h) * var(--scale));
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-inner {
+      width: var(--slide-w);
+      height: var(--slide-h);
+      transform: scale(var(--scale));
+      transform-origin: top left;
+      position: absolute;
+      top: 0; left: 0;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.55);
+      border: none;
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(4,119,191,0.9); }
+    .nav-prev { left: -22px; }
+    .nav-next { right: -22px; }
+
+    .counter {
+      color: #555;
+      font-family: 'Lato', sans-serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+
+    /* =============================
+       SLIDE 1 — PORTADA CLARA
+    ============================= */
+    .s1 .slide-inner {
+      background: var(--bg-light);
+      border-left: 12px solid var(--blue);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px 120px 96px;
+    }
+
+    .s1 .tag {
+      display: inline-flex;
+      align-items: center;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 50px;
+      margin-bottom: 64px;
+      width: fit-content;
+    }
+
+    .s1 .title {
+      font-size: 92px;
+      font-weight: 900;
+      color: var(--text-dark);
+      line-height: 1.05;
+      margin-bottom: 40px;
+    }
+
+    .s1 .subtitle {
+      font-size: 36px;
+      font-weight: 400;
+      color: var(--text-sub);
+      line-height: 1.5;
+      max-width: 820px;
+    }
+
+    .s1 .dots {
+      position: absolute;
+      bottom: 80px;
+      left: 96px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+    }
+    .dot.active {
+      width: 40px; border-radius: 8px;
+      background: var(--cyan);
+    }
+
+    .s1 .handle {
+      position: absolute;
+      bottom: 80px;
+      right: 80px;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-sub);
+    }
+
+    /* ===================================================
+       LOGO — SISTEMA COMPLETO
+       ::before = efecto de fondo (ghost / halo)
+       ::after  = logo pequeño esquina inferior derecha
+    =================================================== */
+
+    /* Logo esquina — todos los slides */
+    .slide-inner::after {
+      content: '';
+      position: absolute;
+      bottom: 52px;
+      right: 60px;
+      width: 144px;
+      height: 144px;
+      background-image: url('../../../imagenes%20para%20historias/gautama_reel.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* GHOST — portada clara y slides de contenido
+       mix-blend-mode: multiply → los píxeles claros del logo
+       desaparecen sobre el fondo blanco, quedan solo los
+       contornos cyan/oscuros del Buddha a muy baja opacidad */
+    .s1 .slide-inner::before,
+    .sc .slide-inner::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 880px;
+      height: 880px;
+      background-image: url('../../../imagenes%20para%20historias/gautama_reel.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.08;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* HALO ATMOSFÉRICO — slide CTA azul
+       mix-blend-mode: screen → los píxeles oscuros desaparecen,
+       los cyan/brillantes crean un resplandor difuso sobre el azul.
+       filter: blur convierte el Buddha en pura luz ambiental */
+    .s-cta .slide-inner::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 58%;
+      transform: translate(-50%, -50%);
+      width: 1020px;
+      height: 1020px;
+      background-image: url('../../../imagenes%20para%20historias/gautama_reel.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.30;
+      mix-blend-mode: screen;
+      filter: blur(52px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* El texto flota sobre el fondo — z-index relativo */
+    .s1 .tag, .s1 .title, .s1 .subtitle, .s1 .dots, .s1 .handle,
+    .sc .number, .sc .heading, .sc .body, .sc .divider, .sc .slide-counter,
+    .s-cta .question, .s-cta .btn, .s-cta .url, .s-cta .handle-cta {
+      position: relative;
+      z-index: 2;
+    }
+
+    .sc .logo-tag { display: none; }
+    .s-cta .handle-cta { display: none; }
+    .s1 .handle { display: none; }
+
+    /* =============================
+       SLIDES 2-5 — CONTENIDO
+    ============================= */
+    .sc .slide-inner {
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px 120px 88px;
+    }
+
+    .sc .number {
+      font-size: 130px;
+      font-weight: 900;
+      color: var(--cyan);
+      line-height: 1;
+      margin-bottom: 20px;
+      letter-spacing: -4px;
+    }
+
+    .sc .heading {
+      font-size: 62px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.15;
+      margin-bottom: 36px;
+    }
+
+    .sc .body {
+      font-size: 36px;
+      font-weight: 400;
+      color: var(--text-sub);
+      line-height: 1.6;
+      margin-bottom: 56px;
+      max-width: 900px;
+    }
+
+    .sc .divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(4,196,217,0.35);
+    }
+
+    .sc .logo-tag {
+      position: absolute;
+      bottom: 60px;
+      right: 80px;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-sub);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .sc .slide-counter {
+      position: absolute;
+      bottom: 64px;
+      left: 88px;
+      font-size: 22px;
+      font-weight: 400;
+      color: #ccc;
+    }
+
+    /* =============================
+       SLIDE 6 — CTA AZUL
+    ============================= */
+    .s-cta .slide-inner {
+      background: var(--blue);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 80px 120px 88px;
+    }
+
+    .s-cta .question {
+      font-size: 80px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 64px;
+      max-width: 900px;
+    }
+
+    .s-cta .btn {
+      display: inline-block;
+      background: var(--cyan);
+      color: var(--white);
+      font-size: 40px;
+      font-weight: 700;
+      font-family: 'Lato', sans-serif;
+      padding: 30px 60px;
+      border-radius: 60px;
+      margin-bottom: 48px;
+      width: fit-content;
+    }
+
+    .s-cta .url {
+      font-size: 30px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .s-cta .handle-cta {
+      position: absolute;
+      bottom: 80px;
+      right: 80px;
+      font-size: 26px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.8);
+    }
+  </style>
+</head>
+<body>
+  <h1 class="page-title">Gautama Digital — Carrusel Día 1 · Lunes 13 Abril</h1>
+
+  <div class="carousel-wrapper">
+    <div class="carousel">
+      <div class="slides-track" id="track">
+
+        <!-- S1: PORTADA -->
+        <div class="slide s1">
+          <div class="slide-inner">
+            <span class="tag">Presencia Digital</span>
+            <h1 class="title">Tu cliente ya te buscó en Google. ¿Apareció tu negocio?</h1>
+            <p class="subtitle">Por qué hoy tener un sitio web no es un lujo — es la base.</p>
+            <div class="dots">
+              <div class="dot active"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+            <span class="handle">@gautama_digital</span>
+          </div>
+        </div>
+
+        <!-- S2 -->
+        <div class="slide sc">
+          <div class="slide-inner">
+            <span class="number">01</span>
+            <h2 class="heading">El 72% busca online antes de comprar</h2>
+            <p class="body">Antes de llamar. Antes de ir al local. Antes de preguntarle a un amigo. Tu cliente ya te buscó en Google. Si no apareces, esa venta se la llevó otro.</p>
+            <div class="divider"></div>
+            <span class="logo-tag">Gautama Digital</span>
+            <span class="slide-counter">2 / 6</span>
+          </div>
+        </div>
+
+        <!-- S3 -->
+        <div class="slide sc">
+          <div class="slide-inner">
+            <span class="number">02</span>
+            <h2 class="heading">Las redes sociales no te pertenecen</h2>
+            <p class="body">Instagram puede banearte. Facebook puede hundir tu alcance orgánico. Un algoritmo puede hacerte invisible mañana. Tu sitio web es el único activo digital que es 100% tuyo.</p>
+            <div class="divider"></div>
+            <span class="logo-tag">Gautama Digital</span>
+            <span class="slide-counter">3 / 6</span>
+          </div>
+        </div>
+
+        <!-- S4 -->
+        <div class="slide sc">
+          <div class="slide-inner">
+            <span class="number">03</span>
+            <h2 class="heading">Google prioriza a los negocios con web</h2>
+            <p class="body">Tener un sitio activo, rápido y bien armado es el primer factor que usa Google para posicionarte en búsquedas locales. Sin web, tu ficha de Maps cae sola.</p>
+            <div class="divider"></div>
+            <span class="logo-tag">Gautama Digital</span>
+            <span class="slide-counter">4 / 6</span>
+          </div>
+        </div>
+
+        <!-- S5 -->
+        <div class="slide sc">
+          <div class="slide-inner">
+            <span class="number">04</span>
+            <h2 class="heading">Tu competencia ya tomó ese lugar</h2>
+            <p class="body">Mientras no estás en Google, alguien de tu rubro en tu ciudad sí está. Y cada día que pasa, captura los clientes que estaban buscándote a ti.</p>
+            <div class="divider"></div>
+            <span class="logo-tag">Gautama Digital</span>
+            <span class="slide-counter">5 / 6</span>
+          </div>
+        </div>
+
+        <!-- S6: CTA -->
+        <div class="slide s-cta">
+          <div class="slide-inner">
+            <p class="question">¿Listo para aparecer cuando te busquen?</p>
+            <span class="btn">Diagnóstico gratuito →</span>
+            <p class="url">gautamadigital.cl  ·  Link en bio 📲</p>
+            <span class="handle-cta">@gautama_digital</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <button class="nav-btn nav-prev" id="prev" onclick="prevSlide()">&#8592;</button>
+    <button class="nav-btn nav-next" id="next" onclick="nextSlide()">&#8594;</button>
+  </div>
+  <div class="counter" id="counter">1 / 6</div>
+
+  <script>
+    let current = 0;
+    const total = 6;
+    const track = document.getElementById('track');
+    const counter = document.getElementById('counter');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    const sw = 1080 * 0.5;
+
+    function update() {
+      track.style.transform = `translateX(-${current * sw}px)`;
+      counter.textContent = `${current + 1} / ${total}`;
+      prev.style.display = current === 0 ? 'none' : 'flex';
+      next.style.display = current === total - 1 ? 'none' : 'flex';
+    }
+    function nextSlide() { if (current < total - 1) { current++; update(); } }
+    function prevSlide() { if (current > 0) { current--; update(); } }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+    update();
+  </script>
+
+  <style>
+    .caption-box {
+      max-width: 540px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 24px 28px;
+      color: #bbb;
+      font-family: 'Lato', sans-serif;
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      margin-top: 8px;
+    }
+    .caption-box strong {
+      color: #04C4D9;
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+  </style>
+  <div class="caption-box">
+    <strong>Caption sugerido</strong>En 2026, si alguien en tu ciudad busca lo que vendes en Google… ¿apareces?
+
+Si la respuesta es no o "no sé", estás perdiendo clientes todos los días sin darte cuenta. 📉
+
+Tu sitio web es la base de todo lo demás: Google Maps, la IA, el boca a boca digital.
+
+👇 Desliza y te explico por qué.
+
+#GautamaDigital #SitioWeb #PresenciaDigital #CuartaRegion #Coquimbo #LaSerena #MarketingDigital #NegociosLocales</div>
+</body>
+</html>
