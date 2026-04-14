@@ -39,8 +39,8 @@ export const SITE = {
   },
 
   nav: [
-    { label: 'Servicios', href: '#servicios' },
-    { label: 'Proceso', href: '#proceso' },
+    { label: 'Servicios', href: '/servicios' },
+    { label: 'Portafolio', href: '#portafolio' },
     { label: 'Clientes', href: '#clientes' },
     { label: 'Contacto', href: '#contacto' },
   ],

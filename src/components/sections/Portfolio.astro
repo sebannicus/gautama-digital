@@ -1,0 +1,349 @@
+---
+/**
+ * Portfolio.astro
+ * Propósito: Muestra los proyectos reales entregados por Gautama Digital.
+ * Diseño: tarjetas con mockup de browser + acento de color por cliente.
+ * Relación: consume PORTFOLIO de content/portfolio.ts.
+ */
+
+import SectionLabel from '../ui/SectionLabel.astro';
+import { PORTFOLIO } from '../../content/portfolio';
+---
+
+<section class="portfolio section" id="portafolio" aria-labelledby="portfolio-heading">
+  <div class="container">
+
+    <div class="portfolio__header" data-scroll-children>
+      <SectionLabel text="PORTAFOLIO" align="center" />
+      <h2 class="portfolio__title" id="portfolio-heading">
+        Sitios que ya están<br />
+        <span class="text-gradient-gold">generando resultados.</span>
+      </h2>
+      <p class="portfolio__sub">
+        Cada proyecto es diseñado desde cero. Sin plantillas compradas. Sin componentes genéricos.
+      </p>
+    </div>
+
+    <div class="portfolio__grid">
+      {PORTFOLIO.map((project, i) => (
+        <article
+          class="portfolio__card gs-fade-up"
+          style={`animation-delay: ${i * 60}ms`}
+          aria-label={project.name}
+        >
+          <!-- Mockup visual -->
+          <div class="portfolio__mockup" style={`--accent: ${project.accentColor}`}>
+            <div class="portfolio__browser-bar">
+              <span class="portfolio__dot"></span>
+              <span class="portfolio__dot"></span>
+              <span class="portfolio__dot"></span>
+              <span class="portfolio__url-bar">
+                {project.url ?? project.name.toLowerCase().replace(/\s/g, '') + '.cl'}
+              </span>
+            </div>
+            <div class="portfolio__preview">
+              <div class="portfolio__preview-lines">
+                <span class="portfolio__line portfolio__line--title" style={`background: ${project.accentColor}`}></span>
+                <span class="portfolio__line portfolio__line--sub"></span>
+                <span class="portfolio__line portfolio__line--sub portfolio__line--short"></span>
+                <div class="portfolio__preview-blocks">
+                  <span class="portfolio__block" style={`background: ${project.accentColor}22`}></span>
+                  <span class="portfolio__block" style={`background: ${project.accentColor}22`}></span>
+                  <span class="portfolio__block" style={`background: ${project.accentColor}22`}></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Info -->
+          <div class="portfolio__info">
+            <div class="portfolio__meta">
+              <h3 class="portfolio__name">{project.name}</h3>
+              <span class="portfolio__industry">{project.industry}</span>
+            </div>
+
+            <p class="portfolio__description">{project.description}</p>
+
+            <div class="portfolio__footer">
+              <div class="portfolio__tags" aria-label="Servicios aplicados">
+                {project.tags.map((tag) => (
+                  <span class="portfolio__tag">{tag}</span>
+                ))}
+              </div>
+
+              {project.href ? (
+                <a
+                  href={project.href}
+                  class="portfolio__link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Ver sitio de ${project.name}`}
+                >
+                  Ver sitio
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                  </svg>
+                </a>
+              ) : (
+                <span class="portfolio__private">Privado</span>
+              )}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { initScrollReveal } from '../../utils/animations';
+  initScrollReveal();
+</script>
+
+<style>
+  .portfolio {
+    background-color: var(--color-bg);
+  }
+
+  .portfolio__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .portfolio__title {
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-weight: var(--weight-extrabold);
+    line-height: var(--leading-tight);
+  }
+
+  .portfolio__sub {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    max-width: 440px;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Grid */
+  .portfolio__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .portfolio__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .portfolio__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Card */
+  .portfolio__card {
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-slow), border-color var(--transition-base), box-shadow var(--transition-slow);
+  }
+
+  .portfolio__card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Browser mockup */
+  .portfolio__mockup {
+    background: #0d0d1a;
+    padding: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .portfolio__browser-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+
+  .portfolio__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .portfolio__dot:first-child { background-color: #ff5f57; }
+  .portfolio__dot:nth-child(2) { background-color: #ffbd2e; }
+  .portfolio__dot:nth-child(3) { background-color: #28ca41; }
+
+  .portfolio__url-bar {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border-radius: var(--radius-full);
+    font-size: 10px;
+    color: var(--color-text-muted);
+    padding: 2px var(--space-3);
+    font-family: var(--font-mono, monospace);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .portfolio__preview {
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--accent) 12%, #0d0d1a) 0%,
+      #0d0d1a 60%
+    );
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    min-height: 100px;
+  }
+
+  .portfolio__preview-lines {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .portfolio__line {
+    display: block;
+    height: 8px;
+    border-radius: var(--radius-full);
+    opacity: 0.7;
+  }
+
+  .portfolio__line--title {
+    width: 55%;
+    height: 12px;
+    opacity: 0.85;
+  }
+
+  .portfolio__line--sub {
+    width: 80%;
+    background: rgba(255,255,255,0.12);
+  }
+
+  .portfolio__line--short {
+    width: 50%;
+  }
+
+  .portfolio__preview-blocks {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+  }
+
+  .portfolio__block {
+    flex: 1;
+    height: 36px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* Info */
+  .portfolio__info {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    flex: 1;
+  }
+
+  .portfolio__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .portfolio__name {
+    font-family: var(--font-headline);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    color: var(--color-text-primary);
+  }
+
+  .portfolio__industry {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .portfolio__description {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    flex: 1;
+  }
+
+  /* Footer */
+  .portfolio__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    margin-top: auto;
+  }
+
+  .portfolio__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .portfolio__tag {
+    font-family: var(--font-subhead);
+    font-size: 10px;
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-overlay);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: 2px var(--space-2);
+    white-space: nowrap;
+  }
+
+  .portfolio__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-subhead);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    color: var(--color-gold);
+    text-decoration: none;
+    white-space: nowrap;
+    letter-spacing: var(--tracking-wide);
+    flex-shrink: 0;
+    transition: gap var(--transition-base);
+  }
+
+  .portfolio__link:hover {
+    gap: var(--space-2);
+  }
+
+  .portfolio__private {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+</style>

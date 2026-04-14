@@ -6,28 +6,46 @@
 
 const clients = [
   {
-    name: 'Antocarz',
-    desc: 'Car Audio & Accesorios · Coquimbo',
-    icon: '🚗',
-    quote: 'Queríamos renovar nuestra imagen y conocer el comportamiento de nuestros clientes. Seba dio en el clavo con una web informando nuestros principales servicios y pudiendo medir su impacto con analíticas.',
-    href: 'https://antocarz.vercel.app',
-    initial: 'A',
-  },
-  {
     name: 'CheckVital',
-    desc: 'Salud & Bienestar · Coquimbo',
-    icon: '🏥',
+    desc: 'Salud & Bienestar · La Serena',
     quote: 'Quería impulsar mi negocio y gracias a la asesoría de Seba entendí lo que necesitaba. Lo aplicamos y hoy recibo constantemente pacientes nuevos sin haber pagado por publicidad, solo posicionamiento de mi web y mi GMB.',
     href: 'https://checkvital.cl',
     initial: 'E',
   },
   {
+    name: 'Vital Airpower',
+    desc: 'Ingeniería Industrial · Coquimbo',
+    quote: 'Necesitábamos una presencia digital que estuviera a la altura de la calidad de nuestros proyectos. Seba entendió nuestro rubro desde el principio y construyó una web que representa exactamente lo que somos como empresa.',
+    href: 'https://vital-airpower.vercel.app',
+    initial: 'R',
+  },
+  {
     name: 'SIMA Ingeniería',
     desc: 'Ingeniería · Coquimbo',
-    icon: '⚙️',
     quote: 'Necesitábamos traspasar toda nuestra experiencia a una web que pudiera informar claramente a nuestros clientes. Seba lo logró adoptando una imagen corporativa pero novedosa y además de estar presentes en los buscadores ahora podemos medir todo nuestro tráfico.',
     href: null,
     initial: 'S',
+  },
+  {
+    name: 'Antocarz',
+    desc: 'Car Audio & Accesorios · Coquimbo',
+    quote: 'Queríamos renovar nuestra imagen y conocer el comportamiento de nuestros clientes. Seba dio en el clavo con una web informando nuestros principales servicios y pudiendo medir su impacto con analíticas.',
+    href: 'https://antocarz.vercel.app',
+    initial: 'A',
+  },
+  {
+    name: 'Salvatierra Paintworks',
+    desc: 'Pintura Profesional · IV Región',
+    quote: 'Necesitaba que mis clientes me encontraran fácil en internet y que el sitio transmitiera profesionalismo. Seba construyó exactamente eso — ahora me llegan consultas directas desde la web.',
+    href: null,
+    initial: 'S',
+  },
+  {
+    name: 'Constructora Scheidl',
+    desc: 'Construcción · IV Región',
+    quote: 'Queríamos un sitio que reflejara la seriedad y experiencia de nuestra constructora. Seba entregó un resultado corporativo y moderno que nos ha abierto puertas con clientes nuevos.',
+    href: null,
+    initial: 'C',
   },
 ];
 ---
@@ -133,6 +151,12 @@ const clients = [
   }
 
   @media (min-width: 1024px) {
+    .trusted__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 1280px) {
     .trusted__grid {
       grid-template-columns: repeat(3, 1fr);
     }
