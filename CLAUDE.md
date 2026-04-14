@@ -11,6 +11,30 @@ Handle Instagram: `@gautama_digital` — sitio: `gautamadigital.cl`
 
 ---
 
+## Sitio web — estado actual (2026-04-14)
+
+### Precios vigentes
+| Plan | Precio | Notas |
+|---|---|---|
+| Landing Profesional | $280.000 | GA4 + SEO local. Sin hosting/dominio. |
+| Analíticas Completas | $380.000 | + Meta Pixel + GA4 avanzado. Sin hosting/dominio. |
+| Tienda Online | $700.000 | Carrito + 20 productos. Sin hosting/dominio. |
+| Agente WhatsApp IA | $350.000 impl. + $50.000/mes | Automatización con IA. |
+
+### Estructura de páginas
+- `/` — Home: Hero → About → Portfolio → Industries → Process → CaseStudy → CtaMid → TrustedBy → FAQ → LocalMap → CtaFinal
+- `/servicios` — Página propia con los 4 paquetes y precios
+
+### Portafolio (6 proyectos en `src/content/portfolio.ts`)
+CheckVital, Vital Airpower, SIMA Ingeniería, Antocarz, Salvatierra Paintworks, Constructora Scheidl
+
+### Pendientes del sitio
+- [ ] Pegar URL embed Google Maps en `src/components/sections/LocalMap.astro` (línea 21 — `MAPS_EMBED_URL`)
+- [ ] Reemplazar testimonios placeholder de Salvatierra y Scheidl con citas reales en `TrustedBy.astro`
+- [ ] Agregar screenshots reales de los proyectos cuando estén disponibles (`public/images/portfolio/`)
+
+---
+
 ## Sistema de contenido Instagram
 
 ### Generar un carrusel nuevo
