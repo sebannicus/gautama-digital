@@ -59,8 +59,12 @@ def export_slides(html_path, n_slides, output_dir):
         page.evaluate("document.documentElement.style.setProperty('--S', '1')")
         page.evaluate("document.querySelector('body').style.cssText = 'padding:0;margin:0;gap:0;'")
         page.evaluate("document.querySelector('.carousel').style.borderRadius = '0'")
+        # Deshabilitar transición CSS para que el screenshot no capture un estado intermedio
+        page.evaluate("document.querySelector('.slides-wrapper').style.transition = 'none'")
+        page.wait_for_timeout(300)  # esperar a que el CSS de --S:1 se aplique
         for i in range(n_slides):
-            page.evaluate(f"cur = {i}; render()")
+            # Mover directamente con 1080px fijos — evita el bug de slideW=1080*0.5 hardcodeado en el HTML
+            page.evaluate(f"document.getElementById('slider').style.transform = 'translateX(-{i * 1080}px)'")
             page.wait_for_timeout(400)
             path = output_dir / f"slide_{i+1:02d}.png"
             page.screenshot(path=str(path), clip={"x": 0, "y": 0, "width": 1080, "height": 1350})
