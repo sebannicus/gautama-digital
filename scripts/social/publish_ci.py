@@ -69,17 +69,55 @@ def export_slides(html_path, n_slides, output_dir):
         browser.close()
     return png_paths
 
-def upload_to_imgbb(image_path, api_key):
+def upload_to_github(image_path):
+    """Sube imagen al repo como archivo temporal y retorna URL raw de GitHub."""
     import base64
+    gh_token = os.environ.get("GITHUB_TOKEN", "")
+    gh_repo  = os.environ.get("GITHUB_REPO", "")
+    if not gh_token or not gh_repo:
+        raise SystemExit("ERROR: GITHUB_TOKEN o GITHUB_REPO no configurados.")
+
+    filename  = Path(image_path).name
+    repo_path = f"_media/ci-temp/{filename}"
+    api_url   = f"https://api.github.com/repos/{gh_repo}/contents/{repo_path}"
+    headers   = {"Authorization": f"Bearer {gh_token}", "Accept": "application/vnd.github+json"}
+
     with open(image_path, "rb") as f:
         b64 = base64.b64encode(f.read()).decode()
-    r = requests.post("https://api.imgbb.com/1/upload", data={
-        "key": api_key,
-        "image": b64,
-        "expiration": 3600,
-    })
+
+    # Si ya existe el archivo, obtener su SHA para poder actualizarlo
+    sha = None
+    existing = requests.get(api_url, headers=headers)
+    if existing.status_code == 200:
+        sha = existing.json().get("sha")
+
+    payload = {"message": f"ci: temp media {filename}", "content": b64}
+    if sha:
+        payload["sha"] = sha
+
+    r = requests.put(api_url, headers=headers, json=payload)
+    if not r.ok:
+        print(f"  ERROR GitHub upload: {r.status_code} — {r.text}")
     r.raise_for_status()
-    return r.json()["data"]["url"]
+
+    raw_url = f"https://raw.githubusercontent.com/{gh_repo}/main/{repo_path}"
+    time.sleep(1)  # pequeña pausa para que GitHub propague el archivo
+    return raw_url
+
+
+def delete_from_github(filename):
+    """Elimina el archivo temporal del repo tras publicar."""
+    gh_token = os.environ.get("GITHUB_TOKEN", "")
+    gh_repo  = os.environ.get("GITHUB_REPO", "")
+    repo_path = f"_media/ci-temp/{filename}"
+    api_url   = f"https://api.github.com/repos/{gh_repo}/contents/{repo_path}"
+    headers   = {"Authorization": f"Bearer {gh_token}", "Accept": "application/vnd.github+json"}
+
+    existing = requests.get(api_url, headers=headers)
+    if existing.status_code != 200:
+        return
+    sha = existing.json().get("sha")
+    requests.delete(api_url, headers=headers, json={"message": f"ci: cleanup {filename}", "sha": sha})
 
 def create_ig_image_container(image_url, ig_id, token, is_carousel_item=True):
     r = requests.post(f"{GRAPH_URL}/{ig_id}/media", params={
@@ -111,16 +149,18 @@ def publish_ig_container(container_id, ig_id, token):
     return r.json()["id"]
 
 def publish_to_instagram(slide_paths, caption, ig_id, token, imgbb_key, dry_run):
-    print(f"\n[IG] Subiendo {len(slide_paths)} slides...")
+    print(f"\n[IG] Subiendo {len(slide_paths)} slides a GitHub...")
     image_urls = []
+    uploaded_files = []
     for path in slide_paths:
         if dry_run:
             print(f"  [DRY] {Path(path).name}")
             image_urls.append(f"https://example.com/{Path(path).name}")
         else:
-            url = upload_to_imgbb(path, imgbb_key)
-            print(f"  OK   {Path(path).name}")
+            url = upload_to_github(path)
+            print(f"  OK   {Path(path).name} → {url}")
             image_urls.append(url)
+            uploaded_files.append(Path(path).name)
 
     if dry_run:
         print("  [DRY] Contenedores y publicacion simulados")
@@ -139,6 +179,12 @@ def publish_to_instagram(slide_paths, caption, ig_id, token, imgbb_key, dry_run)
 
     media_id = publish_ig_container(container_id, ig_id, token)
     print(f"  OK   Media ID: {media_id}")
+
+    # Limpiar archivos temporales del repo
+    print("  Limpiando archivos temporales de GitHub...")
+    for fname in uploaded_files:
+        delete_from_github(fname)
+
     return media_id
 
 def publish_to_facebook(slide_paths, caption, page_id, page_token, dry_run):
@@ -170,7 +216,7 @@ def publish_ig_story(slide_path, ig_id, token, imgbb_key, dry_run):
     if dry_run:
         print(f"  [DRY] Historia IG: {Path(slide_path).name}")
         return
-    url = upload_to_imgbb(slide_path, imgbb_key)
+    url = upload_to_github(slide_path)
     r = requests.post(f"{GRAPH_URL}/{ig_id}/media", params={
         "image_url": url,
         "media_type": "STORIES",
