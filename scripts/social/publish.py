@@ -78,7 +78,7 @@ def upload_to_imgbb(image_path, api_key):
 def create_ig_image_container(image_url, ig_id, token, is_carousel_item=True):
     r = requests.post(f"{GRAPH_URL}/{ig_id}/media", params={
         "image_url": image_url,
-        "is_carousel_item": is_carousel_item,
+        "is_carousel_item": "true" if is_carousel_item else "false",
         "access_token": token,
     })
     r.raise_for_status()
