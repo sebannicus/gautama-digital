@@ -87,6 +87,8 @@ def create_ig_image_container(image_url, ig_id, token, is_carousel_item=True):
         "is_carousel_item": "true" if is_carousel_item else "false",
         "access_token": token,
     })
+    if not r.ok:
+        print(f"  ERROR Meta API: {r.status_code} — {r.text}")
     r.raise_for_status()
     return r.json()["id"]
 
