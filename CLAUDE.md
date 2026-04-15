@@ -73,18 +73,23 @@ gh workflow run publish-social.yml --field date="YYYY-MM-DD" --field dry_run="fa
 
 1. `prepare_for_ci.py` — convierte `file:///` locales a base64 para Linux
 2. Playwright (Chromium headless) — exporta PNGs 1080×1350px
-3. imgbb — hosting temporal de imágenes (requerido por Meta API)
+3. GitHub API — sube imágenes temporalmente a `_media/ci-temp/` y usa `raw.githubusercontent.com` como URL pública (imgbb estaba bloqueado por los servidores de Meta)
 4. Meta Graph API v19.0 — publica en IG y FB
+5. Limpieza automática de `_media/ci-temp/` tras publicar
+
+> **Nota exportación slides**: El HTML del carrusel tiene `const slideW = 1080 * 0.5` hardcodeado para el preview. El script NO usa `render()` sino que mueve el slider directamente con `translateX(-{i * 1080}px)` para evitar este bug.
 
 ### GitHub Secrets configurados
 
 | Secret | Valor |
 |---|---|
-| `LONG_LIVED_TOKEN` | Token Meta 60 días — **renovar mediados junio 2026** |
+| `LONG_LIVED_TOKEN` | Token Meta **sin expiración** — data_access expira mediados junio 2026 |
 | `IG_BUSINESS_ACCOUNT_ID` | `17841441869591123` |
 | `FB_PAGE_ID` | `1104696042716629` |
 | `FB_PAGE_ACCESS_TOKEN` | Token de la Facebook Page |
-| `IMGBB_API_KEY` | Clave imgbb para hosting |
+| `IMGBB_API_KEY` | (ya no se usa — se mantiene por si acaso) |
+
+> El workflow necesita `permissions: contents: write` para subir imágenes temporales al repo via GitHub API.
 
 Credenciales locales en: `scripts/social/.env.social` (no commitear).
 
