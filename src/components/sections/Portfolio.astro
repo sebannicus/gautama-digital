@@ -42,16 +42,45 @@ import { PORTFOLIO } from '../../content/portfolio';
               </span>
             </div>
             <div class="portfolio__preview">
-              <div class="portfolio__preview-lines">
-                <span class="portfolio__line portfolio__line--title" style={`background: ${project.accentColor}`}></span>
-                <span class="portfolio__line portfolio__line--sub"></span>
-                <span class="portfolio__line portfolio__line--sub portfolio__line--short"></span>
-                <div class="portfolio__preview-blocks">
-                  <span class="portfolio__block" style={`background: ${project.accentColor}22`}></span>
-                  <span class="portfolio__block" style={`background: ${project.accentColor}22`}></span>
-                  <span class="portfolio__block" style={`background: ${project.accentColor}22`}></span>
+              {project.href ? (
+                <div class="portfolio__screenshot-wrap">
+                  <img
+                    src={`https://api.microlink.io/?url=${encodeURIComponent(project.href)}&screenshot=true&meta=false&embed=screenshot.url`}
+                    alt={`Vista previa de ${project.name}`}
+                    class="portfolio__screenshot"
+                    loading="lazy"
+                    decoding="async"
+                    width="600"
+                    height="400"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                  />
+                  <div class="portfolio__preview-lines portfolio__preview-lines--fallback" style="display:none">
+                    <span class="portfolio__line portfolio__line--title" style={`background: ${project.accentColor}`}></span>
+                    <span class="portfolio__line portfolio__line--sub"></span>
+                    <span class="portfolio__line portfolio__line--sub portfolio__line--short"></span>
+                    <div class="portfolio__preview-blocks">
+                      <span class="portfolio__block" style={`background: ${project.accentColor}22`}></span>
+                      <span class="portfolio__block" style={`background: ${project.accentColor}22`}></span>
+                      <span class="portfolio__block" style={`background: ${project.accentColor}22`}></span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div class="portfolio__preview-lines portfolio__preview-lines--private">
+                  <div class="portfolio__private-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Proyecto privado
+                  </div>
+                  <span class="portfolio__line portfolio__line--title" style={`background: ${project.accentColor}`}></span>
+                  <span class="portfolio__line portfolio__line--sub"></span>
+                  <span class="portfolio__line portfolio__line--sub portfolio__line--short"></span>
+                  <div class="portfolio__preview-blocks">
+                    <span class="portfolio__block" style={`background: ${project.accentColor}33`}></span>
+                    <span class="portfolio__block" style={`background: ${project.accentColor}22`}></span>
+                    <span class="portfolio__block" style={`background: ${project.accentColor}11`}></span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -210,14 +239,60 @@ import { PORTFOLIO } from '../../content/portfolio';
       #0d0d1a 60%
     );
     border-radius: var(--radius-md);
-    padding: var(--space-4);
-    min-height: 100px;
+    overflow: hidden;
+    min-height: 120px;
   }
 
+  /* Screenshot real del sitio */
+  .portfolio__screenshot-wrap {
+    position: relative;
+    min-height: 120px;
+  }
+
+  .portfolio__screenshot {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform var(--transition-slow);
+  }
+
+  .portfolio__card:hover .portfolio__screenshot {
+    transform: scale(1.03);
+  }
+
+  /* Fallback / private placeholder */
   .portfolio__preview-lines {
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
+    padding: var(--space-4);
+  }
+
+  .portfolio__preview-lines--fallback {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 12%, #0d0d1a) 0%, #0d0d1a 60%);
+  }
+
+  .portfolio__preview-lines--private {
+    min-height: 120px;
+    justify-content: center;
+  }
+
+  .portfolio__private-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-full);
+    padding: 3px var(--space-3);
+    margin-bottom: var(--space-3);
+    align-self: flex-start;
   }
 
   .portfolio__line {

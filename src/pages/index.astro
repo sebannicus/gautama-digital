@@ -3,13 +3,14 @@
  * index.astro
  * Propósito: Página principal de Gautama Digital.
  * Principio SRP: solo orquesta secciones — no contiene lógica de negocio.
- * Estructura: Hero → About → Portfolio → Process → CaseStudy → CtaMid → TrustedBy → FAQ → LocalMap → CtaFinal
+ * Estructura: Hero → About → DigitalVisual → Portfolio → Process → CaseStudy → CtaMid → TrustedBy → FAQ → LocalMap → CtaFinal
  * Nota: Services vive en /servicios (página propia).
  */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/sections/Hero.astro';
 import About from '../components/sections/About.astro';
+import DigitalVisual from '../components/sections/DigitalVisual.astro';
 import Portfolio from '../components/sections/Portfolio.astro';
 import Industries from '../components/sections/Industries.astro';
 import Process from '../components/sections/Process.astro';
@@ -24,6 +25,7 @@ import CtaFinal from '../components/sections/CtaFinal.astro';
 <BaseLayout>
   <Hero />
   <About />
+  <DigitalVisual />
   <Portfolio />
   <Industries />
   <Process />
