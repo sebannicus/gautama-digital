@@ -1,0 +1,523 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionLabel from '../components/ui/SectionLabel.astro';
+import Button from '../components/ui/Button.astro';
+import { SITE } from '../content/site';
+
+const whatsappMsg = encodeURIComponent('Hola Seba, quiero conversar sobre mi proyecto digital.');
+const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
+
+const skills = [
+  { cat: 'Web & Diseño', items: ['Astro', 'HTML/CSS', 'Tailwind', 'Diseño UI/UX', 'Component-based architecture'] },
+  { cat: 'SEO & Analytics', items: ['SEO Local', 'Google My Business', 'GA4', 'Meta Pixel', 'Google Search Console'] },
+  { cat: 'Automatización IA', items: ['Agentes WhatsApp IA', 'Flujos automatizados', 'Chatbots', 'Claude / ChatGPT'] },
+  { cat: 'Negocio & Estrategia', items: ['Funnel de ventas', 'Copy persuasivo', 'Analítica comercial', 'CRM básico'] },
+];
+
+const clientes = [
+  { nombre: 'CheckVital', rubro: 'Estética médica · La Serena' },
+  { nombre: 'Vital Airpower', rubro: 'Ingeniería industrial · Coquimbo' },
+  { nombre: 'SIMA Ingeniería', rubro: 'Ingeniería · Coquimbo' },
+  { nombre: 'Antocarz', rubro: 'Car Audio · Coquimbo' },
+  { nombre: 'Salvatierra Paintworks', rubro: 'Pintura profesional · IV Región' },
+  { nombre: 'Constructora Scheidl', rubro: 'Construcción · IV Región' },
+];
+---
+
+<BaseLayout
+  title={`Quién soy — Sebastián Morales | ${SITE.name}`}
+  description="Soy Sebastián Morales, consultor digital y fundador de Gautama Digital. Ayudo a negocios locales en Chile a crecer con diseño web, SEO local y automatización con IA."
+  canonicalUrl={`${SITE.url}/quien-soy`}
+>
+  <!-- Hero -->
+  <section class="qs-hero">
+    <div class="qs-hero__bg" aria-hidden="true"></div>
+    <div class="container qs-hero__inner">
+      <div class="qs-hero__badge">
+        <span class="qs-hero__dot" aria-hidden="true"></span>
+        Disponible para nuevos proyectos
+      </div>
+      <h1 class="qs-hero__name">Sebastián Morales</h1>
+      <p class="qs-hero__role">Consultor Digital & Fundador de Gautama Digital</p>
+      <p class="qs-hero__loc">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        Coquimbo, Chile · @sebannicus
+      </p>
+    </div>
+  </section>
+
+  <!-- Quién soy — texto principal -->
+  <section class="section qs-about">
+    <div class="container qs-about__inner">
+
+      <div class="qs-about__text">
+        <SectionLabel text="MI HISTORIA" />
+        <h2 class="qs-about__title">
+          Del derecho municipal<br />
+          <span class="text-gradient-gold">al ecosistema digital.</span>
+        </h2>
+        <p class="qs-about__p">
+          Trabajé años en el departamento legal de una municipalidad. Aprendí a leer procesos, entender regulaciones y comunicar en lenguaje claro. Pero siempre vi una brecha enorme: negocios locales con potencial real que no sabían cómo digitalizarse sin depender de agencias caras o soluciones genéricas.
+        </p>
+        <p class="qs-about__p">
+          En febrero de 2026 decidí hacer el cambio. Dejé el cargo y me dediqué de tiempo completo a lo que ya venía construyendo en paralelo: <strong>Gautama Digital</strong>, una consultoría digital orientada a negocios locales en Chile.
+        </p>
+        <p class="qs-about__p">
+          Mi diferencia no es solo el diseño. Es entender el negocio del cliente — sus clientes, su competencia, su ciclo de venta — y construir un sistema digital que trabaje para él, no al revés.
+        </p>
+      </div>
+
+      <div class="qs-about__visual" aria-hidden="true">
+        <div class="qs-stat-grid">
+          <div class="qs-stat">
+            <span class="qs-stat__val">+6</span>
+            <span class="qs-stat__lbl">proyectos entregados</span>
+          </div>
+          <div class="qs-stat">
+            <span class="qs-stat__val">100%</span>
+            <span class="qs-stat__lbl">clientes satisfechos</span>
+          </div>
+          <div class="qs-stat">
+            <span class="qs-stat__val">SEO</span>
+            <span class="qs-stat__lbl">en cada proyecto</span>
+          </div>
+          <div class="qs-stat">
+            <span class="qs-stat__val">IA</span>
+            <span class="qs-stat__lbl">integrada por defecto</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Lo que hago -->
+  <section class="section section--surface qs-what">
+    <div class="container">
+      <SectionLabel text="LO QUE CONSTRUYO" align="center" />
+      <h2 class="qs-section-title">
+        No solo diseño — <span class="text-gradient-gold">construyo ecosistemas.</span>
+      </h2>
+      <p class="qs-section-sub">
+        Trabajo con el máximo estándar de inteligencia de negocio. Cada proyecto integra diseño, posicionamiento, analíticas y automatización desde el día 1.
+      </p>
+
+      <div class="qs-skills-grid">
+        {skills.map((s) => (
+          <div class="qs-skill-card">
+            <h3 class="qs-skill-card__cat">{s.cat}</h3>
+            <ul class="qs-skill-card__list">
+              {s.items.map((item) => (
+                <li class="qs-skill-card__item">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Clientes -->
+  <section class="section qs-clients">
+    <div class="container">
+      <SectionLabel text="CON QUIÉNES HE TRABAJADO" align="center" />
+      <h2 class="qs-section-title">
+        Negocios reales,<br />
+        <span class="text-gradient-gold">resultados verificables.</span>
+      </h2>
+      <div class="qs-clients-grid">
+        {clientes.map((c) => (
+          <div class="qs-client-item">
+            <span class="qs-client-name">{c.nombre}</span>
+            <span class="qs-client-rubro">{c.rubro}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Mi forma de trabajar -->
+  <section class="section section--surface qs-process">
+    <div class="container qs-process__inner">
+      <div class="qs-process__text">
+        <SectionLabel text="MI FORMA DE TRABAJAR" />
+        <h2 class="qs-about__title">
+          Directo. Comercial.<br />
+          <span class="text-gradient-gold">Sin rodeos.</span>
+        </h2>
+        <p class="qs-about__p">
+          No cobro por horas. Cobro por resultados. Cada proyecto tiene un precio fijo acordado desde el inicio — sin sorpresas al final.
+        </p>
+        <p class="qs-about__p">
+          Trabajo con un cliente a la vez cuando el proyecto lo requiere. Eso significa que cuando trabajamos juntos, tengo tu proyecto en la cabeza — no dividido entre 10 clientes simultáneos.
+        </p>
+        <p class="qs-about__p">
+          Entrego en 2 semanas o menos. Si algo demora más, te aviso antes — no después.
+        </p>
+      </div>
+      <div class="qs-process__cards">
+        {[
+          { step: '01', titulo: 'Llamada de 20 min', desc: 'Entiendo tu negocio, tus clientes y qué quieres lograr.' },
+          { step: '02', titulo: 'Propuesta clara', desc: 'Te envío un presupuesto con alcance, plazos y precio final.' },
+          { step: '03', titulo: 'Construcción', desc: 'Diseño y desarrollo con revisiones en tiempo real.' },
+          { step: '04', titulo: 'Entrega + capacitación', desc: 'Recibes el sitio tuyo + sabes cómo usarlo.' },
+        ].map((p) => (
+          <div class="qs-step">
+            <span class="qs-step__num">{p.step}</span>
+            <div>
+              <strong class="qs-step__titulo">{p.titulo}</strong>
+              <p class="qs-step__desc">{p.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="section qs-cta">
+    <div class="container qs-cta__inner">
+      <h2 class="qs-cta__title">
+        ¿Tienes un proyecto?<br />
+        <span class="text-gradient-gold">Hablemos.</span>
+      </h2>
+      <p class="qs-cta__sub">
+        La primera conversación es gratis y sin compromiso. Me cuentas tu negocio y te digo honestamente qué puede funcionar y qué no.
+      </p>
+      <Button href={whatsappUrl} variant="primary" size="lg" external={true} pulse={true}>
+        Escribirle a Seba →
+      </Button>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ── Hero ── */
+  .qs-hero {
+    position: relative;
+    background: #06060F;
+    padding: 140px 0 var(--space-16);
+    overflow: hidden;
+  }
+
+  .qs-hero__bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 80% 50%, rgba(4,119,191,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 400px 300px at 20% 50%, rgba(4,196,217,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .qs-hero__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .qs-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-subhead);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: #2ECC71;
+    background: rgba(46, 204, 113, 0.08);
+    border: 1px solid rgba(46, 204, 113, 0.2);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-4);
+    width: fit-content;
+    margin-bottom: var(--space-2);
+  }
+
+  .qs-hero__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #2ECC71;
+    flex-shrink: 0;
+    animation: pulse-green 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(46,204,113,0.4); }
+    50%       { box-shadow: 0 0 0 8px rgba(46,204,113,0); }
+  }
+
+  .qs-hero__name {
+    font-family: var(--font-headline);
+    font-size: clamp(var(--text-4xl), 6vw, var(--text-7xl));
+    font-weight: var(--weight-extrabold);
+    color: #ffffff;
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .qs-hero__role {
+    font-size: clamp(var(--text-base), 2vw, var(--text-xl));
+    color: rgba(255,255,255,0.65);
+    font-weight: var(--weight-medium);
+  }
+
+  .qs-hero__loc {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-subhead);
+    font-size: var(--text-sm);
+    color: rgba(255,255,255,0.38);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  /* ── About ── */
+  .qs-about__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .qs-about__inner { grid-template-columns: 1fr 320px; }
+  }
+
+  .qs-about__title {
+    font-family: var(--font-headline);
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-weight: var(--weight-extrabold);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-6);
+  }
+
+  .qs-about__p {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-5);
+  }
+
+  .qs-about__p strong { color: var(--color-text-primary); }
+
+  .qs-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .qs-stat {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    text-align: center;
+  }
+
+  .qs-stat__val {
+    font-family: var(--font-headline);
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-extrabold);
+    color: var(--color-gold);
+  }
+
+  .qs-stat__lbl {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    font-family: var(--font-subhead);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  /* ── What / Skills ── */
+  .qs-section-title {
+    font-family: var(--font-headline);
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-weight: var(--weight-extrabold);
+    line-height: var(--leading-tight);
+    text-align: center;
+    margin-bottom: var(--space-4);
+  }
+
+  .qs-section-sub {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    text-align: center;
+    max-width: 520px;
+    margin-inline: auto;
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-12);
+  }
+
+  .qs-skills-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 640px) { .qs-skills-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .qs-skills-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .qs-skill-card {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .qs-skill-card__cat {
+    font-family: var(--font-subhead);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .qs-skill-card__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .qs-skill-card__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .qs-skill-card__item svg { color: var(--color-success); flex-shrink: 0; }
+
+  /* ── Clients ── */
+  .qs-clients-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+    margin-top: var(--space-10);
+  }
+
+  @media (min-width: 768px) { .qs-clients-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .qs-client-item {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    transition: border-color var(--transition-base);
+  }
+
+  .qs-client-item:hover { border-color: var(--color-border-hover); }
+
+  .qs-client-name {
+    font-family: var(--font-headline);
+    font-size: var(--text-base);
+    font-weight: var(--weight-bold);
+    color: var(--color-text-primary);
+  }
+
+  .qs-client-rubro {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  /* ── Process ── */
+  .qs-process__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  @media (min-width: 900px) { .qs-process__inner { grid-template-columns: 1fr 1fr; } }
+
+  .qs-process__cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .qs-step {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .qs-step__num {
+    font-family: var(--font-headline);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-extrabold);
+    color: var(--color-gold);
+    letter-spacing: var(--tracking-widest);
+    flex-shrink: 0;
+    padding-top: 2px;
+    opacity: 0.6;
+  }
+
+  .qs-step__titulo {
+    display: block;
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .qs-step__desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ── CTA ── */
+  .qs-cta {
+    background: #06060F;
+  }
+
+  .qs-cta__inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .qs-cta__title {
+    font-family: var(--font-headline);
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-weight: var(--weight-extrabold);
+    line-height: var(--leading-tight);
+    color: #ffffff;
+  }
+
+  .qs-cta__sub {
+    font-size: var(--text-base);
+    color: rgba(255,255,255,0.55);
+    max-width: 480px;
+    line-height: var(--leading-relaxed);
+  }
+</style>

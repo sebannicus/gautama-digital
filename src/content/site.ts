@@ -40,8 +40,8 @@ export const SITE = {
 
   nav: [
     { label: 'Servicios', href: '/servicios' },
-    { label: 'Portafolio', href: '#portafolio' },
-    { label: 'Clientes', href: '#clientes' },
-    { label: 'Contacto', href: '#contacto' },
+    { label: 'Portafolio', href: '/#portafolio' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Quién soy', href: '/quien-soy' },
   ],
 } as const;

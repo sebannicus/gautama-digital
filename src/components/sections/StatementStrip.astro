@@ -1,0 +1,118 @@
+---
+/**
+ * StatementStrip.astro
+ * Franja de posicionamiento — rompe el ritmo visual y comunica el diferenciador clave.
+ */
+---
+
+<div class="statement" aria-label="Propuesta de posicionamiento Gautama Digital">
+  <div class="container statement__inner">
+
+    <div class="statement__badge" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+      Estándar Gautama Digital
+    </div>
+
+    <p class="statement__text">
+      No te entrego solo una web —<br class="statement__br" />
+      te entrego un <span class="statement__em">ecosistema digital</span> que capta clientes,<br class="statement__br" />
+      mide cada resultado y te permite invertir en publicidad<br class="statement__br" />
+      con información real, <span class="statement__em">no a ciegas.</span>
+    </p>
+
+  </div>
+</div>
+
+<style>
+  .statement {
+    background: #06060F;
+    border-top: 1px solid rgba(4, 196, 217, 0.15);
+    border-bottom: 1px solid rgba(4, 196, 217, 0.15);
+    padding: var(--space-12) 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Orb decorativo sutil */
+  .statement::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 200px;
+    background: radial-gradient(ellipse, rgba(4, 119, 191, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .statement__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    text-align: center;
+  }
+
+  .statement__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-subhead);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+    background: rgba(4, 119, 191, 0.1);
+    border: 1px solid rgba(4, 119, 191, 0.25);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .statement__badge svg {
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .statement__text {
+    font-family: var(--font-headline);
+    font-size: clamp(var(--text-xl), 2.8vw, var(--text-3xl));
+    font-weight: var(--weight-bold);
+    color: rgba(255, 255, 255, 0.82);
+    line-height: var(--leading-relaxed);
+    max-width: 780px;
+  }
+
+  .statement__em {
+    color: #ffffff;
+    font-weight: var(--weight-extrabold);
+    position: relative;
+  }
+
+  .statement__em::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light));
+    border-radius: var(--radius-full);
+    opacity: 0.7;
+  }
+
+  .statement__br {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .statement__br {
+      display: block;
+    }
+  }
+</style>
