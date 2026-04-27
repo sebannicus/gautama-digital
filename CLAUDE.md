@@ -11,7 +11,7 @@ Handle Instagram: `@gautama_digital` — sitio: `gautamadigital.cl`
 
 ---
 
-## Sitio web — estado actual (2026-04-22)
+## Sitio web — estado actual (2026-04-27)
 
 ### Precios vigentes
 | Plan | Precio | Notas |
@@ -22,16 +22,19 @@ Handle Instagram: `@gautama_digital` — sitio: `gautamadigital.cl`
 | Agente WhatsApp IA | $350.000 impl. + $50.000/mes | Automatización con IA. |
 
 ### Estructura de páginas
-- `/` — Home (6 secciones): **Hero → Portfolio → CaseStudy → BlogPreview → FAQ → CtaFinal**
+- `/` — Home (6 secciones): **Hero → Portfolio → StatementStrip → CaseStudy (Propuesta de Valor) → FAQ → CtaFinal**
 - `/servicios` — Página propia con los 4 paquetes y precios
-- `/blog/[slug]` — Posts dinámicos (3 posts en `src/content/blog.ts`)
+- `/quien-soy` — Página personal: bio, stats, clientes, proceso
+- `/blog` — Listado de artículos con filtro por categoría
+- `/blog/[slug]` — Posts dinámicos (23 posts en `src/content/blog.ts`)
 
-### Blog (3 posts en `src/content/blog.ts`)
-| Slug | Título |
-|---|---|
-| `landing-page-negocio-local` | ¿Necesita tu negocio local una página web? |
-| `seo-local-chile-google-maps` | SEO Local en Chile: cómo aparecer en Google Maps |
-| `agente-whatsapp-ia-ventas` | Agente WhatsApp con IA: automatiza tus ventas |
+### Blog (23 posts en `src/content/blog.ts`)
+5 clusters: Diseño Web, SEO Local, Automatización IA, Analíticas, Marketing Digital.
+Posts base: `landing-page-negocio-local`, `seo-local-chile-google-maps`, `agente-whatsapp-ia-ventas` + 20 artículos nuevos enero-abril 2026.
+
+### Analytics y Search Console
+- GA4: propiedad `528950140`, Measurement ID `G-7LH63DBJDK` — activo en BaseLayout
+- GSC: verificado con meta tag HTML (`XyuwQkify7mF2wcyxmrWcoUX2_65RRVX8Y4zjLg6Z6Y`)
 
 ### Portafolio (6 proyectos en `src/content/portfolio.ts`) — todos con URL real
 | Proyecto | URL | Acento |
@@ -51,11 +54,20 @@ Los screenshots se cargan dinámicamente vía `microlink.io`. Cards con URL mues
 - `src/utils/animations.ts` — `initWordReveal()` (word-by-word con ScrollTrigger), `gs-fade-up` con blur+scale inicial
 - Botón WhatsApp: esquina **inferior izquierda** (`bottom: 28px; left: 28px`)
 
+### SEO — estado (2026-04-27)
+- Schema: `LocalBusiness` + `ProfessionalService` con geo coords Coquimbo, image, openingHours ✅
+- FAQPage JSON-LD: solo en `index.astro` (slot head) ✅
+- Article schema: `image`, `dateModified`, `publisher.logo` ✅
+- `public/robots.txt` creado con pointer al sitemap ✅
+- Sitemap: `/sitemap-index.xml` generado por `@astrojs/sitemap` ✅
+
 ### Pendientes del sitio
-- [ ] URL embed Google Maps en `src/components/sections/LocalMap.astro` (sección quitada del home — está en el componente pero no se usa por ahora)
+- [ ] Antocarz: cambiar `portfolio.ts` a `www.antocarz.cl` → URL ya actualizada ✅
+- [ ] Landing pages de ciudad: `/diseno-web-la-serena` y `/diseno-web-coquimbo` (oportunidad SEO local alta)
 - [ ] Testimonios reales de Salvatierra Paintworks y Constructora Scheidl
-- [ ] Google Search Console → solicitar indexación manual
+- [ ] Google Search Console → solicitar indexación manual de las 26 páginas
 - [ ] GMB: descripción, categorías, fotos, Q&A, primer post
+- [ ] Editar página `/servicios` con los 4 planes actualizados
 
 ---
 
