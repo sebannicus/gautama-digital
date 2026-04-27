@@ -92,19 +92,25 @@ export async function initScrollReveal(): Promise<void> {
     });
   });
 
-  // ── Fade up — el más común ────────────────────────────────────────────────
+  // ── Fade up — con blur y scale para más drama ─────────────────────────────
   gsap.utils.toArray<HTMLElement>('.gs-fade-up').forEach((el) => {
-    gsap.to(el, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 85%',
-        once: true,
-      },
-    });
+    gsap.fromTo(
+      el,
+      { opacity: 0, y: 40, filter: 'blur(8px)', scale: 0.95 },
+      {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        scale: 1,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          once: true,
+        },
+      }
+    );
   });
 
   // Fade in
@@ -237,6 +243,62 @@ export async function initCounterAnimation(): Promise<void> {
       scrollTrigger: {
         trigger: el,
         start: 'top 80%',
+        once: true,
+      },
+    });
+  });
+}
+
+/**
+ * Word-by-word reveal: envuelve cada palabra en spans animables
+ * y las hace aparecer en stagger cuando el elemento entra al viewport.
+ * Usa [data-word-reveal] como selector.
+ */
+export async function initWordReveal(): Promise<void> {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const { gsap } = await import('gsap');
+  const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+  gsap.registerPlugin(ScrollTrigger);
+
+  function wrapTextNodes(node: Node): void {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.textContent ?? '';
+      if (!text.trim()) return;
+      const frag = document.createDocumentFragment();
+      text.split(/(\s+)/).forEach((part) => {
+        if (!part.trim()) {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const wrap = document.createElement('span');
+          wrap.className = 'gs-word-wrap';
+          const inner = document.createElement('span');
+          inner.className = 'gs-word';
+          inner.textContent = part;
+          wrap.appendChild(inner);
+          frag.appendChild(wrap);
+        }
+      });
+      node.parentNode?.replaceChild(frag, node);
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      Array.from(node.childNodes).forEach(wrapTextNodes);
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-word-reveal]').forEach((el) => {
+    wrapTextNodes(el);
+    const words = el.querySelectorAll<HTMLElement>('.gs-word');
+    if (!words.length) return;
+
+    gsap.to(words, {
+      y: 0,
+      opacity: 1,
+      duration: 0.65,
+      stagger: 0.045,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
         once: true,
       },
     });

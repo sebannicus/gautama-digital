@@ -11,7 +11,7 @@ Handle Instagram: `@gautama_digital` — sitio: `gautamadigital.cl`
 
 ---
 
-## Sitio web — estado actual (2026-04-14)
+## Sitio web — estado actual (2026-04-22)
 
 ### Precios vigentes
 | Plan | Precio | Notas |
@@ -22,16 +22,40 @@ Handle Instagram: `@gautama_digital` — sitio: `gautamadigital.cl`
 | Agente WhatsApp IA | $350.000 impl. + $50.000/mes | Automatización con IA. |
 
 ### Estructura de páginas
-- `/` — Home: Hero → About → Portfolio → Industries → Process → CaseStudy → CtaMid → TrustedBy → FAQ → LocalMap → CtaFinal
+- `/` — Home (6 secciones): **Hero → Portfolio → CaseStudy → BlogPreview → FAQ → CtaFinal**
 - `/servicios` — Página propia con los 4 paquetes y precios
+- `/blog/[slug]` — Posts dinámicos (3 posts en `src/content/blog.ts`)
 
-### Portafolio (6 proyectos en `src/content/portfolio.ts`)
-CheckVital, Vital Airpower, SIMA Ingeniería, Antocarz, Salvatierra Paintworks, Constructora Scheidl
+### Blog (3 posts en `src/content/blog.ts`)
+| Slug | Título |
+|---|---|
+| `landing-page-negocio-local` | ¿Necesita tu negocio local una página web? |
+| `seo-local-chile-google-maps` | SEO Local en Chile: cómo aparecer en Google Maps |
+| `agente-whatsapp-ia-ventas` | Agente WhatsApp con IA: automatiza tus ventas |
+
+### Portafolio (6 proyectos en `src/content/portfolio.ts`) — todos con URL real
+| Proyecto | URL | Acento |
+|---|---|---|
+| CheckVital | checkvital.cl | #0477BF |
+| Vital Airpower | vital-airpower.vercel.app | #003F87 |
+| SIMA Ingeniería | simaingenieria.cl | #1B3A6B |
+| Antocarz | antocarz.vercel.app | #1A1A2E |
+| Salvatierra Paintworks | salvatierrapaintworks.vercel.app | #7B3F00 |
+| Constructora Scheidl | constructora-scheidl.vercel.app | #4A5568 |
+
+Los screenshots se cargan dinámicamente vía `microlink.io`. Cards con URL muestran badge **LIVE** verde pulsante.
+
+### Sistema de animaciones
+- `src/styles/global.css` — orbs bg-mesh (3 orbs, opacidad 0.14–0.22, más grandes y rápidos), bg-dots (puntos animados), bg-scan (línea de scan)
+- `src/styles/animations.css` — `text-gradient-gold` con sweep animado, `gs-word-wrap`/`gs-word` para word reveal
+- `src/utils/animations.ts` — `initWordReveal()` (word-by-word con ScrollTrigger), `gs-fade-up` con blur+scale inicial
+- Botón WhatsApp: esquina **inferior izquierda** (`bottom: 28px; left: 28px`)
 
 ### Pendientes del sitio
-- [ ] Pegar URL embed Google Maps en `src/components/sections/LocalMap.astro` (línea 21 — `MAPS_EMBED_URL`)
-- [ ] Reemplazar testimonios placeholder de Salvatierra y Scheidl con citas reales en `TrustedBy.astro`
-- [ ] Agregar screenshots reales de los proyectos cuando estén disponibles (`public/images/portfolio/`)
+- [ ] URL embed Google Maps en `src/components/sections/LocalMap.astro` (sección quitada del home — está en el componente pero no se usa por ahora)
+- [ ] Testimonios reales de Salvatierra Paintworks y Constructora Scheidl
+- [ ] Google Search Console → solicitar indexación manual
+- [ ] GMB: descripción, categorías, fotos, Q&A, primer post
 
 ---
 

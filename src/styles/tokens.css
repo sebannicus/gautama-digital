@@ -105,7 +105,7 @@
   --space-40: 10rem;      /* 160px */
 
   /* Padding de sección estándar */
-  --section-padding-y: var(--space-24);
+  --section-padding-y: var(--space-16);
   --section-padding-x: var(--space-6);
 
   /* Contenedor */

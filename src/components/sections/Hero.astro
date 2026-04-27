@@ -1,10 +1,8 @@
 ---
 /**
  * Hero.astro
- * Propósito: Sección héroe — primera impresión, impacto máximo.
- * SEO: H1 contiene "La Serena" + "Google" (keyword principal).
- * Animación: GSAP initHeroAnimation() en carga.
- * Visual: fondo negro con glows flotantes dorado/violeta.
+ * Propósito: Primera impresión — impacto máximo, mínimo texto.
+ * Visual: texto izquierda + card de Google ranking derecha (desktop).
  */
 
 import Button from '../ui/Button.astro';
@@ -15,10 +13,8 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
 ---
 
 <section class="hero" id="inicio" aria-label="Inicio">
-  <!-- Glows decorativos de fondo -->
   <div class="bg-glow bg-glow--gold hero__glow hero__glow--1" aria-hidden="true"></div>
   <div class="bg-glow bg-glow--violet hero__glow hero__glow--2" aria-hidden="true"></div>
-  <div class="bg-glow bg-glow--violet hero__glow hero__glow--3" aria-hidden="true"></div>
 
   <!-- Video decorativo — lado derecho, solo desktop -->
   <div class="hero__video-wrap" aria-hidden="true">
@@ -35,106 +31,62 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
   </div>
 
   <div class="container hero__inner">
+
+    <!-- Contenido -->
     <div class="hero__content" id="hero-parallax">
-      <!-- Label superior -->
       <span class="hero__label" data-hero-label>
         <span class="hero__label-dot" aria-hidden="true"></span>
-        Para dueños de negocio en La Serena y Coquimbo
+        Para negocios en La Serena y Coquimbo
       </span>
 
-      <!-- H1 — keyword principal: diseño web + La Serena -->
       <h1 class="hero__title" data-hero-title>
-        Diseño web en La Serena<br />
-        <span class="text-gradient-gold">que te pone en Google</span><br />
-        sin pagar publicidad.
+        Tu negocio en Google.<br />
+        <span class="text-gradient-gold">Sin pagar publicidad.</span>
       </h1>
 
-      <!-- Subtítulo -->
       <p class="hero__sub" data-hero-sub>
-        Diseñamos páginas web profesionales + SEO local + Google My Business optimizado
-        para negocios en La Serena y Coquimbo. Nuevos clientes llegan solos —
-        sin pagar publicidad, sin contratos de permanencia, sin mensualidades.
-        Tu sitio web es tuyo desde el día uno.
+        Diseño web profesional + SEO local + Google My Business — desde $280.000 CLP.
       </p>
 
-      <!-- CTAs -->
       <div class="hero__cta" data-hero-cta>
         <Button href={whatsappUrl} variant="primary" size="lg" external={true} pulse={true}>
-          Solicitar cotización gratuita
+          Cotización gratis
         </Button>
-        <Button href="#servicios" variant="ghost" size="lg">
-          Ver planes y precios →
+        <Button href="/servicios" variant="ghost" size="lg">
+          Ver planes →
         </Button>
       </div>
 
-      <!-- Prueba social rápida -->
+      <!-- Prueba social: 3 datos en pills -->
       <div class="hero__proof" data-hero-cta>
-        <div class="hero__proof-item">
-          <span class="hero__proof-value">+100</span>
-          <span class="hero__proof-label">visitas orgánicas en 30 días</span>
+        <div class="hero__proof-pill">
+          <span class="hero__proof-val">+100</span>
+          <span class="hero__proof-lbl">visitas / 30 días</span>
         </div>
-        <span class="hero__proof-divider" aria-hidden="true">·</span>
-        <div class="hero__proof-item">
-          <span class="hero__proof-value">$0</span>
-          <span class="hero__proof-label">en publicidad</span>
+        <div class="hero__proof-pill">
+          <span class="hero__proof-val">$0</span>
+          <span class="hero__proof-lbl">en publicidad</span>
         </div>
-        <span class="hero__proof-divider" aria-hidden="true">·</span>
-        <div class="hero__proof-item">
-          <span class="hero__proof-value">Top Maps</span>
-          <span class="hero__proof-label">Google Maps local</span>
+        <div class="hero__proof-pill">
+          <span class="hero__proof-val">#1</span>
+          <span class="hero__proof-lbl">Google Maps</span>
         </div>
       </div>
     </div>
+
   </div>
 
-  <!-- Marquee ticker — da vida y refuerza keywords SEO -->
+  <!-- Marquee -->
   <div class="hero__marquee marquee" aria-hidden="true">
     <div class="marquee__track">
-      <span class="hero__marquee-item">Diseño Web La Serena</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Páginas Web Profesionales</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">SEO Local</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Google Maps</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Marketing Digital</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Coquimbo</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Sitios Web a Medida</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Aparecer en Google</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Sin Publicidad Pagada</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Optimización Web</span>
-      <span class="hero__marquee-sep">·</span>
-      <!-- Duplicado para loop continuo -->
-      <span class="hero__marquee-item">Diseño Web La Serena</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Páginas Web Profesionales</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">SEO Local</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Google Maps</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Marketing Digital</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Coquimbo</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Sitios Web a Medida</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Aparecer en Google</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Sin Publicidad Pagada</span>
-      <span class="hero__marquee-sep">·</span>
-      <span class="hero__marquee-item">Optimización Web</span>
-      <span class="hero__marquee-sep">·</span>
+      {['Diseño Web La Serena','SEO Local','Google Maps','Marketing Digital','Coquimbo','Sitios a Medida','Sin Publicidad Pagada','Optimización Web','Diseño Web La Serena','SEO Local','Google Maps','Marketing Digital','Coquimbo','Sitios a Medida','Sin Publicidad Pagada','Optimización Web'].map(item =>
+        item.startsWith('Diseño') || item.startsWith('SEO') || item.startsWith('Google') || item.startsWith('Mar') || item.startsWith('Coq') || item.startsWith('Sit') || item.startsWith('Sin') || item.startsWith('Opt')
+          ? <><span class="hero__marquee-item">{item}</span><span class="hero__marquee-sep">·</span></>
+          : null
+      )}
     </div>
   </div>
 
-  <!-- Scroll hint -->
   <div class="hero__scroll" data-hero-scroll aria-hidden="true">
     <div class="hero__scroll-line"></div>
     <span class="hero__scroll-text">Scroll</span>
@@ -148,14 +100,12 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
   // Fade suave en el corte del loop del video
   const heroVideo = document.querySelector<HTMLVideoElement>('.hero__video');
   if (heroVideo) {
-    const FADE = 0.6;     // segundos de transición
-    const MAX_OP = 0.75;  // opacidad máxima definida en CSS
-
+    const FADE = 0.6;
+    const MAX_OP = 0.75;
     heroVideo.addEventListener('timeupdate', () => {
       const { currentTime, duration } = heroVideo;
       if (!duration) return;
       const remaining = duration - currentTime;
-
       if (remaining < FADE) {
         heroVideo.style.opacity = String((remaining / FADE) * MAX_OP);
       } else if (currentTime < FADE) {
@@ -166,60 +116,36 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
     });
   }
 
-  // Efecto scroll-scale: el contenido se reduce suavemente al bajar
   const heroParallax = document.getElementById('hero-parallax');
   if (heroParallax && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const scale = Math.max(1 - scrollY / 1400, 0.88);
-      const opacity = Math.max(1 - scrollY / 500, 0);
-      heroParallax.style.transform = `scale(${scale})`;
-      heroParallax.style.opacity = String(opacity);
+      const s = window.scrollY;
+      heroParallax.style.transform = `scale(${Math.max(1 - s / 1400, 0.88)})`;
+      heroParallax.style.opacity = String(Math.max(1 - s / 500, 0));
     }, { passive: true });
   }
 </script>
 
 <style>
   .hero {
+    /* Fusión oscura — igual que producción */
+    --hero-bg: #06060F;
     position: relative;
     min-height: 100dvh;
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
     padding-top: 100px;
     padding-bottom: var(--space-20);
+    background-color: var(--hero-bg);
   }
 
-  /* Glows */
-  .hero__glow {
-    pointer-events: none;
-  }
+  .hero__glow { pointer-events: none; }
+  .hero__glow--1 { width: 700px; height: 700px; top: -150px; right: -200px; }
+  .hero__glow--2 { width: 500px; height: 500px; bottom: 0; left: -200px; animation-delay: -6s; }
 
-  .hero__glow--1 {
-    width: 700px;
-    height: 700px;
-    top: -150px;
-    right: -250px;
-  }
-
-  .hero__glow--2 {
-    width: 600px;
-    height: 600px;
-    bottom: 0;
-    left: -200px;
-    animation-delay: -6s;
-  }
-
-  .hero__glow--3 {
-    width: 400px;
-    height: 400px;
-    top: 40%;
-    right: 15%;
-    animation-delay: -10s;
-    opacity: 0.12;
-  }
-
-  /* Layout */
   .hero__inner {
     position: relative;
     z-index: var(--z-above);
@@ -230,164 +156,12 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
-    padding-bottom: 140px; /* espacio para el marquee absoluto */
-  }
-
-  /* Label */
-  .hero__label {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-family: var(--font-subhead);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-wide);
-    color: var(--color-text-secondary);
-    opacity: 0; /* GSAP lo activa */
-  }
-
-  .hero__label-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--color-gold);
-    border-radius: 50%;
-    flex-shrink: 0;
-    animation: pulse-gold 2s ease-in-out infinite;
-  }
-
-  /* H1 */
-  .hero__title {
-    font-family: var(--font-headline);
-    font-size: clamp(var(--text-4xl), 6vw, var(--text-7xl));
-    font-weight: var(--weight-extrabold);
-    line-height: var(--leading-tight);
-    letter-spacing: var(--tracking-tight);
-    color: var(--color-text-primary);
-    opacity: 0; /* GSAP */
-  }
-
-  /* Subtítulo */
-  .hero__sub {
-    font-size: clamp(var(--text-base), 2vw, var(--text-lg));
-    color: var(--color-text-secondary);
-    line-height: var(--leading-relaxed);
-    max-width: 580px;
-    opacity: 0; /* GSAP */
-  }
-
-  /* CTAs */
-  .hero__cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    align-items: center;
-    opacity: 0; /* GSAP */
-  }
-
-  /* Prueba social */
-  .hero__proof {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-3);
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--color-border);
-    opacity: 0; /* GSAP */
-  }
-
-  /* Marquee */
-  .hero__marquee {
-    position: absolute;
-    bottom: var(--space-20);
-    left: 0;
-    right: 0;
-    padding-block: var(--space-3);
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .hero__marquee-item {
-    font-family: var(--font-subhead);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-semibold);
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
-    flex-shrink: 0;
-  }
-
-  .hero__marquee-sep {
-    color: var(--color-violet-dim);
-    font-size: var(--text-base);
-    flex-shrink: 0;
-  }
-
-  .hero__proof-item {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .hero__proof-value {
-    font-family: var(--font-headline);
-    font-size: var(--text-lg);
-    font-weight: var(--weight-bold);
-    color: var(--color-gold);
-    line-height: 1;
-    background: linear-gradient(135deg, var(--color-gold), var(--color-gold-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero__proof-label {
-    font-size: var(--text-xs);
-    color: var(--color-text-muted);
-  }
-
-  .hero__proof-divider {
-    color: var(--color-text-muted);
-    font-size: var(--text-xl);
-  }
-
-  /* Scroll hint */
-  .hero__scroll {
-    position: absolute;
-    bottom: var(--space-4);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-2);
-    opacity: 0; /* GSAP */
-  }
-
-  .hero__scroll-line {
-    width: 1px;
-    height: 48px;
-    background: linear-gradient(to bottom, var(--color-gold), transparent);
-    animation: scroll-line 2s ease-in-out infinite;
-  }
-
-  @keyframes scroll-line {
-    0% { transform: scaleY(0); transform-origin: top; }
-    50% { transform: scaleY(1); transform-origin: top; }
-    51% { transform: scaleY(1); transform-origin: bottom; }
-    100% { transform: scaleY(0); transform-origin: bottom; }
-  }
-
-  .hero__scroll-text {
-    font-family: var(--font-subhead);
-    font-size: var(--text-xs);
-    letter-spacing: var(--tracking-widest);
-    text-transform: uppercase;
-    color: var(--color-text-muted);
+    padding-bottom: 140px;
   }
 
   /* Video hero */
   .hero__video-wrap {
-    display: none; /* oculto en mobile por defecto */
+    display: none;
   }
 
   @media (min-width: 1024px) {
@@ -407,34 +181,154 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
       height: 100%;
       object-fit: cover;
       object-position: center;
-      opacity: 0; /* JS lo sube gradualmente desde el inicio */
+      opacity: 0;
       transition: opacity 0.05s linear;
     }
 
     .hero__video-fade {
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to right,
-        var(--color-bg) 0%,
-        transparent 40%
-      );
+      background:
+        linear-gradient(to right,  var(--hero-bg) 0%, var(--hero-bg) 8%, transparent 58%),
+        linear-gradient(to top,    var(--hero-bg) 0%, transparent 28%),
+        linear-gradient(to bottom, var(--hero-bg) 0%, transparent 18%);
     }
   }
 
+  .hero__label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-subhead);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-wide);
+    color: rgba(255,255,255,0.55);
+    opacity: 0;
+  }
+
+  .hero__label-dot {
+    width: 8px; height: 8px;
+    background: var(--color-gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse-gold 2s ease-in-out infinite;
+  }
+
+  .hero__title {
+    font-family: var(--font-headline);
+    font-size: clamp(var(--text-4xl), 5.5vw, var(--text-6xl));
+    font-weight: var(--weight-extrabold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: #ffffff;
+    opacity: 0;
+  }
+
+  .hero__sub {
+    font-size: clamp(var(--text-base), 1.8vw, var(--text-lg));
+    color: rgba(255,255,255,0.65);
+    line-height: var(--leading-relaxed);
+    max-width: 480px;
+    opacity: 0;
+  }
+
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+    opacity: 0;
+  }
+
+  /* Pills de prueba social */
+  .hero__proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    opacity: 0;
+  }
+
+  .hero__proof-pill {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .hero__proof-val {
+    font-family: var(--font-headline);
+    font-size: var(--text-base);
+    font-weight: var(--weight-extrabold);
+    color: var(--color-gold);
+  }
+
+  .hero__proof-lbl {
+    font-size: var(--text-xs);
+    color: rgba(255,255,255,0.42);
+    font-family: var(--font-subhead);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  /* Marquee */
+  .hero__marquee {
+    position: absolute;
+    bottom: var(--space-16);
+    left: 0; right: 0;
+    padding-block: var(--space-3);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .hero__marquee-item {
+    font-family: var(--font-subhead);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.38);
+    flex-shrink: 0;
+  }
+
+  .hero__marquee-sep { color: rgba(4,196,217,0.45); flex-shrink: 0; }
+
+  /* Scroll hint */
+  .hero__scroll {
+    position: absolute;
+    bottom: var(--space-4);
+    left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column;
+    align-items: center; gap: var(--space-2);
+    opacity: 0;
+  }
+
+  .hero__scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, var(--color-gold), transparent);
+    animation: scroll-line 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-line {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    50%  { transform: scaleY(1); transform-origin: top; }
+    51%  { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  .hero__scroll-text {
+    font-family: var(--font-subhead);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
   @media (max-width: 640px) {
-    .hero__scroll {
-      display: none;
-    }
-
-    .hero__cta {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .hero__cta :global(.btn) {
-      width: 100%;
-      justify-content: center;
-    }
+    .hero__scroll { display: none; }
+    .hero__cta { flex-direction: column; align-items: flex-start; }
+    .hero__cta :global(.btn) { width: 100%; justify-content: center; }
   }
 </style>

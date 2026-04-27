@@ -15,8 +15,8 @@ import { PORTFOLIO } from '../../content/portfolio';
 
     <div class="portfolio__header" data-scroll-children>
       <SectionLabel text="PORTAFOLIO" align="center" />
-      <h2 class="portfolio__title" id="portfolio-heading">
-        Sitios que ya están<br />
+      <h2 class="portfolio__title gs-fade-up" id="portfolio-heading">
+        Sitios que ya están
         <span class="text-gradient-gold">generando resultados.</span>
       </h2>
       <p class="portfolio__sub">
@@ -32,7 +32,13 @@ import { PORTFOLIO } from '../../content/portfolio';
           aria-label={project.name}
         >
           <!-- Mockup visual -->
-          <div class="portfolio__mockup" style={`--accent: ${project.accentColor}`}>
+          <div class="portfolio__mockup" style={`--accent: ${project.accentColor}`} data-has-url={project.href ? 'true' : undefined}>
+            {project.href && (
+              <div class="portfolio__live" aria-hidden="true">
+                <span class="portfolio__live-dot"></span>
+                LIVE
+              </div>
+            )}
             <div class="portfolio__browser-bar">
               <span class="portfolio__dot"></span>
               <span class="portfolio__dot"></span>
@@ -66,18 +72,26 @@ import { PORTFOLIO } from '../../content/portfolio';
                   </div>
                 </div>
               ) : (
-                <div class="portfolio__preview-lines portfolio__preview-lines--private">
-                  <div class="portfolio__private-badge">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                    Proyecto privado
+                /* Mockup de website con los colores del cliente */
+                <div class="site-mock" style={`--c: ${project.accentColor}`} aria-hidden="true">
+                  {/* Nav */}
+                  <div class="site-mock__nav">
+                    <span class="site-mock__logo"></span>
+                    <div class="site-mock__nav-links">
+                      <span></span><span></span><span></span>
+                    </div>
                   </div>
-                  <span class="portfolio__line portfolio__line--title" style={`background: ${project.accentColor}`}></span>
-                  <span class="portfolio__line portfolio__line--sub"></span>
-                  <span class="portfolio__line portfolio__line--sub portfolio__line--short"></span>
-                  <div class="portfolio__preview-blocks">
-                    <span class="portfolio__block" style={`background: ${project.accentColor}33`}></span>
-                    <span class="portfolio__block" style={`background: ${project.accentColor}22`}></span>
-                    <span class="portfolio__block" style={`background: ${project.accentColor}11`}></span>
+                  {/* Hero */}
+                  <div class="site-mock__hero">
+                    <span class="site-mock__hero-h1"></span>
+                    <span class="site-mock__hero-sub"></span>
+                    <span class="site-mock__hero-btn"></span>
+                  </div>
+                  {/* Cards */}
+                  <div class="site-mock__cards">
+                    <span class="site-mock__card"></span>
+                    <span class="site-mock__card"></span>
+                    <span class="site-mock__card"></span>
                   </div>
                 </div>
               )}
@@ -114,7 +128,12 @@ import { PORTFOLIO } from '../../content/portfolio';
                   </svg>
                 </a>
               ) : (
-                <span class="portfolio__private">Privado</span>
+                <span class="portfolio__delivered">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  Entregado
+                </span>
               )}
             </div>
           </div>
@@ -195,9 +214,43 @@ import { PORTFOLIO } from '../../content/portfolio';
 
   /* Browser mockup */
   .portfolio__mockup {
+    position: relative;
     background: #0d0d1a;
     padding: var(--space-3);
     border-bottom: 1px solid var(--color-border);
+  }
+
+  /* LIVE badge — solo en proyectos con URL real */
+  .portfolio__live {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #2ECC71;
+    background: rgba(46, 204, 113, 0.12);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+    border-radius: var(--radius-full);
+    padding: 2px 7px;
+  }
+
+  .portfolio__live-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #2ECC71;
+    flex-shrink: 0;
+    animation: live-pulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes live-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.5); }
+    50%       { box-shadow: 0 0 0 5px rgba(46, 204, 113, 0); }
   }
 
   .portfolio__browser-bar {
@@ -415,10 +468,109 @@ import { PORTFOLIO } from '../../content/portfolio';
     gap: var(--space-2);
   }
 
-  .portfolio__private {
+  .portfolio__delivered {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-subhead);
     font-size: var(--text-xs);
-    color: var(--color-text-muted);
+    font-weight: var(--weight-semibold);
+    color: #2ECC71;
     white-space: nowrap;
     flex-shrink: 0;
+    letter-spacing: var(--tracking-wide);
+  }
+
+  /* ── Mockup de sitio web para proyectos sin URL pública ── */
+  .site-mock {
+    display: flex;
+    flex-direction: column;
+    background: color-mix(in srgb, var(--c) 8%, #f8fafc);
+    min-height: 130px;
+    overflow: hidden;
+  }
+
+  /* Nav */
+  .site-mock__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 8px;
+    background: var(--c);
+  }
+
+  .site-mock__logo {
+    display: block;
+    width: 40px;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.75);
+  }
+
+  .site-mock__nav-links {
+    display: flex;
+    gap: 5px;
+  }
+
+  .site-mock__nav-links span {
+    display: block;
+    width: 20px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.4);
+  }
+
+  /* Hero */
+  .site-mock__hero {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 8px 8px;
+    background: color-mix(in srgb, var(--c) 12%, white);
+    border-bottom: 1px solid color-mix(in srgb, var(--c) 15%, transparent);
+  }
+
+  .site-mock__hero-h1 {
+    display: block;
+    width: 72%;
+    height: 9px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--c) 60%, #1a1a1a);
+    opacity: 0.85;
+  }
+
+  .site-mock__hero-sub {
+    display: block;
+    width: 55%;
+    height: 5px;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--c) 30%, #666);
+    opacity: 0.5;
+  }
+
+  .site-mock__hero-btn {
+    display: block;
+    width: 48px;
+    height: 14px;
+    border-radius: 4px;
+    background: var(--c);
+    opacity: 0.85;
+    margin-top: 3px;
+  }
+
+  /* Cards row */
+  .site-mock__cards {
+    display: flex;
+    gap: 5px;
+    padding: 8px;
+    flex: 1;
+  }
+
+  .site-mock__card {
+    flex: 1;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--c) 10%, white);
+    border: 1px solid color-mix(in srgb, var(--c) 18%, transparent);
+    min-height: 36px;
   }
 </style>

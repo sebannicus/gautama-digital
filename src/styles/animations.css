@@ -44,6 +44,19 @@
   transform: none;
 }
 
+/* Word reveal — cada palabra sube desde abajo con máscara */
+.gs-word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.gs-word {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+}
+
 
 /* ──────────────────────────────────────────
  * LÍNEA DORADA DECORATIVA
@@ -255,6 +268,41 @@
 
 
 /* ──────────────────────────────────────────
+ * GRADIENT SWEEP — Texto con gradiente vivo
+ * ────────────────────────────────────────── */
+
+@keyframes gradient-sweep {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.text-gradient-gold {
+  background-size: 200% auto !important;
+  animation: gradient-sweep 5s linear infinite;
+}
+
+/* Variante violeta — mismo sweep */
+.text-gradient-violet {
+  background-size: 200% auto !important;
+  animation: gradient-sweep 6s linear infinite reverse;
+}
+
+
+/* ──────────────────────────────────────────
+ * FLOAT — Elemento que flota suavemente
+ * ────────────────────────────────────────── */
+
+@keyframes float-up-down {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+.float {
+  animation: float-up-down 4s ease-in-out infinite;
+}
+
+
+/* ──────────────────────────────────────────
  * APPEAR — Reduced motion fallback
  * ────────────────────────────────────────── */
 
@@ -270,6 +318,11 @@
     clip-path: none;
   }
 
+  .gs-word {
+    transform: none;
+    opacity: 1;
+  }
+
   .bg-glow {
     animation: none;
   }
@@ -283,6 +336,21 @@
   }
 
   .marquee__track {
+    animation: none;
+  }
+
+  .text-gradient-gold,
+  .text-gradient-violet {
+    animation: none;
+    background-size: 100% auto !important;
+  }
+
+  .float {
+    animation: none;
+  }
+
+  .bg-dots,
+  .bg-scan {
     animation: none;
   }
 }

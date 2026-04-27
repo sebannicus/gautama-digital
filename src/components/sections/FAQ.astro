@@ -1,156 +1,174 @@
 ---
 /**
  * FAQ.astro
- * Propósito: Preguntas frecuentes con acordeón accesible.
- * SEO: el schema FAQPage se genera en BaseLayout desde FAQ_ITEMS.
- * A11y: usa <details>/<summary> nativo — accesible sin JS.
- * Relación: consume FAQ_ITEMS.
+ * Accordion con las 7 preguntas frecuentes — cierra objeciones antes de comprar.
  */
 
 import SectionLabel from '../ui/SectionLabel.astro';
 import { FAQ_ITEMS } from '../../content/faq';
+import { SITE } from '../../content/site';
 ---
 
 <section class="faq section" id="faq" aria-labelledby="faq-heading">
-  <div class="container faq__inner">
-    <div class="faq__header" data-scroll-children>
-      <SectionLabel text="PREGUNTAS FRECUENTES" />
+  <div class="container">
+
+    <div class="faq__top" data-scroll-children>
+      <SectionLabel text="PREGUNTAS FRECUENTES" align="center" />
       <h2 class="faq__title" id="faq-heading">
-        Preguntas sobre diseño web<br />
-        <span class="text-gradient-gold">en La Serena y Coquimbo.</span>
+        Lo que todos preguntan<br />
+        <span class="text-gradient-gold">antes de empezar.</span>
       </h2>
-      <p class="faq__sub">
-        Respuestas honestas sobre páginas web, precios, SEO y cómo aparecer en Google —
-        para negocios locales de La Serena y Coquimbo.
-      </p>
     </div>
 
-    <div class="faq__list" role="list">
+    <div class="faq__accordion" role="list">
       {FAQ_ITEMS.map((item, i) => (
-        <details
-          class="faq__item gs-fade-up"
-          role="listitem"
-          name="faq-group"
-        >
-          <summary class="faq__question">
-            <span>{item.question}</span>
-            <svg class="faq__icon" aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+        <details class="faq-item gs-fade-up" style={`animation-delay: ${i * 55}ms`}>
+          <summary class="faq-item__header" role="listitem">
+            <span class="faq-item__num">0{i + 1}</span>
+            <span class="faq-item__q">{item.question}</span>
+            <span class="faq-item__chevron" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </span>
           </summary>
-          <div class="faq__answer">
-            <p>{item.answer}</p>
+          <div class="faq-item__body">
+            <p class="faq-item__a">{item.answer}</p>
           </div>
         </details>
       ))}
     </div>
+
+    <div class="faq__footer gs-fade-up">
+      <p>
+        ¿Otra consulta?
+        <a
+          href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hola Seba, tengo una consulta sobre tu servicio de diseño web.')}`}
+          class="link-gold"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Escríbeme por WhatsApp
+        </a>
+        — respondo el mismo día.
+      </p>
+    </div>
+
   </div>
 </section>
 
+<script>
+  import { initScrollReveal } from '../../utils/animations';
+  initScrollReveal();
+</script>
+
 <style>
-  .faq__inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-10);
+  .faq {
+    background-color: var(--color-bg-surface);
   }
 
-  /* Header */
-  .faq__title {
-    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
-    margin-bottom: var(--space-4);
-  }
-
-  .faq__sub {
-    font-size: var(--text-base);
-    color: var(--color-text-secondary);
-    line-height: var(--leading-relaxed);
-    max-width: 420px;
-  }
-
-  /* Lista */
-  .faq__list {
+  .faq__top {
+    text-align: center;
+    margin-bottom: var(--space-12);
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+    align-items: center;
+    gap: var(--space-4);
   }
 
-  /* Item */
-  .faq__item {
-    background-color: var(--color-bg-surface);
+  .faq__title {
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-weight: var(--weight-extrabold);
+    line-height: var(--leading-tight);
+  }
+
+  /* Accordion */
+  .faq__accordion {
+    max-width: 760px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
     overflow: hidden;
-    transition: border-color var(--transition-base);
+    margin-bottom: var(--space-10);
   }
 
-  .faq__item[open] {
-    border-color: var(--color-border-hover);
+  .faq-item {
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
   }
 
-  /* Pregunta */
-  .faq__question {
+  .faq-item:last-child {
+    border-bottom: none;
+  }
+
+  .faq-item__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: var(--space-4);
     padding: var(--space-5) var(--space-6);
     cursor: pointer;
     list-style: none;
+    user-select: none;
+    transition: background var(--transition-fast);
+  }
+
+  .faq-item__header::-webkit-details-marker { display: none; }
+
+  .faq-item:hover .faq-item__header,
+  .faq-item[open] .faq-item__header {
+    background: var(--color-bg-overlay);
+  }
+
+  .faq-item__num {
     font-family: var(--font-subhead);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-extrabold);
+    color: var(--color-gold);
+    letter-spacing: var(--tracking-widest);
+    opacity: 0.55;
+    flex-shrink: 0;
+    min-width: 28px;
+  }
+
+  .faq-item__q {
+    flex: 1;
+    font-family: var(--font-headline);
     font-size: var(--text-base);
     font-weight: var(--weight-semibold);
     color: var(--color-text-primary);
     line-height: var(--leading-snug);
-    transition: color var(--transition-fast);
-    user-select: none;
   }
 
-  /* Quita el marcador nativo */
-  .faq__question::-webkit-details-marker {
-    display: none;
-  }
-
-  .faq__question:hover {
-    color: var(--color-gold);
-  }
-
-  .faq__item[open] .faq__question {
-    color: var(--color-gold);
-  }
-
-  /* Ícono rotatorio */
-  .faq__icon {
+  .faq-item__chevron {
     flex-shrink: 0;
     color: var(--color-text-muted);
-    transition: transform var(--transition-base), color var(--transition-base);
+    transition: transform var(--transition-base);
+    display: flex;
+    align-items: center;
   }
 
-  .faq__item[open] .faq__icon {
+  .faq-item[open] .faq-item__chevron {
     transform: rotate(180deg);
-    color: var(--color-gold);
   }
 
-  /* Respuesta */
-  .faq__answer {
-    padding: 0 var(--space-6) var(--space-5);
+  .faq-item__body {
+    padding: 0 var(--space-6) var(--space-5) calc(28px + var(--space-4) + var(--space-6));
   }
 
-  .faq__answer p {
+  .faq-item__a {
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
     line-height: var(--leading-relaxed);
   }
 
-  /* Responsive */
-  @media (min-width: 900px) {
-    .faq__inner {
-      grid-template-columns: 1fr 1.8fr;
-      align-items: start;
-    }
-
-    .faq__header {
-      position: sticky;
-      top: 100px;
-    }
+  /* Footer link */
+  .faq__footer {
+    text-align: center;
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
   }
 </style>

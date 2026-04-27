@@ -155,6 +155,9 @@ const schemaBreadcrumb = {
     <script type="application/ld+json" set:html={JSON.stringify(schemaFAQPage)} />
     <script type="application/ld+json" set:html={JSON.stringify(schemaBreadcrumb)} />
 
+    <!-- Slot para schemas adicionales por página (ej: Article en posts de blog) -->
+    <slot name="head" />
+
     <!-- Theme color mobile -->
     <meta name="theme-color" content="#F0F8FC" />
 
@@ -169,6 +172,17 @@ const schemaBreadcrumb = {
   </head>
 
   <body>
+    <!-- Efecto de fondo — orbs animados, position fixed -->
+    <div class="bg-mesh" aria-hidden="true">
+      <div class="bg-mesh__orb bg-mesh__orb--1"></div>
+      <div class="bg-mesh__orb bg-mesh__orb--2"></div>
+      <div class="bg-mesh__orb bg-mesh__orb--3"></div>
+    </div>
+    <!-- Grid de puntos animado -->
+    <div class="bg-dots" aria-hidden="true"></div>
+    <!-- Línea de scan suave -->
+    <div class="bg-scan" aria-hidden="true"></div>
+
     <Header />
     <main id="main-content" tabindex="-1">
       <slot />
@@ -192,7 +206,7 @@ const schemaBreadcrumb = {
       .whatsapp-float {
         position: fixed;
         bottom: 28px;
-        right: 28px;
+        left: 28px;
         z-index: 9999;
         width: 56px;
         height: 56px;
@@ -225,9 +239,12 @@ const schemaBreadcrumb = {
 
     <!-- Scroll reveal global — se activa una vez que el DOM está listo -->
     <script>
-      import { initScrollReveal } from '../utils/animations';
+      import { initScrollReveal, initWordReveal } from '../utils/animations';
       // Pequeño delay para no competir con la animación del hero
-      setTimeout(() => initScrollReveal(), 300);
+      setTimeout(() => {
+        initScrollReveal();
+        initWordReveal();
+      }, 300);
     </script>
 
     <!-- Vercel Analytics -->

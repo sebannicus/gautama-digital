@@ -7,41 +7,57 @@
 
 const industries = [
   {
-    icon: '🏥',
     title: 'Salud y clínicas',
+    color: '#0477BF',
     desc: 'Páginas web para médicos, dentistas, clínicas y centros de estética en La Serena y Coquimbo. Reserva de horas, ficha de servicios y posicionamiento en Google Maps.',
     keywords: ['clínica', 'dentista', 'médico', 'estética'],
   },
   {
-    icon: '🚗',
     title: 'Comercios y automotriz',
+    color: '#04B2D9',
     desc: 'Sitios web para tiendas, talleres y negocios de productos en La Serena. Catálogo de servicios, galería de trabajos y analíticas para medir tu tráfico.',
     keywords: ['tienda', 'taller', 'comercio'],
   },
   {
-    icon: '⚙️',
     title: 'Ingeniería y servicios',
+    color: '#0378A6',
     desc: 'Diseño web corporativo para empresas de ingeniería, construcción y servicios industriales. Imagen profesional + presencia en Google para captar clientes B2B.',
     keywords: ['ingeniería', 'construcción', 'industrial'],
   },
   {
-    icon: '🍽️',
     title: 'Gastronomía y turismo',
+    color: '#04C4D9',
     desc: 'Páginas web para restaurantes, cafeterías, hoteles y hostales en La Serena y Coquimbo. Menú online, fotos del local y botón de reserva directo.',
     keywords: ['restaurante', 'hotel', 'turismo'],
   },
   {
-    icon: '⚖️',
     title: 'Servicios profesionales',
+    color: '#59343E',
     desc: 'Sitio web para abogados, contadores, psicólogos y consultores. Transmite confianza y credibilidad desde el primer clic — con SEO para que te encuentren primero.',
     keywords: ['abogado', 'contador', 'consultor'],
   },
   {
-    icon: '🏘️',
     title: 'Inmobiliaria y propiedades',
+    color: '#0477BF',
     desc: 'Páginas web para corredores de propiedades e inmobiliarias en La Serena. Ficha de propiedades, formulario de contacto y posicionamiento local en Google.',
     keywords: ['inmobiliaria', 'propiedades', 'corredor'],
   },
+];
+
+/* SVG paths para cada industria */
+const icons = [
+  /* Salud — pulso/heartbeat */
+  `<polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke-linecap="round" stroke-linejoin="round"/>`,
+  /* Comercio — tienda */
+  `<path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>`,
+  /* Ingeniería — engranaje */
+  `<circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M3.93 19.07l-1.41 1.41M22 12h-2M4 12H2M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 4.93M12 22v-2M12 4V2"/>`,
+  /* Gastronomía — cubiertos */
+  `<line x1="18" y1="2" x2="18" y2="22"/><path d="M14 2v6a4 4 0 004 4"/><path d="M6 2v4c0 1.1.9 2 2 2h2a2 2 0 012 2v12"/>`,
+  /* Profesionales — maletín */
+  `<rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>`,
+  /* Inmobiliaria — casa */
+  `<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>`,
 ];
 ---
 
@@ -64,11 +80,34 @@ const industries = [
       {industries.map((ind, i) => (
         <div
           class="industries__card gs-fade-up"
-          style={`animation-delay: ${i * 60}ms`}
+          style={`--ind-color: ${ind.color}; animation-delay: ${i * 60}ms`}
         >
-          <div class="industries__card-icon" aria-hidden="true">{ind.icon}</div>
+          <!-- Franja de acento -->
+          <div class="industries__card-stripe" aria-hidden="true"></div>
+
+          <!-- Icono -->
+          <div class="industries__icon-wrap" aria-hidden="true">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+              set:html={icons[i]}
+            />
+          </div>
+
           <h3 class="industries__card-title">{ind.title}</h3>
           <p class="industries__card-desc">{ind.desc}</p>
+
+          <!-- Keywords -->
+          <div class="industries__tags" aria-label="Rubros relacionados">
+            {ind.keywords.map(kw => (
+              <span class="industries__tag">{kw}</span>
+            ))}
+          </div>
         </div>
       ))}
     </div>
@@ -122,6 +161,7 @@ const industries = [
     line-height: var(--leading-relaxed);
   }
 
+  /* Grid */
   .industries__grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -141,26 +181,62 @@ const industries = [
     }
   }
 
+  /* Card */
   .industries__card {
+    position: relative;
     background-color: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
+    padding-top: var(--space-5);
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
+    overflow: hidden;
     transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-slow);
   }
 
   .industries__card:hover {
-    border-color: var(--color-border-hover);
-    box-shadow: var(--shadow-card);
+    border-color: var(--ind-color, var(--color-border-hover));
+    box-shadow: 0 4px 24px color-mix(in srgb, var(--ind-color) 12%, transparent);
     transform: translateY(-3px);
   }
 
-  .industries__card-icon {
-    font-size: 2rem;
-    line-height: 1;
+  /* Franja superior de acento */
+  .industries__card-stripe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--ind-color);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    opacity: 0.7;
+    transition: opacity var(--transition-base);
+  }
+
+  .industries__card:hover .industries__card-stripe {
+    opacity: 1;
+  }
+
+  /* Ícono */
+  .industries__icon-wrap {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--ind-color) 10%, var(--color-bg-surface));
+    border: 1px solid color-mix(in srgb, var(--ind-color) 20%, transparent);
+    border-radius: var(--radius-lg);
+    color: var(--ind-color);
+    flex-shrink: 0;
+    transition: background var(--transition-base), border-color var(--transition-base);
+  }
+
+  .industries__card:hover .industries__icon-wrap {
+    background: color-mix(in srgb, var(--ind-color) 16%, var(--color-bg-surface));
+    border-color: color-mix(in srgb, var(--ind-color) 35%, transparent);
   }
 
   .industries__card-title {
@@ -175,6 +251,27 @@ const industries = [
     color: var(--color-text-secondary);
     line-height: var(--leading-relaxed);
     flex: 1;
+  }
+
+  /* Tags de keywords */
+  .industries__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-1);
+  }
+
+  .industries__tag {
+    font-family: var(--font-subhead);
+    font-size: 10px;
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--ind-color);
+    background: color-mix(in srgb, var(--ind-color) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--ind-color) 18%, transparent);
+    border-radius: var(--radius-full);
+    padding: 2px var(--space-2);
   }
 
   .industries__note {
