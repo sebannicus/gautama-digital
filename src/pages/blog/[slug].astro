@@ -40,7 +40,9 @@ const articleSchema = {
   '@type': 'Article',
   headline: post.title,
   description: post.excerpt,
+  image: `${SITE.url}/images/og-image.jpg`,
   datePublished: post.publishedAt,
+  dateModified: post.publishedAt,
   author: {
     '@type': 'Person',
     name: SITE.founder.name,
@@ -50,6 +52,10 @@ const articleSchema = {
     '@type': 'Organization',
     name: SITE.name,
     url: SITE.url,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE.url}/favicon.svg`,
+    },
   },
   mainEntityOfPage: canonicalUrl,
 };

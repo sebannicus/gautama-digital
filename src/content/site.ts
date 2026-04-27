@@ -14,7 +14,7 @@ export const SITE = {
   name: 'Gautama Digital',
   tagline: 'Diseño Web Profesional en La Serena y Coquimbo',
   description:
-    'Diseño web y páginas web profesionales en La Serena y Coquimbo. SEO local + Google My Business para que tu negocio aparezca en Google sin pagar publicidad. Diagnóstico gratuito. Desde $250.000. Sin mensualidades.',
+    'Diseño web profesional en La Serena y Coquimbo. SEO local + Google My Business para aparecer en Google sin pagar publicidad. Diagnóstico gratuito. Desde $280.000. Sin mensualidades.',
   url: 'https://www.gautamadigital.cl',
 
   phone: '+56 9 9642 5227',

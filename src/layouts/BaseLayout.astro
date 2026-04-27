@@ -8,7 +8,6 @@
  */
 
 import { SITE } from '../content/site';
-import { FAQ_ITEMS } from '../content/faq';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import Analytics from '@vercel/analytics/astro';
@@ -34,15 +33,16 @@ const {
 
 // ── Schema JSON-LD ─────────────────────────────────────────────────────────
 
-const schemaProfessionalService = {
+const schemaLocalBusiness = {
   '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
+  '@type': ['LocalBusiness', 'ProfessionalService'],
   '@id': `${SITE.url}/#business`,
   name: SITE.name,
   description: SITE.description,
   url: SITE.url,
   telephone: SITE.phone,
   email: SITE.email,
+  image: `${SITE.url}/images/og-image.jpg`,
   founder: {
     '@type': 'Person',
     '@id': `${SITE.url}/#founder`,
@@ -56,6 +56,11 @@ const schemaProfessionalService = {
     addressLocality: SITE.location.city,
     addressRegion: SITE.location.region,
     addressCountry: SITE.location.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: -29.9533,
+    longitude: -71.3395,
   },
   areaServed: [
     { '@type': 'City', name: 'La Serena' },
@@ -72,21 +77,9 @@ const schemaProfessionalService = {
     'Marketing Online',
     'Optimización Web',
   ],
-  priceRange: '$$$',
+  openingHours: 'Mo-Fr 09:00-18:00',
+  priceRange: '$$',
   inLanguage: 'es-CL',
-};
-
-const schemaFAQPage = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQ_ITEMS.map((item) => ({
-    '@type': 'Question',
-    name: item.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: item.answer,
-    },
-  })),
 };
 
 const schemaBreadcrumb = {
@@ -154,8 +147,7 @@ const schemaBreadcrumb = {
     />
 
     <!-- Schema JSON-LD -->
-    <script type="application/ld+json" set:html={JSON.stringify(schemaProfessionalService)} />
-    <script type="application/ld+json" set:html={JSON.stringify(schemaFAQPage)} />
+    <script type="application/ld+json" set:html={JSON.stringify(schemaLocalBusiness)} />
     <script type="application/ld+json" set:html={JSON.stringify(schemaBreadcrumb)} />
 
     <!-- Slot para schemas adicionales por página (ej: Article en posts de blog) -->

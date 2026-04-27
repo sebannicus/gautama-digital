@@ -13,9 +13,25 @@ import StatementStrip from '../components/sections/StatementStrip.astro';
 import CaseStudy from '../components/sections/CaseStudy.astro';
 import FAQ from '../components/sections/FAQ.astro';
 import CtaFinal from '../components/sections/CtaFinal.astro';
+import { FAQ_ITEMS } from '../content/faq';
+import { SITE } from '../content/site';
+
+const schemaFAQPage = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
 ---
 
 <BaseLayout>
+  <script type="application/ld+json" set:html={JSON.stringify(schemaFAQPage)} slot="head" />
   <Hero />
   <Portfolio />
   <StatementStrip />

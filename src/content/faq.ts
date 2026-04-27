@@ -12,7 +12,7 @@ export const FAQ_ITEMS: readonly FAQItem[] = [
   {
     question: '¿Cuánto cuesta diseñar una página web profesional en La Serena?',
     answer:
-      'El Paquete Starter cuesta $250.000 CLP (pago único) e incluye landing page profesional, SEO local y Google Analytics. El Paquete Pro cuesta $450.000 CLP e incluye sitio multi-página, GA4 avanzado, schema markup, optimización de velocidad y 3 meses de seguimiento SEO. Sin mensualidades obligatorias — pagas una vez y el sitio es tuyo.',
+      'El plan base Landing Profesional parte en $280.000 CLP pago único e incluye landing profesional, SEO local y GA4. El plan Analíticas Completas vale $380.000 e incorpora Meta Pixel y análisis avanzado. La Tienda Online llega a $700.000 con carrito y hasta 20 productos. También ofrezco el Agente WhatsApp IA desde $350.000 de implementación más $50.000 al mes. Sin mensualidades en los planes de sitio — pagas una vez y el sitio es tuyo.',
   },
   {
     question: '¿Para qué sirve tener una página web?',
@@ -42,6 +42,6 @@ export const FAQ_ITEMS: readonly FAQItem[] = [
   {
     question: '¿Necesito firmar un contrato de permanencia?',
     answer:
-      'No. El Paquete Starter y Pro son pago único — el sitio es tuyo desde el primer día. El Seguimiento Mensual es mes a mes, sin compromiso de permanencia. Si en algún momento no ves valor, lo cancelas sin costo adicional.',
+      'No. Los planes de sitio web (Landing Profesional, Analíticas Completas y Tienda Online) son pago único — el sitio es tuyo desde el primer día. El Agente WhatsApp IA tiene un cargo mensual de $50.000, cancelable en cualquier momento sin costo adicional.',
   },
 ];
