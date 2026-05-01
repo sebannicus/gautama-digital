@@ -147,11 +147,30 @@ def create_ig_carousel_container(item_ids, caption, ig_id, token):
     r.raise_for_status()
     return r.json()["id"]
 
+def wait_for_ig_container(container_id, token, max_wait=60):
+    """Espera hasta que el contenedor tenga status=FINISHED antes de publicar."""
+    for attempt in range(max_wait // 5):
+        r = requests.get(f"{GRAPH_URL}/{container_id}", params={
+            "fields": "status_code",
+            "access_token": token,
+        })
+        r.raise_for_status()
+        status = r.json().get("status_code", "UNKNOWN")
+        print(f"  status: {status} (intento {attempt + 1})")
+        if status == "FINISHED":
+            return
+        if status == "ERROR":
+            raise SystemExit(f"ERROR: contenedor {container_id} en estado ERROR — no se puede publicar.")
+        time.sleep(5)
+    raise SystemExit(f"TIMEOUT: el contenedor {container_id} no llegó a FINISHED en {max_wait}s.")
+
 def publish_ig_container(container_id, ig_id, token):
     r = requests.post(f"{GRAPH_URL}/{ig_id}/media_publish", params={
         "creation_id": container_id,
         "access_token": token,
     })
+    if not r.ok:
+        print(f"  ERROR media_publish: {r.status_code} — {r.text}")
     r.raise_for_status()
     return r.json()["id"]
 
@@ -183,6 +202,9 @@ def publish_to_instagram(slide_paths, caption, ig_id, token, imgbb_key, dry_run)
         container_id = item_ids[0]
     else:
         container_id = create_ig_carousel_container(item_ids, caption, ig_id, token)
+
+    print(f"  Esperando que IG procese el contenedor...")
+    wait_for_ig_container(container_id, token)
 
     media_id = publish_ig_container(container_id, ig_id, token)
     print(f"  OK   Media ID: {media_id}")
