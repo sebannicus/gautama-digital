@@ -15,11 +15,20 @@ on:
         description: 'Dry run (true/false)'
         required: false
         default: 'false'
+      force:
+        description: 'Forzar republicación (ignora published.json)'
+        required: false
+        default: 'false'
+
+# Evita publicación duplicada si dos workflows se disparan el mismo día.
+concurrency:
+  group: gautama-social-publish
+  cancel-in-progress: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     permissions:
       contents: write
 
@@ -35,21 +44,36 @@ jobs:
 
     steps:
       - name: Checkout repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
+          cache: 'pip'
 
-      - name: Instalar dependencias
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-chromium-v1
+
+      - name: Instalar dependencias Python
+        run: pip install requests playwright
+
+      - name: Instalar Chromium (con deps si no esta cacheado)
         run: |
-          pip install requests playwright
-          python -m playwright install chromium --with-deps
+          if [ "${{ steps.playwright-cache.outputs.cache-hit }}" = "true" ]; then
+            python -m playwright install-deps chromium
+          else
+            python -m playwright install chromium --with-deps
+          fi
 
       - name: Publicar carrusel del dia
         run: |
           cd scripts/social
           python publish_ci.py \
             --date "${{ github.event.inputs.date }}" \
-            --dry-run "${{ github.event.inputs.dry_run || 'false' }}"
+            --dry-run "${{ github.event.inputs.dry_run || 'false' }}" \
+            --force "${{ github.event.inputs.force || 'false' }}"
