@@ -18,7 +18,7 @@ from pathlib import Path
 from datetime import date, datetime
 
 ENV_FILE      = Path(__file__).parent / ".env.social"
-CAROUSELS_DIR = Path(r"C:\Users\crman\Downloads\Claude\gautama-digital\.agents\carousels")
+CAROUSELS_DIR = Path(r"D:\dev\agencia\gautama-digital\.agents\carousels")
 GRAPH_URL     = "https://graph.facebook.com/v19.0"
 
 CAPTIONS = {
@@ -28,6 +28,7 @@ CAPTIONS = {
     "sin-web":            "Mucha gente no sabe que esta pagando cuando contrata una pagina web.\n\nAca te lo explicamos sin vueltas.\n\nPaquete Starter desde $250.000. El sitio es tuyo desde el primer dia.\n\nDiagnostico gratuito -> Link en bio\n\n#GautamaDigital #PaginaWeb #CuartaRegion #MarketingDigital #Coquimbo",
     "web-es-inversion":   "Una pagina web no es un gasto. Es la herramienta de ventas que trabaja por ti las 24 horas.\n\nDiagnostico gratuito -> Link en bio\n\n#GautamaDigital #PaginaWeb #CuartaRegion #MarketingDigital",
     "cuanto-cuesta":      "La pregunta mas frecuente: cuanto cuesta una pagina web en Chile?\n\nLa respuesta honesta: depende. Pero te explicamos exactamente de que depende.\n\nEn Gautama Digital te decimos el precio exacto antes de empezar. Sin sorpresas.\n\nDiagnostico gratuito -> Link en bio\n\n#GautamaDigital #PaginaWeb #CuartaRegion #Coquimbo #LaSerena #MarketingDigital",
+    "agente-whatsapp-ia": "Cuantos clientes perdiste hoy por no responder a tiempo?\n\nA las 11 PM alguien busco exactamente lo que ofreces, te escribio por WhatsApp... y eligio al que si contesto.\n\nEl Agente WhatsApp IA responde en segundos, califica leads y te avisa cuando hay una oportunidad real. Tu negocio disponible 24/7 - sin contratar a nadie.\n\nDiagnostico gratuito -> Link en bio\n\n#GautamaDigital #WhatsAppIA #AutomatizacionIA #MarketingDigital #CuartaRegion #Coquimbo #LaSerena #NegociosLocales",
 }
 
 # ── Helpers ──────────────────────────────────────────────────────────────────

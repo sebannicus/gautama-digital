@@ -21,6 +21,7 @@ CAPTIONS = {
     "aparecer-en-google": "Tu negocio puede llevar anos funcionando... y aun asi no aparecer cuando alguien busca en Google.\n\nEso tiene solucion.\n\nDiagnostico gratuito -> Link en bio\n\n#GautamaDigital #SEOLocal #CuartaRegion #Coquimbo #LaSerena",
     "sin-web":            "Mucha gente no sabe que esta pagando cuando contrata una pagina web.\n\nAca te lo explicamos sin vueltas.\n\nPaquete Starter desde $250.000. El sitio es tuyo desde el primer dia.\n\nDiagnostico gratuito -> Link en bio\n\n#GautamaDigital #PaginaWeb #CuartaRegion #MarketingDigital #Coquimbo",
     "cuanto-cuesta":      "La pregunta mas frecuente: cuanto cuesta una pagina web en Chile?\n\nLa respuesta honesta: depende. Pero te explicamos exactamente de que depende.\n\nEn Gautama Digital te decimos el precio exacto antes de empezar. Sin sorpresas.\n\nDiagnostico gratuito -> Link en bio\n\n#GautamaDigital #PaginaWeb #CuartaRegion #Coquimbo #LaSerena #MarketingDigital",
+    "agente-whatsapp-ia": "Cuantos clientes perdiste hoy por no responder a tiempo?\n\nA las 11 PM alguien busco exactamente lo que ofreces, te escribio por WhatsApp... y eligio al que si contesto.\n\nEl Agente WhatsApp IA responde en segundos, califica leads y te avisa cuando hay una oportunidad real. Tu negocio disponible 24/7 - sin contratar a nadie.\n\nDiagnostico gratuito -> Link en bio\n\n#GautamaDigital #WhatsAppIA #AutomatizacionIA #MarketingDigital #CuartaRegion #Coquimbo #LaSerena #NegociosLocales",
 }
 
 def get_env(key):
@@ -60,11 +61,12 @@ def export_slides(html_path, n_slides, output_dir):
         page.evaluate("document.querySelector('body').style.cssText = 'padding:0;margin:0;gap:0;'")
         page.evaluate("document.querySelector('.carousel').style.borderRadius = '0'")
         # Deshabilitar transición CSS para que el screenshot no capture un estado intermedio
-        page.evaluate("document.querySelector('.slides-wrapper').style.transition = 'none'")
+        wrapper = page.evaluate("document.querySelector('.slides-wrapper') ? '.slides-wrapper' : '.slides-track'")
+        page.evaluate(f"document.querySelector('{wrapper}').style.transition = 'none'")
         page.wait_for_timeout(300)  # esperar a que el CSS de --S:1 se aplique
         for i in range(n_slides):
             # Mover directamente con 1080px fijos — evita el bug de slideW=1080*0.5 hardcodeado en el HTML
-            page.evaluate(f"document.getElementById('slider').style.transform = 'translateX(-{i * 1080}px)'")
+            page.evaluate(f"(document.getElementById('slider') || document.getElementById('track')).style.transform = 'translateX(-{i * 1080}px)'")
             page.wait_for_timeout(400)
             path = output_dir / f"slide_{i+1:02d}.png"
             page.screenshot(path=str(path), clip={"x": 0, "y": 0, "width": 1080, "height": 1350})

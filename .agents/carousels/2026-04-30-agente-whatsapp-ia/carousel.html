@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gautama Digital — Agente WhatsApp IA</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
+    :root {
+      --bg-light:   #F0F8FC;
+      --blue:       #0477BF;
+      --cyan:       #04C4D9;
+      --text-dark:  #59343E;
+      --text-sub:   #0378A6;
+      --white:      #FFFFFF;
+      --wine:       #59343E;
+      --slide-w: 1080px;
+      --slide-h: 1350px;
+      --S: 0.5;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d0d0d;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px;
+      gap: 16px;
+      font-family: 'Lato', sans-serif;
+    }
+
+    h1.page-title {
+      color: #555;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      width:  calc(var(--slide-w) * var(--S));
+      height: calc(var(--slide-h) * var(--S));
+    }
+
+    .carousel {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 6px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+
+    .slides-wrapper {
+      display: flex;
+      height: 100%;
+      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .slide {
+      width:  calc(var(--slide-w) * var(--S));
+      height: calc(var(--slide-h) * var(--S));
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-inner {
+      width: var(--slide-w);
+      height: var(--slide-h);
+      transform: scale(var(--S));
+      transform-origin: top left;
+      position: absolute;
+      top: 0; left: 0;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.55);
+      border: none; color: white;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      cursor: pointer; font-size: 18px; z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(4,119,191,0.9); }
+    .nav-prev { left: -22px; }
+    .nav-next { right: -22px; }
+
+    .counter { color: #555; font-size: 12px; letter-spacing: 2px; }
+
+    /* ===== LOGO EN TODOS LOS SLIDES ===== */
+    .slide-inner::after {
+      content: '';
+      position: absolute;
+      bottom: 48px; right: 56px;
+      width: 148px; height: 148px;
+      background-image: url('../../../imagenes%20para%20historias/gautama_reel.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.92;
+    }
+
+    /* ============================================================
+       SLIDE 1 — HERO GRADIENTE
+    ============================================================ */
+    .s1 .slide-inner {
+      background: linear-gradient(145deg, var(--wine) 0%, var(--blue) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px 120px 88px;
+    }
+
+    .s1 .eyebrow {
+      font-size: 28px; font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+
+    .s1 .divider-line {
+      width: 80px; height: 4px;
+      background: var(--cyan); border-radius: 2px;
+      margin-bottom: 48px;
+    }
+
+    .s1 .title {
+      font-size: 94px; font-weight: 900;
+      color: var(--white); line-height: 1.02;
+      margin-bottom: 48px;
+    }
+    .s1 .title span { color: var(--cyan); }
+
+    .s1 .subtitle {
+      font-size: 36px; font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.55; max-width: 840px;
+    }
+
+    .s1 .dots {
+      position: absolute;
+      bottom: 80px; left: 88px;
+      display: flex; gap: 10px; align-items: center;
+    }
+    .dot { width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+    .dot.active { width: 40px; border-radius: 8px; background: var(--cyan); }
+
+    /* ============================================================
+       SLIDES 2-5 — CONTENIDO FONDO CLARO
+    ============================================================ */
+    .sc .slide-inner {
+      background: var(--bg-light);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px 120px 88px;
+      border-left: 10px solid var(--cyan);
+    }
+
+    .sc .number {
+      font-size: 130px; font-weight: 900;
+      color: var(--cyan); line-height: 1;
+      letter-spacing: -4px; margin-bottom: 16px;
+    }
+
+    .sc .heading {
+      font-size: 62px; font-weight: 700;
+      color: var(--text-dark); line-height: 1.15;
+      margin-bottom: 36px;
+    }
+
+    .sc .body {
+      font-size: 36px; font-weight: 400;
+      color: var(--text-sub); line-height: 1.6;
+      margin-bottom: 56px; max-width: 900px;
+    }
+
+    .sc .insight {
+      background: var(--white);
+      border-left: 6px solid var(--blue);
+      padding: 28px 36px;
+      border-radius: 0 12px 12px 0;
+      font-size: 30px; font-weight: 700;
+      color: var(--blue); line-height: 1.4;
+    }
+
+    .sc .divider {
+      width: 100%; height: 1px;
+      background: rgba(4,196,217,0.3);
+      margin-bottom: 32px;
+    }
+
+    .sc .logo-tag {
+      position: absolute;
+      bottom: 60px; right: 80px;
+      font-size: 22px; font-weight: 700;
+      color: var(--text-sub);
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+
+    .sc .slide-counter {
+      position: absolute;
+      bottom: 64px; left: 88px;
+      font-size: 22px; font-weight: 400; color: #aac;
+    }
+
+    /* ============================================================
+       SLIDE 6 — FRASE AUTORIDAD
+    ============================================================ */
+    .s-frase .slide-inner {
+      background: linear-gradient(145deg, var(--wine) 0%, var(--blue) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 88px 120px 88px;
+    }
+
+    .s-frase .comillas {
+      font-size: 200px; font-weight: 900;
+      color: var(--cyan); line-height: 0.7;
+      margin-bottom: 40px; opacity: 0.9;
+    }
+
+    .s-frase .frase {
+      font-size: 60px; font-weight: 300;
+      color: var(--white); line-height: 1.25;
+      margin-bottom: 48px; max-width: 880px;
+    }
+    .s-frase .frase strong { font-weight: 700; color: var(--cyan); }
+
+    .s-frase .attr-line { width: 80px; height: 2px; background: var(--cyan); margin-bottom: 24px; }
+    .s-frase .attr { font-size: 26px; font-weight: 700; color: var(--cyan); letter-spacing: 2px; text-transform: uppercase; }
+
+    /* ============================================================
+       SLIDE 7 — CTA
+    ============================================================ */
+    .s-cta .slide-inner {
+      background: var(--blue);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 80px 120px 88px;
+    }
+
+    .s-cta .pre-title {
+      font-size: 26px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 32px;
+    }
+
+    .s-cta .question {
+      font-size: 80px; font-weight: 700;
+      color: var(--white); line-height: 1.05;
+      margin-bottom: 24px; max-width: 880px;
+    }
+
+    .s-cta .price-tag {
+      font-size: 40px; font-weight: 700;
+      color: rgba(255,255,255,0.7); margin-bottom: 56px;
+    }
+    .s-cta .price-tag span { color: var(--cyan); }
+
+    .s-cta .btn {
+      display: inline-block;
+      background: var(--cyan); color: var(--white);
+      font-size: 40px; font-weight: 700;
+      font-family: 'Lato', sans-serif;
+      padding: 30px 60px; border-radius: 60px;
+      margin-bottom: 40px; width: fit-content;
+    }
+
+    .s-cta .url {
+      font-size: 28px; font-weight: 400;
+      color: rgba(255,255,255,0.55);
+    }
+  </style>
+</head>
+<body>
+  <h1 class="page-title">Gautama Digital — Agente WhatsApp IA · 30 Abril 2026</h1>
+
+  <div class="carousel-wrapper">
+    <div class="carousel">
+      <div class="slides-wrapper" id="slider">
+
+        <!-- S1: HERO -->
+        <div class="slide s1">
+          <div class="slide-inner">
+            <p class="eyebrow">Automatización con IA</p>
+            <div class="divider-line"></div>
+            <h1 class="title">Tu negocio<br>vendiendo<br>mientras <span>duermes.</span></h1>
+            <p class="subtitle">El Agente WhatsApp IA responde, califica y convierte clientes — sin que tú estés presente.</p>
+            <div class="dots">
+              <div class="dot active"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- S2 -->
+        <div class="slide sc">
+          <div class="slide-inner">
+            <span class="number">01</span>
+            <h2 class="heading">Responde en segundos, las 24 horas</h2>
+            <p class="body">Un cliente te escribe a las 11 PM. Tú duermes. Tu agente responde al instante con precios, disponibilidad y detalles del servicio — exactamente lo que necesita para decidir.</p>
+            <div class="divider"></div>
+            <span class="logo-tag">Gautama Digital</span>
+            <span class="slide-counter">2 / 7</span>
+          </div>
+        </div>
+
+        <!-- S3 -->
+        <div class="slide sc">
+          <div class="slide-inner">
+            <span class="number">02</span>
+            <h2 class="heading">Entrenado con tu negocio, no genérico</h2>
+            <p class="body">No responde con frases de manual. Conoce tu servicio, tu precio y tu tono. Habla exactamente como tú hablarías — solo que siempre disponible y sin cansarse.</p>
+            <div class="insight">
+              Tu voz. Tu marca. Sin descanso.
+            </div>
+            <span class="logo-tag">Gautama Digital</span>
+            <span class="slide-counter">3 / 7</span>
+          </div>
+        </div>
+
+        <!-- S4 -->
+        <div class="slide sc">
+          <div class="slide-inner">
+            <span class="number">03</span>
+            <h2 class="heading">Califica leads antes de que te interrumpan</h2>
+            <p class="body">Descarta curiosos, responde preguntas frecuentes y te avisa solo cuando hay una oportunidad real. Tú intervenes únicamente para cerrar la venta.</p>
+            <div class="divider"></div>
+            <span class="logo-tag">Gautama Digital</span>
+            <span class="slide-counter">4 / 7</span>
+          </div>
+        </div>
+
+        <!-- S5 -->
+        <div class="slide sc">
+          <div class="slide-inner">
+            <span class="number">04</span>
+            <h2 class="heading">Para negocios que se pasan el día respondiendo DMs</h2>
+            <p class="body">Horarios, precios, cómo funciona, si tienen stock — siempre las mismas preguntas. El agente las responde por ti. Tú solo cierras ventas.</p>
+            <div class="divider"></div>
+            <span class="logo-tag">Gautama Digital</span>
+            <span class="slide-counter">5 / 7</span>
+          </div>
+        </div>
+
+        <!-- S6: FRASE AUTORIDAD -->
+        <div class="slide s-frase">
+          <div class="slide-inner">
+            <div class="comillas">"</div>
+            <p class="frase">Cada mensaje sin responder es un cliente que decidió llamar a <strong>la competencia.</strong></p>
+            <div class="attr-line"></div>
+            <span class="attr">Gautama Digital</span>
+          </div>
+        </div>
+
+        <!-- S7: CTA -->
+        <div class="slide s-cta">
+          <div class="slide-inner">
+            <p class="pre-title">Agente WhatsApp IA</p>
+            <p class="question">Tu negocio siempre disponible, sin contratar a nadie.</p>
+            <p class="price-tag">Desde <span>$350.000 CLP</span> + $50.000/mes</p>
+            <span class="btn">Diagnóstico gratuito →</span>
+            <p class="url">gautamadigital.cl · Link en bio 📲</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <button class="nav-btn nav-prev" id="prev" onclick="prevSlide()">&#8592;</button>
+    <button class="nav-btn nav-next" id="next" onclick="nextSlide()">&#8594;</button>
+  </div>
+  <div class="counter" id="counter">1 / 7</div>
+
+  <script>
+    let current = 0;
+    const total = 7;
+    const slider  = document.getElementById('slider');
+    const counter = document.getElementById('counter');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    const sw = 1080 * 0.5;
+
+    function update() {
+      slider.style.transform = `translateX(-${current * sw}px)`;
+      counter.textContent = `${current + 1} / ${total}`;
+      prev.style.display = current === 0 ? 'none' : 'flex';
+      next.style.display = current === total - 1 ? 'none' : 'flex';
+    }
+    function nextSlide() { if (current < total - 1) { current++; update(); } }
+    function prevSlide() { if (current > 0) { current--; update(); } }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+    update();
+  </script>
+
+  <style>
+    .caption-box {
+      max-width: 540px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 24px 28px;
+      color: #bbb;
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      margin-top: 8px;
+    }
+    .caption-box strong {
+      color: #04C4D9;
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+  </style>
+  <div class="caption-box">
+    <strong>Caption sugerido</strong>¿Cuántos clientes perdiste hoy por no responder a tiempo?
+
+A las 11 PM alguien buscó exactamente lo que ofreces, te escribió por WhatsApp... y eligió al que sí contestó.
+
+El Agente WhatsApp IA responde en segundos, califica leads y te avisa cuando hay una oportunidad real. Tu negocio disponible 24/7 — sin contratar a nadie. 🤖
+
+Diagnóstico gratuito → Link en bio 📲
+
+#GautamaDigital #WhatsAppIA #AutomatizacionIA #MarketingDigital #CuartaRegion #Coquimbo #LaSerena #NegociosLocales</div>
+</body>
+</html>
