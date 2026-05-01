@@ -73,18 +73,19 @@ Los screenshots se cargan dinámicamente vía `microlink.io`. Cards con URL mues
 
 ## Sistema de contenido Instagram
 
+> **Estado (2026-05-01): pipeline hardened y en producción.** Primer carrusel publicado con éxito: `2026-04-30-agente-whatsapp-ia`.
+
 ### Generar un carrusel nuevo
 
 ```
 /instagram-carousel [tema]
 ```
 
-El skill genera el HTML completo con el diseño aprobado. Después:
+El skill genera el HTML completo. Después:
 
-1. Agregar el caption en `CAPTIONS` de `scripts/social/publish.py` Y `scripts/social/publish_ci.py`
-2. Si hay imagen de fondo nueva → copiarla a `_media/fondos/`
-3. Si hay sprite Gautama nuevo → copiarlo a `_media/16-bit/`
-4. Push a `main`:
+1. Agregar caption en `CAPTIONS` de **ambos** `publish.py` y `publish_ci.py`
+2. Si hay imagen/sprite nuevo → copiar a `_media/fondos/` o `_media/16-bit/`
+3. Push a `main`:
 
 ```bash
 git add .agents/carousels/YYYY-MM-DD-[slug]/ scripts/social/
@@ -92,10 +93,15 @@ git commit -m "Carrusel YYYY-MM-DD: [tema]"
 git push origin main
 ```
 
-5. Se publica solo a las 20:00 CLT. Para publicar antes:
+4. Se publica solo a las 20:00 CLT. Para publicar ahora:
 
 ```bash
 gh workflow run publish-social.yml --field date="YYYY-MM-DD" --field dry_run="false"
+```
+
+Para **forzar republicación** (ignora published.json):
+```bash
+gh workflow run publish-social.yml --field date="YYYY-MM-DD" --field force=true
 ```
 
 ### Publicación automática — GitHub Actions
@@ -104,50 +110,87 @@ gh workflow run publish-social.yml --field date="YYYY-MM-DD" --field dry_run="fa
 - Archivo: `.github/workflows/publish-social.yml`
 - Publica en: Instagram (carousel) + Facebook (álbum) + Historia IG (primer slide)
 - Funciona aunque el PC esté apagado
+- `concurrency: group: gautama-social-publish` — evita doble publicación si se dispara dos veces
 
-### Flujo interno del publisher
+### Flujo interno del publisher (post-hardening)
 
-1. `prepare_for_ci.py` — convierte `file:///` locales a base64 para Linux
-2. Playwright (Chromium headless) — exporta PNGs 1080×1350px
-3. GitHub API — sube imágenes temporalmente a `_media/ci-temp/` y usa `raw.githubusercontent.com` como URL pública (imgbb estaba bloqueado por los servidores de Meta)
-4. Meta Graph API v19.0 — publica en IG y FB
-5. Limpieza automática de `_media/ci-temp/` tras publicar
+1. Health check del token Meta — avisa si expira en <15 días
+2. Guard anti-doble: lee `published.json` en la carpeta del carrusel — sale si ya se publicó
+3. `prepare_for_ci.py` — convierte `file:///` a base64 para Linux
+4. Playwright — exporta PNGs 1080×1350px (usa `domcontentloaded` no `networkidle`)
+5. GitHub API — sube slides en **paralelo** (4 workers) a `_media/ci-temp/`; reintentos x3
+6. Meta Graph API v19.0 — crea contenedores IG, espera `status=FINISHED`, publica carousel
+7. `published.json` commiteado al repo (persiste entre runs del runner)
+8. Facebook álbum + Historia IG en bloques independientes (si fallan, IG no se pierde)
+9. Cleanup `_media/ci-temp/` en `try/finally` — siempre corre aunque algo falle
+10. Resumen final con permalink IG, URL FB, duración total
 
-> **Nota exportación slides**: El HTML del carrusel tiene `const slideW = 1080 * 0.5` hardcodeado para el preview. El script NO usa `render()` sino que mueve el slider directamente con `translateX(-{i * 1080}px)` para evitar este bug.
+### Estructura HTML requerida para el publisher CI
+
+El script busca estos elementos específicos — **no cambiar los IDs/clases**:
+
+```html
+<div class="slides-wrapper" id="slider">   ← id="slider" obligatorio
+  <div class="slide ...">                   ← class debe empezar con "slide"
+  ...
+</div>
+```
+
+Variables CSS obligatorias: `--S: 0.5` (preview) / `--S: 1` (export CI).
+
+### Diseño real de carruseles (lo que se usa, no el template del skill)
+
+Los carruseles publicados usan este sistema (no Playfair/Outfit):
+- **Fuente**: `Lato` (300/400/700/900)
+- **Hero/Frase/CTA**: gradiente `linear-gradient(145deg, #59343E 0%, #0477BF 100%)`
+- **Slides de contenido**: fondo claro `#F0F8FC`, borde izquierdo cyan, número grande cyan
+- **Escala**: `transform: scale(var(--S))` en `.slide-inner` (1080×1350px nativos)
+- Logo: `::after` en `.slide-inner` apuntando a `../../../imagenes para historias/gautama_reel.png`
 
 ### GitHub Secrets configurados
 
-| Secret | Valor |
+| Secret | Descripción |
 |---|---|
-| `LONG_LIVED_TOKEN` | Token Meta **sin expiración** — data_access expira mediados junio 2026 |
+| `LONG_LIVED_TOKEN` | Token Meta 60 días — **renovar mediados junio 2026** |
 | `IG_BUSINESS_ACCOUNT_ID` | `17841441869591123` |
 | `FB_PAGE_ID` | `1104696042716629` |
 | `FB_PAGE_ACCESS_TOKEN` | Token de la Facebook Page |
-| `IMGBB_API_KEY` | (ya no se usa — se mantiene por si acaso) |
+| `IMGBB_API_KEY` | No se usa — se mantiene por si acaso |
 
-> El workflow necesita `permissions: contents: write` para subir imágenes temporales al repo via GitHub API.
-
-Credenciales locales en: `scripts/social/.env.social` (no commitear).
+Credenciales locales en: `scripts/social/.env.social` (gitignored).
 
 ### Archivos del sistema
 
 ```
 gautama-digital/
-  .github/workflows/publish-social.yml   ← cron + workflow_dispatch
+  .github/workflows/publish-social.yml   ← cron + workflow_dispatch + concurrency guard
   scripts/social/
-    publish_ci.py                         ← publisher GitHub Actions
-    publish.py                            ← publisher local
+    publish_ci.py                         ← publisher CI (hardened, usa en producción)
+    publish.py                            ← publisher local (mismas features)
     prepare_for_ci.py                     ← file:// → base64
     .env.social                           ← credenciales locales (gitignored)
   _media/
     fondos/                               ← fondos para CI
     16-bit/                               ← sprites Gautama para CI
+    ci-temp/                              ← slides temporales durante el run (se autolimpian)
   .agents/carousels/
     YYYY-MM-DD-[slug]/
-      carousel.html                       ← preview interactivo
-      slides/                             ← PNGs exportados (local)
-      slides_ci/                          ← PNGs exportados (CI)
+      carousel.html                       ← fuente del carrusel
+      carousel_ci.html                    ← generado por prepare_for_ci.py (gitignored)
+      published.json                      ← guard anti-doble (commiteado por CI)
+      slides_ci/                          ← PNGs exportados por CI
 ```
+
+### Carruseles publicados
+
+| Fecha | Slug | Estado |
+|---|---|---|
+| 2026-04-13 | aparecer-en-google | ¿publicado? — sin published.json |
+| 2026-04-14 | test-5-errores | ¿publicado? — sin published.json |
+| 2026-04-15 | sin-web-5-errores | ¿publicado? — sin published.json |
+| 2026-04-16 | cuanto-cuesta-una-web | ¿publicado? — sin published.json |
+| 2026-04-17 | web-es-inversion | ¿publicado? — sin published.json |
+| 2026-04-30 | agente-whatsapp-ia | ✅ publicado — published.json en repo |
 
 ---
 
