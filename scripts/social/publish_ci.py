@@ -4,6 +4,7 @@
 # Prepara el HTML reemplazando file:// con base64 antes de correr Playwright.
 
 import os
+import re
 import sys
 import json
 import time
@@ -274,7 +275,7 @@ def main():
 
     # Contar slides
     html_content = Path(html_ci).read_text(encoding="utf-8")
-    n_slides = html_content.count('class="slide"')
+    n_slides = len(re.findall(r'class="slide[\s"]', html_content))
     print(f"  Slides detectados: {n_slides}")
 
     # Exportar PNGs
