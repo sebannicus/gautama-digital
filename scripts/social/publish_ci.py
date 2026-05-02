@@ -289,14 +289,12 @@ def upload_to_github(image_path):
     raise RuntimeError(f"GitHub upload fallo definitivamente para {filename}: {last_err}")
 
 def upload_many_parallel(paths):
-    """Sube N archivos en paralelo conservando el orden de salida."""
-    results = [None] * len(paths)
-    with ThreadPoolExecutor(max_workers=GITHUB_UPLOAD_PARALLEL) as ex:
-        future_map = {ex.submit(upload_to_github, p): i for i, p in enumerate(paths)}
-        for fut in as_completed(future_map):
-            idx = future_map[fut]
-            results[idx] = fut.result()
-            log(f"  OK   {Path(paths[idx]).name} ({idx+1}/{len(paths)})")
+    """Sube N archivos de forma secuencial (evita conflictos de SHA en commits paralelos)."""
+    results = []
+    for i, p in enumerate(paths):
+        url = upload_to_github(p)
+        log(f"  OK   {Path(p).name} ({i+1}/{len(paths)})")
+        results.append(url)
     return results
 
 def delete_from_github(filename):
@@ -323,12 +321,9 @@ def delete_from_github(filename):
         log(f"  WARN delete_from_github({filename}): {e}")
 
 def cleanup_uploaded_files(filenames):
-    """Borra todos los archivos subidos en paralelo. Nunca lanza excepcion."""
-    if not filenames:
-        return
-    with ThreadPoolExecutor(max_workers=GITHUB_UPLOAD_PARALLEL) as ex:
-        for _ in ex.map(delete_from_github, filenames):
-            pass
+    """Borra los archivos subidos de forma secuencial. Nunca lanza excepcion."""
+    for fname in filenames:
+        delete_from_github(fname)
 
 # ── Meta API ─────────────────────────────────────────────────────────────────
 
