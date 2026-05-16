@@ -12,9 +12,9 @@
 
 export const SITE = {
   name: 'Gautama Digital',
-  tagline: 'Diseño Web Profesional en La Serena y Coquimbo',
+  tagline: 'Marketing Digital, Automatización IA e Inteligencia de Negocios · La Serena y Coquimbo',
   description:
-    'Diseño web profesional en La Serena y Coquimbo. SEO local + Google My Business para aparecer en Google sin pagar publicidad. Diagnóstico gratuito. Desde $280.000. Sin mensualidades.',
+    'Sistemas digitales para negocios locales en Chile. Presencia en Google sin publicidad, bots WhatsApp IA que capturan leads 24/7, y dashboards de inteligencia de negocios. Diagnóstico gratuito. Desde $280.000.',
   url: 'https://www.gautamadigital.cl',
 
   phone: '+56 9 9642 5227',

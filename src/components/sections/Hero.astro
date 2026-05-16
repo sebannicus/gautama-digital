@@ -40,36 +40,36 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
       </span>
 
       <h1 class="hero__title" data-hero-title>
-        Tu negocio en Google.<br />
-        <span class="text-gradient-gold">Sin pagar publicidad.</span>
+        No vendemos páginas web.<br />
+        <span class="text-gradient-gold">Construimos la máquina que trae clientes.</span>
       </h1>
 
       <p class="hero__sub" data-hero-sub>
-        Diseño web profesional + SEO local + Google My Business — desde $280.000 CLP.
+        Presencia en Google que te encuentra, automatización con IA que captura leads de noche, y datos para saber exactamente qué funciona. Sin publicidad pagada. Sin mensualidades.
       </p>
 
       <div class="hero__cta" data-hero-cta>
         <Button href={whatsappUrl} variant="primary" size="lg" external={true} pulse={true}>
-          Cotización gratis
+          Diagnóstico gratuito →
         </Button>
         <Button href="/servicios" variant="ghost" size="lg">
-          Ver planes →
+          Ver los 3 sistemas
         </Button>
       </div>
 
       <!-- Prueba social: 3 datos en pills -->
       <div class="hero__proof" data-hero-cta>
         <div class="hero__proof-pill">
-          <span class="hero__proof-val">+100</span>
-          <span class="hero__proof-lbl">visitas / 30 días</span>
-        </div>
-        <div class="hero__proof-pill">
-          <span class="hero__proof-val">$0</span>
-          <span class="hero__proof-lbl">en publicidad</span>
+          <span class="hero__proof-val">+8</span>
+          <span class="hero__proof-lbl">negocios · 100% satisfechos</span>
         </div>
         <div class="hero__proof-pill">
           <span class="hero__proof-val">#1</span>
-          <span class="hero__proof-lbl">Google Maps</span>
+          <span class="hero__proof-lbl">Google Maps · CheckVital</span>
+        </div>
+        <div class="hero__proof-pill">
+          <span class="hero__proof-val">24/7</span>
+          <span class="hero__proof-lbl">bot IA capturando leads</span>
         </div>
       </div>
     </div>
@@ -79,11 +79,9 @@ const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${whatsappMsg}`;
   <!-- Marquee -->
   <div class="hero__marquee marquee" aria-hidden="true">
     <div class="marquee__track">
-      {['Diseño Web La Serena','SEO Local','Google Maps','Marketing Digital','Coquimbo','Sitios a Medida','Sin Publicidad Pagada','Optimización Web','Diseño Web La Serena','SEO Local','Google Maps','Marketing Digital','Coquimbo','Sitios a Medida','Sin Publicidad Pagada','Optimización Web'].map(item =>
-        item.startsWith('Diseño') || item.startsWith('SEO') || item.startsWith('Google') || item.startsWith('Mar') || item.startsWith('Coq') || item.startsWith('Sit') || item.startsWith('Sin') || item.startsWith('Opt')
-          ? <><span class="hero__marquee-item">{item}</span><span class="hero__marquee-sep">·</span></>
-          : null
-      )}
+      {['Presencia Digital','Automatización IA','Inteligencia de Negocios','WhatsApp Bot','CRM','Analytics','SEO Local','Google Maps','La Serena','Coquimbo','Presencia Digital','Automatización IA','Inteligencia de Negocios','WhatsApp Bot','CRM','Analytics','SEO Local','Google Maps','La Serena','Coquimbo'].map(item => (
+        <><span class="hero__marquee-item">{item}</span><span class="hero__marquee-sep">·</span></>
+      ))}
     </div>
   </div>
 

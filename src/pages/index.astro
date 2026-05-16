@@ -8,6 +8,7 @@
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/sections/Hero.astro';
+import Pillars from '../components/sections/Pillars.astro';
 import Portfolio from '../components/sections/Portfolio.astro';
 import StatementStrip from '../components/sections/StatementStrip.astro';
 import CaseStudy from '../components/sections/CaseStudy.astro';
@@ -33,6 +34,7 @@ const schemaFAQPage = {
 <BaseLayout>
   <script type="application/ld+json" set:html={JSON.stringify(schemaFAQPage)} slot="head" />
   <Hero />
+  <Pillars />
   <Portfolio />
   <StatementStrip />
   <CaseStudy />

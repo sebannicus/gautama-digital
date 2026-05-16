@@ -14,13 +14,13 @@ import { SERVICES } from '../../content/services';
 <section class="services section section--surface" id="servicios" aria-labelledby="services-heading">
   <div class="container">
     <div class="services__header" data-scroll-children>
-      <SectionLabel text="PAQUETES" align="center" />
+      <SectionLabel text="PLANES Y PRECIOS" align="center" />
       <h2 class="services__title" id="services-heading">
-        Elige el plan que<br />
-        <span class="text-gradient-gold">se ajusta a tu negocio.</span>
+        Transparencia total.<br />
+        <span class="text-gradient-gold">Pagas por lo que necesitas.</span>
       </h2>
       <p class="services__sub">
-        Todos los planes incluyen una reunión de diagnóstico gratuita para entender qué necesitas antes de cobrar un solo peso. Pagas en dos cuotas: la mitad al ver el avance, la otra mitad al recibir el sitio listo.
+        Sin letra chica, sin cobros sorpresa. El diagnóstico inicial siempre es gratuito — en 30 minutos te digo exactamente qué necesita tu negocio antes de cobrar un solo peso.
       </p>
     </div>
 
@@ -30,8 +30,44 @@ import { SERVICES } from '../../content/services';
       <strong>1 cupo disponible</strong>.
     </div>
 
+    <!-- Pilar 1: Presencia Digital -->
+    <div class="services__pillar-header">
+      <div class="services__pillar-badge" style="--pc: #04C4D9">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Pilar 1 — Presencia Digital
+      </div>
+      <p class="services__pillar-desc">Te encuentran en Google. Sin pagar publicidad.</p>
+    </div>
     <div class="services__grid">
-      {SERVICES.map((service) => (
+      {SERVICES.filter(s => ['starter','pro','ecommerce'].includes(s.id)).map((service) => (
+        <ServiceCard service={service} />
+      ))}
+    </div>
+
+    <!-- Pilar 2: Automatización IA -->
+    <div class="services__pillar-header">
+      <div class="services__pillar-badge" style="--pc: #0477BF">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Pilar 2 — Automatización IA
+      </div>
+      <p class="services__pillar-desc">Captura leads y publica contenido sin mover un dedo.</p>
+    </div>
+    <div class="services__grid services__grid--2col">
+      {SERVICES.filter(s => ['whatsapp','instagram'].includes(s.id)).map((service) => (
+        <ServiceCard service={service} />
+      ))}
+    </div>
+
+    <!-- Pilar 3: Inteligencia de Negocios -->
+    <div class="services__pillar-header">
+      <div class="services__pillar-badge" style="--pc: #C4A35A">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Pilar 3 — Inteligencia de Negocios
+      </div>
+      <p class="services__pillar-desc">Datos reales para decisiones que mueven el negocio.</p>
+    </div>
+    <div class="services__grid services__grid--1col">
+      {SERVICES.filter(s => ['bi'].includes(s.id)).map((service) => (
         <ServiceCard service={service} />
       ))}
     </div>
@@ -105,6 +141,57 @@ import { SERVICES } from '../../content/services';
     text-align: center;
     font-size: var(--text-sm);
     color: var(--color-text-muted);
+  }
+
+  /* Pillar headers */
+  .services__pillar-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-14);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .services__pillar-badge {
+    --pc: #04C4D9;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-subhead);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--pc);
+    background: color-mix(in srgb, var(--pc) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--pc) 25%, transparent);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-4);
+    width: fit-content;
+  }
+
+  .services__pillar-desc {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    font-weight: var(--weight-medium);
+  }
+
+  /* Grid variants */
+  .services__grid--2col {
+    grid-template-columns: 1fr;
+  }
+
+  .services__grid--1col {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+
+  @media (min-width: 768px) {
+    .services__grid--2col {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   /* Responsive */

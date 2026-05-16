@@ -44,4 +44,14 @@ export const FAQ_ITEMS: readonly FAQItem[] = [
     answer:
       'No. Los planes de sitio web (Landing Profesional, Analíticas Completas y Tienda Online) son pago único — el sitio es tuyo desde el primer día. El Agente WhatsApp IA tiene un cargo mensual de $50.000, cancelable en cualquier momento sin costo adicional.',
   },
+  {
+    question: '¿Qué hace exactamente un bot de WhatsApp con IA y cómo me ayuda?',
+    answer:
+      'Es un agente de inteligencia artificial conectado a tu número de WhatsApp Business que responde automáticamente cuando tú no puedes. Lo entrenas con la información de tu negocio: servicios, precios, horarios, preguntas frecuentes. El bot responde al instante 24/7, califica al prospecto (saber si es serio o está explorando) y te deriva solo los que valen tu tiempo — con nombre, consulta y contexto completo. Ya está en producción en Antocarz desde abril 2026, capturando leads reales. Para negocios que pierden clientes por no responder rápido, la diferencia es inmediata.',
+  },
+  {
+    question: '¿Para qué sirve un dashboard de inteligencia de negocios?',
+    answer:
+      'Un dashboard de negocios concentra todos tus indicadores clave en un solo lugar: cuántos prospectos nuevos tienes esta semana, de dónde vienen tus clientes (Google, Instagram, referidos), cuánto vale cada canal, y cuáles prospectos están sin seguimiento. Sin esto, tomas decisiones basadas en intuición. Con esto, sabes exactamente dónde poner el tiempo y el dinero. Para negocios que ya tienen cierto volumen de clientes y quieren escalar sin perder el control, un CRM + dashboard es la inversión de mayor retorno.',
+  },
 ];
