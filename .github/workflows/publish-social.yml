@@ -62,13 +62,8 @@ jobs:
       - name: Instalar dependencias Python
         run: pip install requests playwright
 
-      - name: Instalar Chromium (con deps si no esta cacheado)
-        run: |
-          if [ "${{ steps.playwright-cache.outputs.cache-hit }}" = "true" ]; then
-            python -m playwright install-deps chromium
-          else
-            python -m playwright install chromium --with-deps
-          fi
+      - name: Instalar Chromium
+        run: python -m playwright install chromium --with-deps
 
       - name: Publicar carrusel del dia
         run: |
