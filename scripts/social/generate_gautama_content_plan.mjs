@@ -320,6 +320,16 @@ const posts = [
   },
 ];
 
+const existingPublishedPosts = [
+  {
+    date: "2026-05-18",
+    slot: "01",
+    pillar: "Marketing digital",
+    slug: "seo-local-google",
+    title: "Tu negocio existe... pero Google no lo muestra",
+  },
+];
+
 const backlog = [
   ["2026-05-28", "Marketing digital", "SEO local para servicios profesionales"],
   ["2026-05-28", "Inteligencia de negocios", "Panel mensual de crecimiento"],
@@ -351,6 +361,16 @@ const backlog = [
   ["2026-06-10", "Marketing digital", "Calendario editorial por objetivos"],
   ["2026-06-11", "Inteligencia de negocios", "Datos para decidir precios"],
   ["2026-06-11", "Automatizaciones", "Sistema digital minimo viable"],
+  ["2026-06-12", "Marketing digital", "Pagina de casos que genera confianza"],
+  ["2026-06-12", "Inteligencia de negocios", "Tablero de consultas por servicio"],
+  ["2026-06-13", "Automatizaciones", "Flujo de bienvenida para nuevos leads"],
+  ["2026-06-13", "Marketing digital", "SEO para preguntas frecuentes"],
+  ["2026-06-14", "Inteligencia de negocios", "Indicadores para detectar fuga comercial"],
+  ["2026-06-14", "Automatizaciones", "Seguimiento automatico post reunion"],
+  ["2026-06-15", "Marketing digital", "Oferta irresistible sin bajar precios"],
+  ["2026-06-15", "Inteligencia de negocios", "Reporte de conversion por canal"],
+  ["2026-06-16", "Automatizaciones", "Sistema de respuestas con tono de marca"],
+  ["2026-06-16", "Marketing digital", "Feed empresarial ordenado de 3 en 3"],
 ];
 
 function esc(s) {
@@ -604,6 +624,7 @@ const calendarRows = [
   "",
   "| Fecha | Slot | Pilar | Slug | Enfoque |",
   "|---|---:|---|---|---|",
+  ...existingPublishedPosts.map((post) => `| ${post.date} | ${post.slot} | ${post.pillar} | ${post.slug} | ${post.title} |`),
   ...posts.map((post) => `| ${post.date} | ${post.slot} | ${post.pillar} | ${post.slug} | ${post.title} |`),
   "",
   "## Backlog dias 11 a 30",

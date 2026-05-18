@@ -8,6 +8,7 @@ Cadencia: 2 publicaciones diarias. Cada fila de 3 posts forma una unidad visual 
 
 | Fecha | Slot | Pilar | Slug | Enfoque |
 |---|---:|---|---|---|
+| 2026-05-18 | 01 | Marketing digital | seo-local-google | Tu negocio existe... pero Google no lo muestra |
 | 2026-05-18 | 02 | Automatizaciones | whatsapp-ia-responde-24-7 | Tu WhatsApp no puede dormir |
 | 2026-05-19 | 01 | Inteligencia de negocios | dashboard-clientes-reales | No necesitas mas datos |
 | 2026-05-19 | 02 | Marketing digital | web-que-convierte | Una web bonita no basta |
@@ -62,6 +63,16 @@ Cadencia: 2 publicaciones diarias. Cada fila de 3 posts forma una unidad visual 
 | 2026-06-10 | Marketing digital | Calendario editorial por objetivos |
 | 2026-06-11 | Inteligencia de negocios | Datos para decidir precios |
 | 2026-06-11 | Automatizaciones | Sistema digital minimo viable |
+| 2026-06-12 | Marketing digital | Pagina de casos que genera confianza |
+| 2026-06-12 | Inteligencia de negocios | Tablero de consultas por servicio |
+| 2026-06-13 | Automatizaciones | Flujo de bienvenida para nuevos leads |
+| 2026-06-13 | Marketing digital | SEO para preguntas frecuentes |
+| 2026-06-14 | Inteligencia de negocios | Indicadores para detectar fuga comercial |
+| 2026-06-14 | Automatizaciones | Seguimiento automatico post reunion |
+| 2026-06-15 | Marketing digital | Oferta irresistible sin bajar precios |
+| 2026-06-15 | Inteligencia de negocios | Reporte de conversion por canal |
+| 2026-06-16 | Automatizaciones | Sistema de respuestas con tono de marca |
+| 2026-06-16 | Marketing digital | Feed empresarial ordenado de 3 en 3 |
 
 ## Reglas visuales
 
