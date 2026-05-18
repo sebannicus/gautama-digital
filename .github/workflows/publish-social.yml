@@ -2,7 +2,8 @@ name: Gautama Social Publisher
 
 on:
   schedule:
-    # 23:00 UTC = 20:00 Chile CLT (UTC-3)
+    # Dos publicaciones diarias. Cada run publica el siguiente carrusel pendiente del dia.
+    - cron: '0 16 * * *'
     - cron: '0 23 * * *'
   workflow_dispatch:
     # Permite correrlo manualmente desde GitHub si es necesario

@@ -75,19 +75,38 @@ def load_env():
             env[k.strip()] = v.strip()
     return env
 
-def find_carousel(target_date):
+def find_carousels(target_date):
+    folders = []
     for folder in sorted(CAROUSELS_DIR.iterdir()):
         if folder.is_dir() and folder.name.startswith(target_date) and not folder.name.startswith("_"):
             html = folder / "carousel.html"
             if html.exists():
-                return folder
+                folders.append(folder)
+    return folders
+
+def find_carousel(target_date, force=False):
+    folders = find_carousels(target_date)
+    if not folders:
+        return None
+    if force:
+        return folders[0]
+    for folder in folders:
+        if not already_published(folder):
+            return folder
     return None
 
 def get_slug(folder):
     parts = folder.name.split("-", 3)
     return parts[3] if len(parts) > 3 else folder.name
 
-def get_caption(slug):
+def get_caption(folder):
+    caption_file = folder / "caption.txt"
+    if caption_file.exists():
+        caption = caption_file.read_text(encoding="utf-8").strip()
+        if caption:
+            return caption
+
+    slug = get_slug(folder)
     for key, caption in CAPTIONS.items():
         if key in slug:
             return caption
@@ -433,9 +452,13 @@ def main():
 
     run_started = time.time()
 
-    folder = find_carousel(target_date)
+    folder = find_carousel(target_date, force=force)
     if not folder:
-        log(f"Sin carrusel para {target_date}. Nada que publicar.")
+        total_for_date = len(find_carousels(target_date))
+        if total_for_date:
+            log(f"Todos los carruseles para {target_date} ya estan publicados. Nada que publicar.")
+        else:
+            log(f"Sin carrusel para {target_date}. Nada que publicar.")
         sys.exit(0)
 
     log(f"Carrusel: {folder.name}")
@@ -457,7 +480,7 @@ def main():
         slide_paths = [str(p) for p in existing]
         log(f"PNGs ya exportados: {len(slide_paths)} slides")
 
-    caption = get_caption(slug)
+    caption = get_caption(folder)
 
     env = load_env()
     missing = [k for k in ["LONG_LIVED_TOKEN", "IG_BUSINESS_ACCOUNT_ID", "FB_PAGE_ID", "FB_PAGE_ACCESS_TOKEN", "IMGBB_API_KEY"] if not env.get(k)]
@@ -482,11 +505,7 @@ def main():
     except Exception as e:
         log(f"  ERROR FB fallo (IG ya publico): {e}")
 
-    try:
-        with log_step("Publicar Historia IG"):
-            story_ok = publish_ig_story(slide_paths[0], env, dry_run)
-    except Exception as e:
-        log(f"  ERROR Historia fallo: {e}")
+    log("Historia IG omitida temporalmente por ajuste visual pendiente.")
 
     if not dry_run:
         mark_published(folder, ig_media_id, fb_post_id, story_ok)
@@ -509,7 +528,7 @@ def main():
         if "_" in fb_post_id:
             page_part, post_part = fb_post_id.split("_", 1)
             print(f"             https://facebook.com/{page_part}/posts/{post_part}")
-    print(f"  Historia : {'OK' if story_ok else ('-' if dry_run else 'FALLO')}")
+    print("  Historia : OMITIDA")
     print(f"{sep}\n")
 
 if __name__ == "__main__":
