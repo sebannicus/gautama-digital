@@ -2,223 +2,354 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Gautama Digital - Publicar por publicar no construye marca</title>
+  <title>Gautama Digital - La autoridad tambien puede ser cercana</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
     :root {
       --W: 1080px;
       --H: 1350px;
       --S: 0.5;
-      --cyan: #04C4D9;
-      --blue: #0477BF;
-      --wine: #59343E;
-      --ink: #06060F;
-      --paper: #F0F8FC;
-      --muted: #A9D9E8;
-      --bg: url('../../../_media/fondos/WhatsApp%20Image%202026-04-14%20at%2012.41.24%20PM%20(2).jpeg');
+      --cyan: #23E7FF;
+      --cyan-soft: #89F5FF;
+      --blue: #0573D9;
+      --deep: #020817;
+      --mid: #061936;
+      --ink: #EAFBFF;
+      --muted: #A6DCEC;
       --logo: url('../../../imagenes%20para%20historias/gautama_reel.png');
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; letter-spacing: 0; }
     body {
-      background: #0d0d0d;
+      background: #05070d;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 16px;
       padding: 48px 20px;
-      font-family: Outfit, sans-serif;
+      font-family: Lato, Arial, sans-serif;
     }
     .carousel-wrapper {
       position: relative;
       width: calc(var(--W) * var(--S));
       height: calc(var(--H) * var(--S));
     }
-    .carousel { width: 100%; height: 100%; overflow: hidden; border-radius: 6px; box-shadow: 0 24px 80px rgba(0,0,0,.6); }
-    .slides-wrapper { display: flex; height: 100%; transition: transform .38s cubic-bezier(.4,0,.2,1); }
-    .slide { width: calc(var(--W) * var(--S)); height: calc(var(--H) * var(--S)); flex-shrink: 0; position: relative; overflow: hidden; }
-    .slide-inner { width: var(--W); height: var(--H); transform: scale(var(--S)); transform-origin: top left; position: absolute; inset: 0 auto auto 0; overflow: hidden; }
+    .carousel {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 6px;
+      box-shadow: 0 26px 90px rgba(0,0,0,.66);
+      background: var(--deep);
+    }
+    .slides-wrapper {
+      display: flex;
+      height: 100%;
+      transition: transform .38s cubic-bezier(.4,0,.2,1);
+    }
+    .slide {
+      width: calc(var(--W) * var(--S));
+      height: calc(var(--H) * var(--S));
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide-inner {
+      width: var(--W);
+      height: var(--H);
+      transform: scale(var(--S));
+      transform-origin: top left;
+      position: absolute;
+      inset: 0 auto auto 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 72% 18%, rgba(35,231,255,.2), transparent 26%),
+        radial-gradient(circle at 24% 78%, rgba(5,115,217,.34), transparent 30%),
+        linear-gradient(155deg, #010613 0%, #03122B 48%, #061B3D 100%);
+    }
+    .slide-inner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle, rgba(137,245,255,.9) 0 1px, transparent 1.8px) 30px 44px / 112px 112px,
+        radial-gradient(circle, rgba(5,115,217,.65) 0 1px, transparent 2px) 18px 20px / 72px 72px,
+        linear-gradient(90deg, transparent 0 94%, rgba(35,231,255,.12) 95% 96%, transparent 97%) 0 0 / 92px 92px,
+        linear-gradient(0deg, transparent 0 94%, rgba(35,231,255,.08) 95% 96%, transparent 97%) 0 0 / 92px 92px;
+      opacity: .5;
+      z-index: 1;
+    }
     .slide-inner::after {
       content: "";
       position: absolute;
-      right: 58px;
-      bottom: 50px;
-      width: 150px;
-      height: 150px;
-      background: var(--logo) center / contain no-repeat;
-      z-index: 20;
-      opacity: .94;
-    }
-    .bg { position: absolute; inset: 0; background: var(--bg) center / cover no-repeat; transform: scale(1.04); z-index: 1; }
-    .veil { position: absolute; inset: 0; z-index: 2; }
-    .hero .veil, .dark-slide .veil {
+      inset: 0;
+      z-index: 2;
       background:
-        radial-gradient(circle at 22% 18%, rgba(4,196,217,.2), transparent 30%),
-        linear-gradient(145deg, rgba(6,6,15,.9) 0%, rgba(89,52,62,.72) 44%, rgba(4,119,191,.78) 100%);
+        linear-gradient(90deg, rgba(2,8,23,.9), rgba(2,8,23,.22) 48%, rgba(2,8,23,.82)),
+        radial-gradient(circle at 50% 50%, transparent 0 44%, rgba(2,8,23,.45) 72%, rgba(0,0,0,.6) 100%);
+      pointer-events: none;
     }
-    .light-slide .bg { opacity: .16; filter: grayscale(.2); }
-    .light-slide .veil {
-      background:
-        linear-gradient(90deg, rgba(240,248,252,.97), rgba(240,248,252,.91)),
-        radial-gradient(circle at 80% 20%, rgba(4,196,217,.12), transparent 30%);
+    .aura {
+      position: absolute;
+      width: 760px;
+      height: 760px;
+      border-radius: 50%;
+      border: 2px solid rgba(35,231,255,.28);
+      box-shadow: inset 0 0 42px rgba(35,231,255,.12), 0 0 60px rgba(35,231,255,.14);
+      z-index: 3;
     }
-    .content { position: relative; z-index: 5; height: 100%; padding: 86px 88px 132px; display: flex; flex-direction: column; justify-content: center; }
-    .kicker, .frame-label {
-      position: relative;
-      z-index: 5;
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: .18em;
+    .aura::before,
+    .aura::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      inset: 58px;
+      border: 1px solid rgba(137,245,255,.28);
+    }
+    .aura::after { inset: 118px; opacity: .7; }
+    .gautama {
+      position: absolute;
+      z-index: 4;
+      width: 600px;
+      height: 520px;
+      background: var(--pose) center bottom / contain no-repeat;
+      filter: drop-shadow(0 0 32px rgba(35,231,255,.72)) drop-shadow(0 0 90px rgba(5,115,217,.54));
+      mix-blend-mode: screen;
+    }
+    .copy-panel {
+      position: absolute;
+      z-index: 8;
+      width: 604px;
+      padding: 42px 44px 48px;
+      border: 1px solid rgba(137,245,255,.26);
+      border-left: 5px solid var(--cyan);
+      border-radius: 8px;
+      background: linear-gradient(145deg, rgba(2,8,23,.86), rgba(5,25,54,.74));
+      box-shadow: 0 24px 70px rgba(0,0,0,.38), inset 0 0 32px rgba(35,231,255,.08);
+      backdrop-filter: blur(7px);
+    }
+    .kicker {
+      color: var(--cyan-soft);
+      font-size: 25px;
+      line-height: 1.2;
+      font-weight: 900;
       text-transform: uppercase;
-      color: var(--cyan);
+      margin-bottom: 24px;
     }
-    .frame-label { position: absolute; top: 76px; left: 88px; }
-    .bar { width: 82px; height: 5px; border-radius: 4px; background: var(--cyan); margin: 34px 0 46px; }
-    h1 {
-      font-size: 88px;
-      line-height: 1.02;
-      letter-spacing: 0;
+    h1, h2 {
       color: white;
       font-weight: 900;
-      max-width: 820px;
-      margin-bottom: 44px;
+      text-wrap: balance;
     }
-    h1 span, strong { color: var(--cyan); }
-    .subtitle {
+    h1 {
+      font-size: 82px;
+      line-height: 1.04;
+      max-width: 740px;
+      margin-bottom: 28px;
+    }
+    h2 {
+      font-size: 62px;
+      line-height: 1.09;
+      margin: 16px 0 24px;
+    }
+    .body-copy,
+    .subtitle,
+    .cta-copy {
+      color: rgba(234,251,255,.82);
       font-size: 34px;
-      line-height: 1.45;
-      color: rgba(255,255,255,.78);
-      max-width: 760px;
+      line-height: 1.42;
       font-weight: 400;
     }
-    .dark-slide .slide-inner, .light-slide .slide-inner { padding: 170px 88px 132px; }
-    .dark-slide h2, .light-slide h2 {
-      position: relative;
-      z-index: 5;
-      font-size: 64px;
-      line-height: 1.12;
-      letter-spacing: 0;
-      font-weight: 800;
-      max-width: 840px;
-      margin: 22px 0 34px;
-    }
-    .dark-slide h2 { color: white; }
-    .light-slide h2 { color: var(--wine); }
-    .dark-slide p, .light-slide p {
-      position: relative;
-      z-index: 5;
-      font-size: 34px;
-      line-height: 1.52;
-      max-width: 820px;
-      font-weight: 400;
-    }
-    .dark-slide p { color: rgba(255,255,255,.78); }
-    .light-slide p { color: #0378A6; }
+    .subtitle { max-width: 650px; }
     .num {
-      position: relative;
-      z-index: 5;
       display: block;
-      font-size: 132px;
-      line-height: .9;
-      font-weight: 900;
       color: var(--cyan);
-      letter-spacing: -4px;
+      font-size: 112px;
+      line-height: .82;
+      font-weight: 900;
+      text-shadow: 0 0 26px rgba(35,231,255,.5);
     }
-    .rule { position: relative; z-index: 5; width: 100%; height: 1px; background: rgba(4,196,217,.35); margin-top: 46px; }
-    .slide-count { position: absolute; left: 88px; bottom: 66px; z-index: 5; color: rgba(169,217,232,.9); font-size: 22px; letter-spacing: .08em; }
-    .cta .slide-inner {
-      background: linear-gradient(145deg, var(--wine), var(--blue));
-      padding: 96px 88px 132px;
-      display: flex;
-      flex-direction: column;
+    .slide-count {
+      position: absolute;
+      left: 74px;
+      bottom: 58px;
+      z-index: 10;
+      color: rgba(166,220,236,.86);
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .brand-seal {
+      position: absolute;
+      right: 56px;
+      bottom: 48px;
+      z-index: 10;
+      width: 116px;
+      height: 116px;
+      border-radius: 50%;
+      background: var(--logo) center / cover no-repeat;
+      border: 1px solid rgba(137,245,255,.38);
+      box-shadow: 0 0 32px rgba(35,231,255,.32);
+      opacity: .95;
+    }
+    .layout-right .copy-panel { left: 70px; top: 88px; }
+    .layout-right .gautama { right: -10px; bottom: 88px; }
+    .layout-right .aura { right: -118px; bottom: 28px; }
+    .layout-left .copy-panel { right: 70px; top: 88px; }
+    .layout-left .gautama { left: -18px; bottom: 88px; }
+    .layout-left .aura { left: -124px; bottom: 26px; }
+    .hero .copy-panel {
+      width: 672px;
+      top: 84px;
+      padding: 46px 48px 52px;
+    }
+    .hero.layout-right .copy-panel { left: 66px; }
+    .hero.layout-left .copy-panel { right: 66px; }
+    .hero .gautama {
+      width: 650px;
+      height: 590px;
+      bottom: 56px;
+    }
+    .hero.layout-right .gautama { right: -28px; }
+    .hero.layout-left .gautama { left: -28px; }
+    .hero .aura { width: 830px; height: 830px; bottom: -14px; }
+    .cta .copy-panel {
+      top: 98px;
+      left: 70px;
+      width: 680px;
+      padding: 50px 50px 56px;
+    }
+    .cta .gautama {
+      right: -22px;
+      bottom: 70px;
+      width: 600px;
+      height: 560px;
+      opacity: .96;
+    }
+    .cta .aura { right: -146px; bottom: 2px; }
+    .cta h2 { font-size: 70px; line-height: 1.05; margin-bottom: 24px; }
+    .pill {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
       justify-content: center;
+      margin-top: 34px;
+      min-height: 82px;
+      padding: 0 34px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, var(--cyan), #0C9CFF);
+      color: #02101D;
+      font-size: 31px;
+      font-weight: 900;
+      box-shadow: 0 0 34px rgba(35,231,255,.35);
     }
-    .cta h2 { color: white; font-size: 76px; line-height: 1.04; font-weight: 900; max-width: 850px; margin-bottom: 32px; position: relative; z-index: 5; }
-    .cta p { color: rgba(255,255,255,.78); font-size: 34px; line-height: 1.45; max-width: 760px; position: relative; z-index: 5; margin-bottom: 54px; }
-    .pill { position: relative; z-index: 5; display: inline-block; width: fit-content; background: var(--cyan); color: white; padding: 28px 50px; border-radius: 999px; font-size: 34px; font-weight: 800; }
     .nav-btn {
-      position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%;
-      border: 0; background: rgba(0,0,0,.55); color: white; cursor: pointer; z-index: 30; font-size: 18px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 0;
+      background: rgba(0,0,0,.56);
+      color: white;
+      cursor: pointer;
+      z-index: 30;
+      font-size: 18px;
     }
-    .nav-prev { left: -76px; } .nav-next { right: -76px; }
-    .counter { color: #555; font-size: 12px; letter-spacing: 2px; }
+    .nav-prev { left: -76px; }
+    .nav-next { right: -76px; }
+    .counter { color: #6f7d8f; font-size: 12px; font-weight: 700; }
   </style>
 </head>
 <body>
   <div class="carousel-wrapper">
     <div class="carousel">
       <div class="slides-wrapper" id="slider">
-        <div class="slide hero">
-          <div class="slide-inner">
-            <div class="bg"></div>
-            <div class="veil"></div>
-            <div class="content">
-              <div class="kicker">Marketing digital</div>
-              <div class="bar"></div>
-              <h1>Publicar por publicar no construye marca<br><span>El contenido debe posicionarte como la opcion obvia.</span></h1>
-              <p class="subtitle">Gautama Digital convierte presencia, datos y automatizacion en sistemas comerciales para negocios locales.</p>
+        <div class="slide hero layout-right">
+          <div class="slide-inner" style="--pose: url('../../../_media/gautama-poses/pose-book.png');">
+            <div class="aura"></div>
+            <div class="gautama"></div>
+            <div class="copy-panel">
+              <p class="kicker">Marketing digital</p>
+              <h1>La autoridad tambien puede ser cercana</h1>
+              <p class="subtitle">El contenido no tiene que gritar para que alguien confie. Puede ensenar, acompanar y abrir criterio.</p>
             </div>
+            <span class="slide-count">1 / 6</span>
+            <span class="brand-seal"></span>
           </div>
         </div>
 
-        <div class="slide light-slide">
-          <div class="slide-inner">
-            <div class="bg"></div>
-            <div class="veil"></div>
-            <div class="frame-label">Marketing digital</div>
-            <span class="num">01</span>
-            <h2>Cada post debe cumplir un rol</h2>
-            <p>Educar, demostrar experiencia, mostrar resultados o activar una consulta.</p>
-            <div class="rule"></div>
+        <div class="slide teach layout-left">
+          <div class="slide-inner" style="--pose: url('../../../_media/gautama-poses/pose-book.png');">
+            <div class="aura"></div>
+            <div class="gautama"></div>
+            <div class="copy-panel">
+              <p class="kicker">Marketing digital</p>
+              <span class="num">01</span>
+              <h2>Ensenar atrae mejor que insistir</h2>
+              <p class="body-copy">Cuando explicas con generosidad, las personas entienden tu criterio antes de pedir una cotizacion.</p>
+            </div>
             <span class="slide-count">2 / 6</span>
+            <span class="brand-seal"></span>
           </div>
         </div>
 
-        <div class="slide light-slide">
-          <div class="slide-inner">
-            <div class="bg"></div>
-            <div class="veil"></div>
-            <div class="frame-label">Marketing digital</div>
-            <span class="num">02</span>
-            <h2>La repeticion ordenada crea confianza</h2>
-            <p>Un feed coherente hace que el usuario entienda rapido que haces y por que elegirte.</p>
-            <div class="rule"></div>
+        <div class="slide teach layout-right">
+          <div class="slide-inner" style="--pose: url('../../../_media/gautama-poses/pose-think.png');">
+            <div class="aura"></div>
+            <div class="gautama"></div>
+            <div class="copy-panel">
+              <p class="kicker">Marketing digital</p>
+              <span class="num">02</span>
+              <h2>Repetir con intencion crea memoria</h2>
+              <p class="body-copy">No publiques al azar. Vuelve a tus ideas centrales desde distintos angulos hasta que tu marca sea reconocible.</p>
+            </div>
             <span class="slide-count">3 / 6</span>
+            <span class="brand-seal"></span>
           </div>
         </div>
 
-        <div class="slide light-slide">
-          <div class="slide-inner">
-            <div class="bg"></div>
-            <div class="veil"></div>
-            <div class="frame-label">Marketing digital</div>
-            <span class="num">03</span>
-            <h2>La autoridad se disena</h2>
-            <p>Titulares, ritmo visual, ejemplos y llamados a la accion construyen percepcion profesional.</p>
-            <div class="rule"></div>
+        <div class="slide teach layout-left">
+          <div class="slide-inner" style="--pose: url('../../../_media/gautama-poses/pose-chart.png');">
+            <div class="aura"></div>
+            <div class="gautama"></div>
+            <div class="copy-panel">
+              <p class="kicker">Marketing digital</p>
+              <span class="num">03</span>
+              <h2>Mostrar proceso construye confianza</h2>
+              <p class="body-copy">La autoridad nace cuando el cliente puede ver como piensas, que mides y por que recomiendas cada paso.</p>
+            </div>
             <span class="slide-count">4 / 6</span>
+            <span class="brand-seal"></span>
           </div>
         </div>
 
-        <div class="slide light-slide">
-          <div class="slide-inner">
-            <div class="bg"></div>
-            <div class="veil"></div>
-            <div class="frame-label">Marketing digital</div>
-            <span class="num">04</span>
-            <h2>El contenido debe llevar a accion</h2>
-            <p>Likes no pagan cuentas. Conversaciones, visitas y consultas si.</p>
-            <div class="rule"></div>
+        <div class="slide teach layout-right">
+          <div class="slide-inner" style="--pose: url('../../../_media/gautama-poses/pose-heart.png');">
+            <div class="aura"></div>
+            <div class="gautama"></div>
+            <div class="copy-panel">
+              <p class="kicker">Marketing digital</p>
+              <span class="num">04</span>
+              <h2>La cercania tambien vende</h2>
+              <p class="body-copy">Un mensaje amable reduce distancia. La sabiduria del contenido esta en hacerlo facil de entender.</p>
+            </div>
             <span class="slide-count">5 / 6</span>
+            <span class="brand-seal"></span>
           </div>
         </div>
-        <div class="slide cta">
-          <div class="slide-inner">
-            <div class="bg"></div>
-            <div class="veil"></div>
-            <div class="frame-label">Gautama Digital</div>
-            <h2>Planifiquemos tu contenido</h2>
-            <p>Si quieres ordenar tu presencia digital y convertirla en un sistema que trabaja todos los dias, conversemos.</p>
-            <span class="pill">Diagnostico gratuito</span>
+
+        <div class="slide cta layout-right">
+          <div class="slide-inner" style="--pose: url('../../../_media/gautama-poses/pose-meditate.png');">
+            <div class="aura"></div>
+            <div class="gautama"></div>
+            <div class="copy-panel">
+              <p class="kicker">Gautama Digital</p>
+              <h2>Construyamos un feed con presencia y criterio</h2>
+              <p class="cta-copy">Gautama Digital ordena contenido, medicion y automatizacion para que tu marca comunique con calma.</p>
+              <span class="pill">Diagnostico gratuito</span>
+            </div>
+            <span class="slide-count">6 / 6</span>
+            <span class="brand-seal"></span>
           </div>
         </div>
       </div>
