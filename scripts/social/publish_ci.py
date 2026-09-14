@@ -649,6 +649,7 @@ def main():
     ig_permalink = None
     fb_post_id  = None
     story_ok    = False
+    story_estado = "OMITIDA (sin story.html)"
     uploaded_files: list[str] = []
 
     try:
@@ -675,7 +676,9 @@ def main():
                     story_ci  = prepare_and_save(str(story_src), out_name="story_ci.html")
                     story_png = export_story(Path(story_ci), slides_dir)
                     story_ok  = publish_ig_story(story_png, ig_id, token, dry_run, uploaded_files)
+                story_estado = "SIMULADA" if dry_run else ("PUBLICADA" if story_ok else "FALLO")
             except Exception as e:
+                story_estado = f"FALLO ({type(e).__name__})"
                 log(f"  ERROR Historia IG fallo (el post ya quedo publicado): {e}")
         else:
             log("Sin story.html en la carpeta — Historia IG omitida.")
@@ -709,7 +712,7 @@ def main():
         if "_" in fb_post_id:
             page_part, post_part = fb_post_id.split("_", 1)
             print(f"             https://facebook.com/{page_part}/posts/{post_part}")
-    print("  Historia : OMITIDA")
+    print(f"  Historia : {story_estado}")
     print(f"{sep}\n")
 
 if __name__ == "__main__":
