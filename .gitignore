@@ -20,3 +20,5 @@ protection_result.json
 # Material comercial — no va a repo publico
 *.local.md
 .agents/propuestas/
+__pycache__/
+*.pyc
