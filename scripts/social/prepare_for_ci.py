@@ -86,8 +86,8 @@ def prepare_html(html_path: str) -> tuple[str, list[str], list[str]]:
 
     return html, resolved, unresolved
 
-def prepare_and_save(html_path: str) -> str:
-    out_path = Path(html_path).parent / "carousel_ci.html"
+def prepare_and_save(html_path: str, out_name: str = "carousel_ci.html") -> str:
+    out_path = Path(html_path).parent / out_name
     result, resolved, unresolved = prepare_html(html_path)
     out_path.write_text(result, encoding="utf-8")
     print(f"  OK   HTML preparado -> {out_path.name} ({len(resolved)} imagenes resueltas)")

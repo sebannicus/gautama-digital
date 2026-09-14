@@ -11,3 +11,12 @@ npm-debug.log*
 
 .vercel
 protection_result.json
+
+# Artefactos de render de carruseles (se regeneran en CI)
+.agents/carousels/**/slides_ci/
+.agents/carousels/**/carousel_ci.html
+.agents/carousels/**/story_ci.html
+
+# Material comercial — no va a repo publico
+*.local.md
+.agents/propuestas/

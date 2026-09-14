@@ -6,12 +6,45 @@ Instrucciones específicas para el proyecto Gautama Digital. Leer antes de cualq
 
 ## Proyecto
 
-Gautama Digital es la agencia digital de Sebastián Morales (@sebannicus), Coquimbo, Chile.
+Gautama Digital es la **escuela de IA aplicada** de Sebastián Morales (@sebannicus), Coquimbo, Chile.
 Handle Instagram: `@gautama_digital` — sitio: `gautamadigital.cl`
+
+> **Reposicionamiento (2026-09-14): de agencia a escuela.**
+> Todo lo que es servicio de agencia (webs, SEO, bots) migra a la marca **Digital Hunters**.
+> Gautama Digital queda como plataforma educativa: cursos presenciales mensuales de 2 días
+> donde el alumno sale con ChatGPT y Claude instalados y funcionando en su trabajo.
+> No mezclar las dos voces: Gautama enseña, Digital Hunters vende servicios.
+
+### Perfil de voz — «profesor práctico»
+
+Audiencia: personas con trabajos de oficina en la Región de Coquimbo (contadores, abogados,
+administrativos, vendedores, pymes). No son desarrolladores. Sienten que se están quedando atrás
+con la IA y no saben por dónde partir.
+
+Reglas de voz:
+- **Autoridad en el resultado, cercanía en el camino.** «A mí me costó meses. Tú lo tienes en dos días.»
+- Cada pieza entrega **algo ejecutable hoy**, no una reflexión.
+- Números y ejemplos concretos de trabajo chileno real (un correo al SII, una cotización, un informe).
+- Nunca jerga sin traducir (prompt, token, modelo) — se explica en castellano.
+- **No** se usa la historia laboral personal de Sebastián como ancla de credibilidad.
+- Tildes y puntuación correctas siempre. El copy sin tildes se lee amateur.
+- Se acabó el registro zen/poético («los datos pueden ser amables»). Ahora se enseña.
+
+### Los 5 pilares de contenido
+
+| Pilar | Qué es | Frecuencia |
+|---|---|---|
+| **Hazlo hoy** | Un truco ejecutable en 5 minutos, sin instalar nada | 2×/semana |
+| **Yo estaba ahí** | Situaciones de oficina reales + cómo la IA las cambia | 1×/semana |
+| **Traducción** | Desarmar un término técnico en castellano simple | 1×/semana |
+| **Antes / después** | Una tarea real cronometrada, con y sin IA | 1×/semana |
+| **El curso** | Qué se lleva el alumno, quién vino, cómo salió | 1×/semana |
+
+«Yo estaba ahí» construye la marca. Los otros cuatro construyen la venta.
 
 ---
 
-## Sitio web — estado actual (2026-04-27)
+## Sitio web — estado actual (2026-06-03)
 
 ### Precios vigentes
 | Plan | Precio | Notas |
@@ -22,7 +55,7 @@ Handle Instagram: `@gautama_digital` — sitio: `gautamadigital.cl`
 | Agente WhatsApp IA | $350.000 impl. + $50.000/mes | Automatización con IA. |
 
 ### Estructura de páginas
-- `/` — Home (6 secciones): **Hero → Portfolio → StatementStrip → CaseStudy (Propuesta de Valor) → FAQ → CtaFinal**
+- `/` — Home (9 secciones): **Hero → Pillars → Portfolio → StatementStrip → Connector → CaseStudy → InteractiveSelector ("Planes") → FAQ → CtaFinal**
 - `/servicios` — Página propia con los 4 paquetes y precios
 - `/quien-soy` — Página personal: bio, stats, clientes, proceso
 - `/blog` — Listado de artículos con filtro por categoría
@@ -48,10 +81,36 @@ Posts base: `landing-page-negocio-local`, `seo-local-chile-google-maps`, `agente
 
 Los screenshots se cargan dinámicamente vía `microlink.io`. Cards con URL muestran badge **LIVE** verde pulsante.
 
-### Sistema de animaciones
-- `src/styles/global.css` — orbs bg-mesh (3 orbs, opacidad 0.14–0.22, más grandes y rápidos), bg-dots (puntos animados), bg-scan (línea de scan)
-- `src/styles/animations.css` — `text-gradient-gold` con sweep animado, `gs-word-wrap`/`gs-word` para word reveal
-- `src/utils/animations.ts` — `initWordReveal()` (word-by-word con ScrollTrigger), `gs-fade-up` con blur+scale inicial
+### Sistema de animaciones y componentes visuales 21st.dev (2026-06-03)
+
+**8 componentes de 21st.dev portados a vanilla CSS/JS (sin React):**
+
+| Componente | Ubicación | Técnica |
+|---|---|---|
+| GradientText | Hero h1 | Gradiente cyan→azul→púrpura en `.text-gradient-gold` |
+| AuroraButton | "VER LOS 3 SISTEMAS" Hero | `conic-gradient` rotatorio con `@property --aurora-a` + mask en `Button.astro` variante `aurora` |
+| SpotlightBackground | Hero fondo | 4 glows + mouse-tracking spotlight con lerp en `Hero.astro` |
+| WebGLShader | Hero `<canvas id="hero-shader-canvas">` | GLSL fragment shader wave distortion, paleta azul/cyan |
+| PulseBeams | `Connector.astro` (entre StatementStrip y CaseStudy) | `src/components/ui/PulseBeams.astro` — SVG stroke-dashoffset animado |
+| Gallery4 | Portfolio | `Portfolio.astro` reescrito como carousel horizontal drag+snap |
+| InteractiveSelector | Sección "Planes" (entre CaseStudy y FAQ) | `src/components/ui/InteractiveSelector.astro` — 3 pilares expandibles |
+| MagneticDock | CtaFinal | `src/components/ui/MagneticDock.astro` — WA/Email/IG con mouse proximity |
+
+**CSS base:**
+- `src/styles/animations.css` — `@property --aurora-a`, `aurora-spin`, `text-gradient-gold` sweep, `gs-*` GSAP states
+- `src/styles/global.css` — `.text-gradient-gold` con 4 stops (cyan→blue→purple→cyan)
+- `src/utils/animations.ts` — `initWordReveal()` (word-by-word con ScrollTrigger), `gs-fade-up` con blur+scale
+
+**Nuevos componentes UI (`src/components/ui/`):**
+- `PulseBeams.astro` — SVG 5 paths convergentes al nodo "G" central
+- `InteractiveSelector.astro` — 3 pilares, expande con precios y badges
+- `MagneticDock.astro` — dock glassmorphism con physics de proximidad
+
+**Nuevas secciones (`src/components/sections/`):**
+- `Connector.astro` — usa PulseBeams, muestra los 3 sistemas convergiendo
+
+**Button.astro variantes:** `primary` | `ghost` | `whatsapp` | `aurora`
+
 - Botón WhatsApp: esquina **inferior izquierda** (`bottom: 28px; left: 28px`)
 
 ### SEO — estado (2026-04-27)
@@ -83,9 +142,31 @@ Los screenshots se cargan dinámicamente vía `microlink.io`. Cards con URL mues
 
 El skill genera el HTML completo. Después:
 
-1. Agregar caption en `CAPTIONS` de **ambos** `publish.py` y `publish_ci.py`
-2. Si hay imagen/sprite nuevo → copiar a `_media/fondos/` o `_media/16-bit/`
-3. Push a `main`:
+1. Escribir `caption.txt` en la carpeta del carrusel (UTF-8, con tildes).
+   La primera línea es lo único que se ve sin expandir: ahí va el gancho.
+   *(El diccionario `CAPTIONS` de `publish.py` es legacy — solo se usa si falta `caption.txt`.)*
+2. Escribir `story.html` (1080×1920) para la Historia. Si no existe, se omite sin fallar.
+3. Si hay imagen/pose nueva → copiar a `_media/gautama-poses/` o `_media/fondos/`
+4. Verificar el render **antes** de publicar:
+
+```bash
+cd scripts/social
+python -c "
+import sys, re; sys.path.insert(0,'.')
+from pathlib import Path
+from prepare_for_ci import prepare_and_save
+import publish_ci as pc
+f = Path('../../.agents/carousels/YYYY-MM-DD-[slug]').resolve()
+ci = prepare_and_save(str(f/'carousel.html'))
+n = len(re.findall(r'class=\"slide[\s\"]', Path(ci).read_text(encoding='utf-8')))
+pc.export_slides(Path(ci), n, f/'slides_ci')
+pc.export_story(Path(prepare_and_save(str(f/'story.html'), out_name='story_ci.html')), f/'slides_ci')
+"
+```
+
+Los PNGs quedan en `slides_ci/` (gitignored). Revisarlos antes de seguir.
+
+5. Push a `main`:
 
 ```bash
 git add .agents/carousels/YYYY-MM-DD-[slug]/ scripts/social/
@@ -151,7 +232,7 @@ Los carruseles publicados usan este sistema (no Playfair/Outfit):
 
 | Secret | Descripción |
 |---|---|
-| `LONG_LIVED_TOKEN` | Token Meta 60 días — **renovar mediados junio 2026** |
+| `LONG_LIVED_TOKEN` | Token Meta — renovado 2026-09-14. Revisar a mediados de **noviembre 2026**. |
 | `IG_BUSINESS_ACCOUNT_ID` | `17841441869591123` |
 | `FB_PAGE_ID` | `1104696042716629` |
 | `FB_PAGE_ACCESS_TOKEN` | Token de la Facebook Page |
@@ -181,18 +262,44 @@ gautama-digital/
       slides_ci/                          ← PNGs exportados por CI
 ```
 
-### Carruseles publicados
+### Molde de carrusel (7 slides) — vigente desde 2026-09-14
 
-| Fecha | Slug | Estado |
-|---|---|---|
-| 2026-04-13 | aparecer-en-google | ¿publicado? — sin published.json |
-| 2026-04-14 | test-5-errores | ¿publicado? — sin published.json |
-| 2026-04-15 | sin-web-5-errores | ¿publicado? — sin published.json |
-| 2026-04-16 | cuanto-cuesta-una-web | ¿publicado? — sin published.json |
-| 2026-04-17 | web-es-inversion | ¿publicado? — sin published.json |
-| 2026-04-30 | agente-whatsapp-ia | ✅ publicado — published.json en repo |
+```
+1  HOOK        El dolor específico o la promesa con número. Sin panel, texto a sangre.
+2  CONTEXTO    Por qué pasa. Prepara los pasos.
+3  PASO 01     Ejecutable, con cita de ejemplo literal.
+4  PASO 02     Ejecutable.
+5  PASO 03     Ejecutable. El menos obvio va aquí.
+6  PRUEBA      Comparativa sin/con. Es el slide que gana el «guardar».
+7  CTA         El curso, con fecha o cupos.
+```
 
----
+Clases CSS por tipo de slide: `.hook` `.context` `.step` `.proof` `.cta`.
+Estructura obligatoria para el publisher (no cambiar): `id="slider"` en `.slides-wrapper`,
+cada slide con `class="slide ..."`, `--S: 0.5` preview / `--S: 1` export.
+
+### Historias (9:16) — reactivadas 2026-09-14
+
+Cada carrusel puede traer un `story.html` propio de **1080×1920**. Si existe, el publisher lo
+renderiza y lo publica como Historia; si no existe, la omite sin fallar.
+
+- Zonas seguras: `--safe-top: 300px` / `--safe-bottom: 320px` (IG tapa avatar arriba y barra abajo).
+- Las guías rojas de zona segura solo se ven en preview: el export agrega `body.export` y las oculta.
+- **Nunca** reciclar un slide 4:5 como historia — ese fue el motivo de que se desactivaran en mayo.
+
+Tres formatos en rotación:
+| Formato | Para qué |
+|---|---|
+| **El puente** | Manda al carrusel del día. Es el que se automatiza. |
+| **La pregunta** | Sticker de encuesta. Alimenta el contenido de la semana. |
+| **La clase de 15 s** | Un solo tip, texto grande, sin adornos. |
+
+### Historial
+
+- **Abril–mayo 2026:** 27 carruseles del ciclo «agencia / zen». Archivados en
+  `.agents/carousels/_archivo-2026/` el 2026-09-14. El publisher ignora carpetas que empiezan con `_`.
+- **2026-09-15 · `contexto-chatgpt`** — primer carrusel del molde nuevo (pilar «Hazlo hoy»),
+  con historia 9:16. Listo para publicar.
 
 ## Sistema de diseño aprobado
 
@@ -264,19 +371,46 @@ git push
 
 ## Renovación del token Meta
 
-El `LONG_LIVED_TOKEN` expira cada 60 días. Próxima renovación: **mediados junio 2026**.
+El `LONG_LIVED_TOKEN` expira cada 60 días.
+
+> **Estado 2026-09-14: renovado y operativo.** Cuenta `@gautama_digital`
+> (IG `17841441869591123`, Page `1104696042716629`). El Page token quedó sin expiración.
+>
+> **Incidente que lo tumbó:** el App Secret estaba escrito en este mismo archivo, y el repo
+> es público. GitHub lo detectó por secret scanning, avisó a Meta, y Meta invalidó todas las
+> sesiones — por eso murieron el user token y el page token a la vez, y por eso el intercambio
+> `fb_exchange_token` ya no servía. Se rotó el secret el 2026-09-14.
+>
+> **Regla:** el App Secret vive solo en `scripts/social/.env.social` (gitignored).
+> Nunca en este archivo, en el README ni en un commit.
 
 Para renovar, ejecutar desde `scripts/social/`:
 
-```python
-import requests
-r = requests.get("https://graph.facebook.com/v19.0/oauth/access_token", params={
-    "grant_type": "fb_exchange_token",
-    "client_id": "2180375189398482",
-    "client_secret": "404fa0f16a3694a8217ccdb18ab6c4ec",
-    "fb_exchange_token": "[TOKEN_ACTUAL]",
-})
-print(r.json()["access_token"])
+> **Nunca escribir el App Secret en este archivo.** El repo es público.
+> Las credenciales viven solo en `scripts/social/.env.social` (gitignored)
+> y en los GitHub Secrets del repo.
+
+```bash
+# 1. Generar un User Token en https://developers.facebook.com/tools/explorer
+#    App "gautama-publicador" > permisos: instagram_basic, instagram_content_publish,
+#    pages_manage_posts, pages_read_engagement, pages_show_list
+# 2. Convertirlo a long-lived y actualizar .env.social + GitHub Secrets:
+cd scripts/social
+python setup_tokens.py --token PEGAR_TOKEN_AQUI --push-secrets
 ```
 
+El script lee `META_APP_ID` y `META_APP_SECRET` desde `.env.social`, obtiene el token de
+60 días, detecta la Page y la cuenta IG asociadas, y sube los cuatro secrets al repo.
+
 Luego actualizar el Secret `LONG_LIVED_TOKEN` en `github.com/sebannicus/gautama-digital/settings/secrets/actions`.
+
+---
+
+## Servicio de agencia → Digital Hunters
+
+El negocio de gestión de Instagram para clientes (planes, márgenes, propuestas, prospectos)
+ya no vive en este repo. Razones: este repo es público, y con el reposicionamiento ese negocio
+pertenece a **Digital Hunters**.
+
+Material local en `.agents/negocio-agencia.local.md` (gitignored). Migrar al repo de
+Digital Hunters cuando exista.

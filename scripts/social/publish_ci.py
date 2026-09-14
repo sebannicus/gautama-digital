@@ -258,6 +258,35 @@ def export_slides(html_path, n_slides, output_dir):
         browser.close()
     return png_paths
 
+def export_story(html_path, output_dir):
+    """Renderiza story.html a PNG 1080x1920 (9:16) para Historia de Instagram."""
+    from playwright.sync_api import sync_playwright
+    output_dir.mkdir(exist_ok=True)
+    out_path = output_dir / "story.png"
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page(viewport={"width": 1080, "height": 1920})
+        page.goto(f"file://{html_path.resolve().as_posix()}", wait_until="domcontentloaded", timeout=PLAYWRIGHT_GOTO_TIMEOUT)
+        try:
+            page.wait_for_load_state("load", timeout=10000)
+        except Exception:
+            log("  WARN load state demoro mas de 10s, continuamos igual")
+        try:
+            page.evaluate("document.fonts && document.fonts.ready")
+            page.wait_for_function("document.fonts ? document.fonts.status === 'loaded' : true", timeout=8000)
+        except Exception:
+            log("  WARN fonts.ready timeout, continuamos")
+
+        page.evaluate("document.documentElement.style.setProperty('--S', '1')")
+        page.evaluate("document.body.classList.add('export')")  # oculta guias de zona segura
+        page.evaluate("document.body.style.cssText = 'padding:0;margin:0;'")
+        page.evaluate("document.querySelector('.story') && (document.querySelector('.story').style.borderRadius = '0')")
+        page.wait_for_timeout(350)
+        page.screenshot(path=str(out_path), clip={"x": 0, "y": 0, "width": 1080, "height": 1920})
+        log("  OK   story.png (1080x1920)")
+        browser.close()
+    return str(out_path)
+
 # ── GitHub upload ────────────────────────────────────────────────────────────
 
 def _gh_headers():
@@ -638,7 +667,18 @@ def main():
             log(f"  ERROR Facebook fallo (IG ya publico): {e}")
             log("  IG quedo publicado. Revisar FB manualmente.")
 
-        log("Historia IG omitida temporalmente por ajuste visual pendiente.")
+        # Historia IG — solo si el carrusel trae su propio story.html (1080x1920)
+        story_src = folder / "story.html"
+        if story_src.exists():
+            try:
+                with log_step("Publicar Historia IG"):
+                    story_ci  = prepare_and_save(str(story_src), out_name="story_ci.html")
+                    story_png = export_story(Path(story_ci), slides_dir)
+                    story_ok  = publish_ig_story(story_png, ig_id, token, dry_run, uploaded_files)
+            except Exception as e:
+                log(f"  ERROR Historia IG fallo (el post ya quedo publicado): {e}")
+        else:
+            log("Sin story.html en la carpeta — Historia IG omitida.")
 
         # Refrescar marca con fb_post_id y story_ok finales
         if not dry_run:

@@ -1,0 +1,21 @@
+Si ChatGPT te responde genérico, el problema no es ChatGPT.
+
+Casi todos escriben una orden de una línea —«hazme un correo de cobranza»— y esperan el trabajo de un especialista. La herramienta no conoce tu rubro, tu cliente ni tu forma de escribir. Hay que decírselo.
+
+Son tres líneas, antes de pedir nada:
+
+1. Quién eres → «Soy contador y atiendo pymes en Coquimbo.»
+2. Para quién es → «Es para un cliente atrasado que quiero conservar.»
+3. Un ejemplo tuyo → «Este correo lo mandé yo. Sigue ese estilo.»
+
+El tercero es el que casi nadie hace, y es el que más cambia el resultado. Pegar un texto propio es la diferencia entre sonar a robot y sonar a ti.
+
+Mismo modelo, mismo minuto, distinto resultado. No cambió la herramienta: cambió lo que le pediste.
+
+Guarda esto y pruébalo mañana con el primer correo que tengas que escribir.
+
+—
+
+En el curso de dos días vamos mucho más allá de esto: dejamos ChatGPT y Claude instalados y funcionando en tu computador, con tus documentos y tu forma de escribir. Escríbeme si quieres los detalles.
+
+#InteligenciaArtificial #ChatGPT #Claude #ProductividadLaboral #IAparaTrabajo #Coquimbo #LaSerena #CuartaRegion #AprenderIA #GautamaDigital

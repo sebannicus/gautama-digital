@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gautama Digital — Si ChatGPT te responde genérico</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+    :root {
+      --W: 1080px;
+      --H: 1350px;
+      --S: 0.5;
+      --cyan: #23E7FF;
+      --cyan-soft: #89F5FF;
+      --blue: #0573D9;
+      --deep: #020817;
+      --ink: #EAFBFF;
+      --muted: #A6DCEC;
+      --warn: #FFB547;
+      --logo: url('../../../imagenes%20para%20historias/gautama_reel.png');
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #05070d;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 48px 20px;
+      font-family: Lato, Arial, sans-serif;
+    }
+    .carousel-wrapper {
+      position: relative;
+      width: calc(var(--W) * var(--S));
+      height: calc(var(--H) * var(--S));
+    }
+    .carousel {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 6px;
+      box-shadow: 0 26px 90px rgba(0,0,0,.66);
+      background: var(--deep);
+    }
+    .slides-wrapper {
+      display: flex;
+      height: 100%;
+      transition: transform .38s cubic-bezier(.4,0,.2,1);
+    }
+    .slide {
+      width: calc(var(--W) * var(--S));
+      height: calc(var(--H) * var(--S));
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide-inner {
+      width: var(--W);
+      height: var(--H);
+      transform: scale(var(--S));
+      transform-origin: top left;
+      position: absolute;
+      inset: 0 auto auto 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 78% 12%, rgba(35,231,255,.16), transparent 30%),
+        radial-gradient(circle at 18% 84%, rgba(5,115,217,.28), transparent 34%),
+        linear-gradient(158deg, #010613 0%, #03122B 50%, #061B3D 100%);
+      padding: 96px 88px 150px;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Retícula técnica de fondo — sutil, da sensación de "taller" */
+    .slide-inner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 0 97%, rgba(35,231,255,.07) 98% 100%) 0 0 / 90px 90px,
+        linear-gradient(0deg, transparent 0 97%, rgba(35,231,255,.05) 98% 100%) 0 0 / 90px 90px;
+      z-index: 1;
+    }
+    .slide-inner > * { position: relative; z-index: 5; }
+
+    /* ── Marca fija ───────────────────────────────────────── */
+    .brand-seal {
+      position: absolute;
+      right: 78px;
+      bottom: 74px;
+      z-index: 10;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: var(--logo) center / cover no-repeat;
+      border: 1px solid rgba(137,245,255,.34);
+      box-shadow: 0 0 28px rgba(35,231,255,.26);
+    }
+    .slide-count {
+      position: absolute;
+      left: 88px;
+      bottom: 100px;
+      z-index: 10;
+      color: rgba(166,220,236,.72);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    /* ── Tipografía base ──────────────────────────────────── */
+    .kicker {
+      color: var(--cyan);
+      font-size: 24px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      margin-bottom: 34px;
+    }
+    h1 {
+      color: #fff;
+      font-size: 96px;
+      line-height: 1.02;
+      font-weight: 900;
+      text-wrap: balance;
+    }
+    h2 {
+      color: #fff;
+      font-size: 68px;
+      line-height: 1.06;
+      font-weight: 900;
+      text-wrap: balance;
+    }
+    p {
+      color: rgba(234,251,255,.84);
+      font-size: 36px;
+      line-height: 1.44;
+      font-weight: 400;
+    }
+    .accent { color: var(--cyan); }
+
+    /* ── 1. HOOK — sin panel, texto a sangre ──────────────── */
+    .hook .slide-inner { justify-content: center; }
+    .hook h1 { font-size: 104px; margin-bottom: 40px; }
+    .hook .lead {
+      font-size: 42px;
+      color: var(--cyan-soft);
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .hook .rule {
+      width: 160px;
+      height: 8px;
+      background: var(--cyan);
+      border-radius: 4px;
+      margin-bottom: 48px;
+      box-shadow: 0 0 30px rgba(35,231,255,.6);
+    }
+    .hook .gautama {
+      position: absolute;
+      right: -40px;
+      bottom: -20px;
+      width: 520px;
+      height: 480px;
+      background: var(--pose) center bottom / contain no-repeat;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 40px rgba(35,231,255,.5));
+      opacity: .5;
+      z-index: 2;
+    }
+
+    /* ── 2. CONTEXTO ──────────────────────────────────────── */
+    .context .slide-inner { justify-content: center; }
+    .context h2 { margin-bottom: 36px; }
+    .context p { font-size: 38px; max-width: 830px; }
+    .context .gautama {
+      position: absolute;
+      left: -60px;
+      bottom: -10px;
+      width: 470px;
+      height: 440px;
+      background: var(--pose) center bottom / contain no-repeat;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 40px rgba(5,115,217,.6));
+      opacity: .42;
+      z-index: 2;
+    }
+
+    /* ── 3-5. PASOS ───────────────────────────────────────── */
+    .step .slide-inner { justify-content: center; }
+    .step-tag {
+      display: flex;
+      align-items: baseline;
+      gap: 22px;
+      margin-bottom: 30px;
+    }
+    .step-tag .n {
+      color: var(--cyan);
+      font-size: 148px;
+      line-height: .8;
+      font-weight: 900;
+      text-shadow: 0 0 34px rgba(35,231,255,.45);
+    }
+    .step-tag .of {
+      color: rgba(166,220,236,.5);
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: .1em;
+    }
+    .step h2 { margin-bottom: 32px; }
+    .step .quote {
+      border-left: 6px solid var(--cyan);
+      background: rgba(35,231,255,.07);
+      padding: 28px 34px;
+      border-radius: 0 8px 8px 0;
+      color: var(--cyan-soft);
+      font-size: 34px;
+      font-style: italic;
+      line-height: 1.38;
+      margin-bottom: 30px;
+    }
+    .step p { font-size: 34px; max-width: 850px; }
+
+    /* ── 6. PRUEBA — comparativa ──────────────────────────── */
+    .proof .slide-inner { justify-content: center; }
+    .proof h2 { font-size: 58px; margin-bottom: 44px; }
+    .compare { display: flex; flex-direction: column; gap: 26px; margin-bottom: 40px; }
+    .box {
+      padding: 30px 34px;
+      border-radius: 10px;
+      border: 1px solid;
+    }
+    .box .label {
+      font-size: 24px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 14px;
+    }
+    .box .txt { font-size: 32px; line-height: 1.34; }
+    .box-bad { border-color: rgba(255,181,71,.4); background: rgba(255,181,71,.07); }
+    .box-bad .label { color: var(--warn); }
+    .box-bad .txt { color: rgba(255,226,186,.82); }
+    .box-good { border-color: rgba(35,231,255,.45); background: rgba(35,231,255,.09); }
+    .box-good .label { color: var(--cyan); }
+    .box-good .txt { color: var(--ink); }
+    .verdict {
+      font-size: 40px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.24;
+    }
+
+    /* ── 7. CTA ───────────────────────────────────────────── */
+    .cta .slide-inner { justify-content: center; }
+    .cta h2 { font-size: 76px; margin-bottom: 32px; }
+    .cta p { font-size: 36px; max-width: 800px; margin-bottom: 44px; }
+    .pill {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      min-height: 92px;
+      padding: 0 42px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--cyan), #0C9CFF);
+      color: #02101D;
+      font-size: 34px;
+      font-weight: 900;
+      box-shadow: 0 0 40px rgba(35,231,255,.4);
+    }
+    .cta .gautama {
+      position: absolute;
+      right: -50px;
+      bottom: -14px;
+      width: 540px;
+      height: 500px;
+      background: var(--pose) center bottom / contain no-repeat;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 44px rgba(35,231,255,.6));
+      opacity: .5;
+      z-index: 2;
+    }
+
+    /* ── Navegación (solo preview, no sale en el export) ──── */
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 0;
+      background: rgba(0,0,0,.56);
+      color: #fff;
+      cursor: pointer;
+      z-index: 30;
+      font-size: 18px;
+    }
+    .nav-prev { left: -76px; }
+    .nav-next { right: -76px; }
+    .counter { color: #6f7d8f; font-size: 12px; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="carousel-wrapper">
+    <div class="carousel">
+      <div class="slides-wrapper" id="slider">
+
+        <!-- 1 · HOOK -->
+        <div class="slide hook">
+          <div class="slide-inner" style="--pose: url('../../../_media/gautama-poses/pose-think.png');">
+            <div class="gautama"></div>
+            <div class="rule"></div>
+            <h1>Si ChatGPT te responde <span class="accent">genérico</span>, el problema no es ChatGPT.</h1>
+            <p class="lead">Son tres líneas que nadie te enseñó a escribir.</p>
+            <span class="slide-count">1 / 7</span>
+            <span class="brand-seal"></span>
+          </div>
+        </div>
+
+        <!-- 2 · CONTEXTO -->
+        <div class="slide context">
+          <div class="slide-inner" style="--pose: url('../../../_media/gautama-poses/pose-laptop.png');">
+            <div class="gautama"></div>
+            <p class="kicker">Por qué pasa</p>
+            <h2>Le pides como a un buscador, no como a un colega.</h2>
+            <p>«Escríbeme un correo de cobranza» es una orden de una línea esperando trabajo de especialista. La IA no conoce tu rubro, tu cliente ni tu forma de escribir. <span class="accent">Se lo tienes que decir.</span></p>
+            <span class="slide-count">2 / 7</span>
+            <span class="brand-seal"></span>
+          </div>
+        </div>
+
+        <!-- 3 · PASO 01 -->
+        <div class="slide step">
+          <div class="slide-inner">
+            <p class="kicker">Hazlo hoy</p>
+            <div class="step-tag"><span class="n">01</span><span class="of">/ 03</span></div>
+            <h2>Dile quién eres.</h2>
+            <div class="quote">«Soy contador y atiendo pymes en Coquimbo.»</div>
+            <p>Con esa sola línea te cambia el vocabulario, los ejemplos y el nivel técnico de toda la respuesta.</p>
+            <span class="slide-count">3 / 7</span>
+            <span class="brand-seal"></span>
+          </div>
+        </div>
+
+        <!-- 4 · PASO 02 -->
+        <div class="slide step">
+          <div class="slide-inner">
+            <p class="kicker">Hazlo hoy</p>
+            <div class="step-tag"><span class="n">02</span><span class="of">/ 03</span></div>
+            <h2>Dile para quién es.</h2>
+            <div class="quote">«Es para un cliente que lleva dos meses atrasado, pero que quiero conservar.»</div>
+            <p>No es lo mismo escribirle al SII que a un cliente antiguo. Nombra al destinatario y el tono se ajusta solo.</p>
+            <span class="slide-count">4 / 7</span>
+            <span class="brand-seal"></span>
+          </div>
+        </div>
+
+        <!-- 5 · PASO 03 -->
+        <div class="slide step">
+          <div class="slide-inner">
+            <p class="kicker">Hazlo hoy</p>
+            <div class="step-tag"><span class="n">03</span><span class="of">/ 03</span></div>
+            <h2>Muéstrale un ejemplo tuyo.</h2>
+            <div class="quote">«Este es un correo que mandé antes. Sigue ese estilo.»</div>
+            <p>Pegar un texto propio es la diferencia entre sonar a robot y sonar a ti. Es el paso que casi nadie da.</p>
+            <span class="slide-count">5 / 7</span>
+            <span class="brand-seal"></span>
+          </div>
+        </div>
+
+        <!-- 6 · PRUEBA -->
+        <div class="slide proof">
+          <div class="slide-inner">
+            <p class="kicker">La diferencia</p>
+            <h2>Mismo modelo. Mismo minuto.</h2>
+            <div class="compare">
+              <div class="box box-bad">
+                <div class="label">Sin contexto</div>
+                <div class="txt">Tres párrafos correctos y fríos que igual vas a tener que reescribir entero.</div>
+              </div>
+              <div class="box box-good">
+                <div class="label">Con las tres líneas</div>
+                <div class="txt">Un correo que copias, revisas una vez y envías.</div>
+              </div>
+            </div>
+            <p class="verdict">La herramienta no cambió.<br>Cambió lo que le pediste.</p>
+            <span class="slide-count">6 / 7</span>
+            <span class="brand-seal"></span>
+          </div>
+        </div>
+
+        <!-- 7 · CTA -->
+        <div class="slide cta">
+          <div class="slide-inner" style="--pose: url('../../../_media/gautama-poses/pose-book.png');">
+            <div class="gautama"></div>
+            <p class="kicker">Gautama Digital</p>
+            <h2>Esto es lo básico. Falta lo que de verdad ahorra horas.</h2>
+            <p>En dos días dejamos ChatGPT y Claude instalados y funcionando en tu computador, con tus documentos y tu forma de escribir.</p>
+            <span class="pill">Curso presencial · cupos limitados</span>
+            <span class="slide-count">7 / 7</span>
+            <span class="brand-seal"></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <button class="nav-btn nav-prev" id="prev" onclick="prevSlide()">&#8592;</button>
+    <button class="nav-btn nav-next" id="next" onclick="nextSlide()">&#8594;</button>
+  </div>
+  <div class="counter" id="counter">1 / 7</div>
+  <script>
+    let current = 0;
+    const total = 7;
+    const slider = document.getElementById('slider');
+    const counter = document.getElementById('counter');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    const sw = 1080 * 0.5;
+    function update() {
+      slider.style.transform = `translateX(-${current * sw}px)`;
+      counter.textContent = `${current + 1} / ${total}`;
+      prev.style.display = current === 0 ? 'none' : 'block';
+      next.style.display = current === total - 1 ? 'none' : 'block';
+    }
+    function nextSlide() { if (current < total - 1) { current++; update(); } }
+    function prevSlide() { if (current > 0) { current--; update(); } }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+    update();
+  </script>
+</body>
+</html>
